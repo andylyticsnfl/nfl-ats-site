@@ -160,6 +160,11 @@ footer { padding: 44px 0 60px; color: var(--text-muted); font-size: 12.5px; text
   .hero h1 { font-size: 32px; }
   .stat-row { grid-template-columns: 1fr; }
   .philosophy-grid { grid-template-columns: 1fr; }
-  .nav .links { gap: 16px; }
-  .nav .links a { font-size: 13px; }
+  .container { padding: 0 20px; }
+  .nav { padding: 14px 20px; flex-wrap: wrap; row-gap: 10px; }
+  .nav .links { gap: 18px; width: 100%; justify-content: center; }
+  .nav .links a { font-size: 13.5px; }
+  .nav .links a[href="index.html"] { display: none !important; }
+  .hero { padding: 56px 0 40px; }
+  .hero-break { display: none; }
 }
