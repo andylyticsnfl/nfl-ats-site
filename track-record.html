@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track Record — Trifecta</title>
+<meta name="description" content="Every Top 5 and Top 1 confidence pick, 2021-2025, graded in full.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <rect x="2" y="14" width="5" height="10" rx="1.5" fill="var(--accent)" opacity="0.55"/>
+      <rect x="10.5" y="8" width="5" height="16" rx="1.5" fill="var(--accent)" opacity="0.8"/>
+      <rect x="19" y="2" width="5" height="22" rx="1.5" fill="var(--accent)"/>
+    </svg>
+    <span class="word">TRI<span>FECTA</span></span>
+  </a>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="track-record.html" class="active">Track Record</a>
+    <a href="about.html">Methodology</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div style="padding: 48px 0 8px;">
+    <div class="eyebrow"><span class="dot"></span>1,239 GAMES · FULL HISTORY · NO GAMES OMITTED</div>
+    <h1 style="font-size:34px; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px;">Every graded pick, 2021&ndash;2025</h1>
+    <p style="color:var(--text-secondary); font-size:15.5px; max-width:680px; margin:0 0 32px;">Each week, the model ranks every game by how much it disagrees with the closing line. The Top 5 and Top 1 by that measure are tracked here separately from the full slate — nothing added or removed after the fact.</p>
+  </div>
+
+  <div class="stat-row" id="summary-row"></div>
+
+  <section style="border-top: none; padding-top: 0;">
+    <h2>By season</h2>
+    <div class="table-wrap" style="margin-bottom: 48px;">
+      <table id="season-table">
+        <thead><tr><th>Season</th><th>Top 1/wk</th><th>Top 5/wk</th><th>Full slate</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="top5">Top 5 / week (450 picks)</button>
+      <button class="tab-btn" data-tab="top1">Top 1 / week (90 picks)</button>
+    </div>
+
+    <div class="controls">
+      <select id="season-filter">
+        <option value="">All seasons</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+      </select>
+      <select id="result-filter">
+        <option value="">All results</option>
+        <option value="correct">Correct only</option>
+        <option value="wrong">Wrong only</option>
+      </select>
+      <input id="team-filter" type="text" placeholder="Filter by team (e.g. KC)">
+      <span class="summary" id="filtered-summary"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table id="picks-table">
+        <thead>
+          <tr>
+            <th data-sort="season">Season</th>
+            <th data-sort="week">Wk</th>
+            <th data-sort="matchup">Matchup</th>
+            <th data-sort="score">Score</th>
+            <th data-sort="spread">Spread</th>
+            <th data-sort="pick_team">Pick</th>
+            <th data-sort="edge">Edge</th>
+            <th data-sort="correct">Result</th>
+          </tr>
+        </thead>
+        <tbody id="picks-body"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="disclaimer">Past performance on historical seasons does not guarantee future results. Sports betting involves risk; never wager more than you can afford to lose.</div>
+</footer>
+
+<script>
+let allData = null;
+let currentTab = 'top5';
+let sortKey = 'season';
+let sortDir = 1;
+
+function render() {
+  const seasonF = document.getElementById('season-filter').value;
+  const resultF = document.getElementById('result-filter').value;
+  const teamF = document.getElementById('team-filter').value.trim().toUpperCase();
+
+  let rows = allData[currentTab + '_picks'].slice();
+  if (seasonF) rows = rows.filter(r => String(r.season) === seasonF);
+  if (resultF === 'correct') rows = rows.filter(r => r.correct);
+  if (resultF === 'wrong') rows = rows.filter(r => !r.correct);
+  if (teamF) rows = rows.filter(r => r.home === teamF || r.away === teamF || r.pick_team === teamF);
+
+  rows.sort((a, b) => {
+    let av, bv;
+    if (sortKey === 'matchup') { av = a.away + a.home; bv = b.away + b.home; }
+    else if (sortKey === 'score') { av = a.home_score; bv = b.home_score; }
+    else if (sortKey === 'spread') { av = a.spread; bv = b.spread; }
+    else if (sortKey === 'edge') { av = Math.abs(a.edge); bv = Math.abs(b.edge); }
+    else if (sortKey === 'correct') { av = a.correct ? 1 : 0; bv = b.correct ? 1 : 0; }
+    else { av = a[sortKey]; bv = b[sortKey]; }
+    if (av < bv) return -1 * sortDir;
+    if (av > bv) return 1 * sortDir;
+    return 0;
+  });
+
+  const nCorrect = rows.filter(r => r.correct).length;
+  document.getElementById('filtered-summary').textContent =
+    rows.length ? `${nCorrect}-${rows.length - nCorrect} (${(nCorrect / rows.length * 100).toFixed(1)}%) shown` : 'No picks match';
+
+  document.getElementById('picks-body').innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.season}</td>
+      <td>${r.week}</td>
+      <td>${r.away} @ ${r.home}</td>
+      <td>${r.away_score}-${r.home_score}</td>
+      <td>${r.home} ${r.spread > 0 ? '+' : ''}${r.spread}</td>
+      <td>${r.pick_team} (${r.pick_side})</td>
+      <td>${r.edge > 0 ? '+' : ''}${r.edge}</td>
+      <td><span class="tag ${r.correct ? 'tag-correct' : 'tag-wrong'}">${r.correct ? 'Correct' : 'Wrong'}</span></td>
+    </tr>
+  `).join('');
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTab = btn.dataset.tab;
+    render();
+  });
+});
+document.querySelectorAll('#picks-table th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.sort;
+    sortDir = (sortKey === key) ? -sortDir : 1;
+    sortKey = key;
+    render();
+  });
+});
+['season-filter', 'result-filter', 'team-filter'].forEach(id =>
+  document.getElementById(id).addEventListener('input', render)
+);
+
+fetch('data/picks_log.json').then(r => r.json()).then(data => {
+  allData = data;
+  const p = data.pooled;
+  document.getElementById('summary-row').innerHTML = `
+    <div class="stat-tile"><div class="value">${p.top1_pct}%</div><div class="label">Top 1/wk</div><div class="n">${p.top1_n} picks</div></div>
+    <div class="stat-tile"><div class="value">${p.top5_pct}%</div><div class="label">Top 5/wk</div><div class="n">${p.top5_n} picks</div></div>
+    <div class="stat-tile"><div class="value">${p.overall_pct}%</div><div class="label">Full slate</div><div class="n">${p.overall_n} picks</div></div>`;
+
+  document.querySelector('#season-table tbody').innerHTML = data.season_summary.map(s => `
+    <tr>
+      <td>${s.season}</td>
+      <td>${s.top1_pct}% <span style="color:var(--text-muted)">(${s.top1_n})</span></td>
+      <td>${s.top5_pct}% <span style="color:var(--text-muted)">(${s.top5_n})</span></td>
+      <td>${s.overall_pct}% <span style="color:var(--text-muted)">(${s.overall_n})</span></td>
+    </tr>`).join('');
+
+  render();
+});
+</script>
+</body>
+</html>
