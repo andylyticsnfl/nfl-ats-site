@@ -32,6 +32,10 @@
 
   if (new Date() >= WEEK1_CUTOFF) return;
   if (localStorage.getItem('trifecta_email_submitted')) return;
+  // A stored Encyclopedia session token means this browser already
+  // completed a real magic-link login — i.e. an actual paying subscriber.
+  // Don't pitch them a "get Week 1 free" promo they've already paid past.
+  if (localStorage.getItem('trifecta_enc_token')) return;
 
   var page = location.pathname.split('/').pop() || 'index.html';
   if (page === 'encyclopedia.html') return; // don't compete with the sign-in flow / paid-tier upsell there

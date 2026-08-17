@@ -84,6 +84,7 @@
         <span class="updated" id="updated-label"></span>
       </div>
       <p style="font-size: 13px; color: var(--text-muted); max-width: 640px; margin: -8px 0 16px;"><strong style="color:var(--text-secondary);">Edge</strong> is a number the model assigns to every game, measuring how far its own view diverges from the market's. The bigger the number, the bigger that disagreement, and the more confident the pick.</p>
+      <p id="pending-note" style="display:none; font-size: 13px; color: var(--text-secondary); background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; max-width: 640px; margin: -4px 0 16px;"></p>
       <div class="table-wrap">
         <table id="board-table">
           <thead>
@@ -179,6 +180,15 @@ function renderBoard(data) {
     hour: 'numeric', minute: '2-digit',
   });
   document.getElementById('updated-label').textContent = `Updated ${updatedET} ET`;
+
+  const pendingNoteEl = document.getElementById('pending-note');
+  if (data.picks_pending) {
+    pendingNoteEl.style.display = 'block';
+    pendingNoteEl.textContent = `Week ${data.week}'s schedule is confirmed below — Edge scores and picks unlock closer to kickoff, once the model has this season's rosters and injury data to work with.`;
+  } else {
+    pendingNoteEl.style.display = 'none';
+  }
+
   document.getElementById('board-body').innerHTML = data.games.map(g => {
     // spread_line is nflverse's raw convention (positive = HOME favored),
     // opposite of standard sportsbook display (favorite = negative) —
@@ -186,13 +196,21 @@ function renderBoard(data) {
     // (its sign is just home-vs-away bookkeeping; Pick already states
     // the side), matching the same convention already used on the Track
     // Record page's export.
-    const homeSpread = -g.spread_line;
+    const spreadCell = g.spread_line === null || g.spread_line === undefined
+      ? '<span style="color:var(--text-muted);">—</span>'
+      : (() => { const homeSpread = -g.spread_line; return `${g.home_team} ${homeSpread > 0 ? '+' : ''}${homeSpread}`; })();
+    const edgeCell = g.edge === null || g.edge === undefined
+      ? '<span style="color:var(--text-muted);">Coming soon</span>'
+      : Math.abs(g.edge).toFixed(2);
+    const pickCell = g.pick === null || g.pick === undefined
+      ? '<span style="color:var(--text-muted);">Check back closer to kickoff</span>'
+      : (g.pick === 'home' ? g.home_team : g.away_team);
     return `
     <tr>
       <td>${g.away_team} @ ${g.home_team}</td>
-      <td>${g.home_team} ${homeSpread > 0 ? '+' : ''}${homeSpread}</td>
-      <td>${Math.abs(g.edge).toFixed(2)}</td>
-      <td>${g.pick === 'home' ? g.home_team : g.away_team}</td>
+      <td>${spreadCell}</td>
+      <td>${edgeCell}</td>
+      <td>${pickCell}</td>
       <td>${g.correct === null ? '<span style="color:var(--text-muted);">Pending</span>' : `<span class="tag ${g.correct ? 'tag-correct' : 'tag-wrong'}">${g.correct ? 'Correct' : 'Wrong'}</span>`}</td>
     </tr>
   `;
