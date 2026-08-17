@@ -6,8 +6,10 @@
  *  - On subscribe.html: shows once (first visit only), same cutoff rules.
  *  - Once an email is submitted, never shows again anywhere (any page).
  *
- * WEEK1_CUTOFF is a placeholder (~Sept 10, 2026, per the season's likely
- * Thursday opener) — update this once the real 2026 Week 1 date is set.
+ * WEEK1_CUTOFF is the real 2026 cutoff: Sunday Week 1 kickoff (Sept 13,
+ * 2026, 10am PT). Kickoff of the season opener itself is Thursday Sept 9,
+ * 5:20pm PT, but Caleb wants the free-picks giveaway open through the
+ * Sunday slate too.
  *
  * IMPLEMENTATION NOTE (found the hard way, via direct testing against the
  * live account): Brevo's "Simple HTML" export is genuinely broken — its
@@ -25,7 +27,7 @@
  */
 (function () {
   var FORM_ACTION = 'https://bf3fab7e.sibforms.com/serve/MUIFANTnm7MltWD6JFgafuL-EEUnR1MpQBhPmDkNaFcvJAvh5UxW4SDGCDZPp6ORmr-atf5GxQT_HLckHjTAZXrWB4QJMd4kDkXsZ39tA9DIE6facvHznLJgZ2cq-UpAsTcG-07inTDGnAILHHWBQtAHUHCWfO5qSQPr_7b66Hwgiz7YfJw34TcO0HCPTw8CyMDYCpgW4MlI4vMwzQ==';
-  var WEEK1_CUTOFF = new Date('2026-09-10T00:00:00Z'); // placeholder, confirm real date
+  var WEEK1_CUTOFF = new Date('2026-09-13T17:00:00Z'); // Sun Week 1 kickoff, Sept 13 2026 10am PT
 
   if (new Date() >= WEEK1_CUTOFF) return;
   if (localStorage.getItem('trifecta_email_submitted')) return;

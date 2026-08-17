@@ -52,6 +52,7 @@
     <a href="index.html">Home</a>
     <a href="track-record.html">Track Record</a>
     <a href="about.html">Methodology</a>
+    <a href="encyclopedia.html">Encyclopedia</a>
     <a href="subscribe.html" class="active">Subscribe</a>
   </div>
 </nav>
@@ -112,18 +113,8 @@
           <li><span class="check">✓</span> Wednesday early analysis — a full new week's read, days before standard delivery</li>
         </ul>
         <a id="btn-pro" class="btn btn-secondary" style="justify-content:center;" target="_blank" rel="noopener">Get Encyclopedia</a>
+        <a href="encyclopedia.html" style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:10px;">Already subscribed? Log in to the live board →</a>
       </div>
-    </div>
-    <p style="text-align:center; font-size:12px; color:var(--text-muted);">Pricing goes live closer to Week 1. <a href="#" style="color:var(--accent);" id="promo-relaunch">Get Week 1 free →</a></p>
-
-    <div class="chart-card" style="max-width: 640px; margin: 32px auto 0; text-align: center; border-color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--surface-1));">
-      <div class="eyebrow" style="margin: 0 auto 12px;"><span class="dot"></span>WEEK 1 FREE</div>
-      <h3 style="margin: 0 0 10px; font-size: 19px;">Subscribe before Week 1, get Week 1 free</h3>
-      <p style="font-size: 13.5px; color: var(--text-secondary); margin: 0;">
-        Sign up any time before the season opener and your first week is on us — your paid term starts with Week 2.
-        1 week gets you Weeks 1&ndash;2. 4 weeks gets you Weeks 1&ndash;5. 8 weeks gets you Weeks 1&ndash;9.
-        The full season is already priced as a discount off the week-by-week rate.
-      </p>
     </div>
   </section>
 
@@ -179,12 +170,6 @@ document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
 });
 
 renderPricing('1');
-
-document.getElementById('promo-relaunch').addEventListener('click', function (e) {
-  e.preventDefault();
-  localStorage.removeItem('trifecta_promo_seen');
-  location.reload();
-});
 </script>
 <script src="popup.js"></script>
 </body>
