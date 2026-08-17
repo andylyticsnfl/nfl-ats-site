@@ -79,14 +79,12 @@
       font-weight: 400 !important; font-size: 14.5px !important; color: var(--text-secondary) !important;
       font-family: var(--font-body) !important;
     }
-    #sib-form-container input.input {
-      background: var(--surface-2) !important; border: 1px solid var(--border-strong) !important;
+    #sib-form-container input.input,
+    #sib-form-container input.input:focus {
+      background: var(--surface-2) !important; border: 1px solid var(--border) !important;
       border-radius: 8px !important; color: var(--text-primary) !important; font-family: var(--font-body) !important;
       padding: 12px 14px !important; width: 100%; box-sizing: border-box;
       -webkit-appearance: none !important; appearance: none !important; outline: none !important; box-shadow: none !important;
-    }
-    #sib-form-container input.input:focus {
-      outline: none !important; box-shadow: 0 0 0 2px var(--accent-dim) !important; border-color: var(--accent) !important;
     }
     #sib-form-container .sib-form-block__button {
       background: var(--accent) !important; border-radius: 8px !important; width: 100%;
