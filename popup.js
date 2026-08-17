@@ -6,10 +6,11 @@
  *  - On subscribe.html: shows once (first visit only), same cutoff rules.
  *  - Once an email is submitted, never shows again anywhere (any page).
  *
- * WEEK1_CUTOFF is the real 2026 cutoff: Sunday Week 1 kickoff (Sept 13,
- * 2026, 10am PT). Kickoff of the season opener itself is Thursday Sept 9,
- * 5:20pm PT, but Caleb wants the free-picks giveaway open through the
- * Sunday slate too.
+ * WEEK1_CUTOFF is set to when Week 1's Snapshot/Digest picks actually go
+ * out — Sunday Sept 13, 2026, 8:45am PT (matches the "main" batch send
+ * time in nfl-ats-model's send_weekly_picks.yml) — not an arbitrary
+ * kickoff time. Caleb's call (2026-08-18): align the free-picks cutoff to
+ * the real delivery instant, not a guessed kickoff time.
  *
  * IMPLEMENTATION NOTE (found the hard way, via direct testing against the
  * live account): Brevo's "Simple HTML" export is genuinely broken — its
@@ -27,7 +28,7 @@
  */
 (function () {
   var FORM_ACTION = 'https://bf3fab7e.sibforms.com/serve/MUIFANTnm7MltWD6JFgafuL-EEUnR1MpQBhPmDkNaFcvJAvh5UxW4SDGCDZPp6ORmr-atf5GxQT_HLckHjTAZXrWB4QJMd4kDkXsZ39tA9DIE6facvHznLJgZ2cq-UpAsTcG-07inTDGnAILHHWBQtAHUHCWfO5qSQPr_7b66Hwgiz7YfJw34TcO0HCPTw8CyMDYCpgW4MlI4vMwzQ==';
-  var WEEK1_CUTOFF = new Date('2026-09-13T17:00:00Z'); // Sun Week 1 kickoff, Sept 13 2026 10am PT
+  var WEEK1_CUTOFF = new Date('2026-09-13T15:45:00Z'); // Sun Sept 13 2026, 8:45am PT — picks-delivery time
 
   if (new Date() >= WEEK1_CUTOFF) return;
   if (localStorage.getItem('trifecta_email_submitted')) return;
