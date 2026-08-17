@@ -78,7 +78,8 @@
     #sib-form-container .entry__field,
     #sib-form-container .form__entry,
     #sib-form-container .form__label-row,
-    #sib-form-container .sib-input {
+    #sib-form-container .sib-input,
+    #sib-form-container .sib-form-block {
       background: transparent !important; border: none !important; border-radius: 0 !important;
       padding: 0 !important; margin: 0 !important; box-shadow: none !important;
     }
@@ -98,7 +99,7 @@
       -webkit-appearance: none !important; appearance: none !important; outline: none !important; box-shadow: none !important;
     }
     #sib-form-container .sib-form-block__button {
-      background: var(--accent) !important; border-radius: 8px !important; width: 100%;
+      background: var(--accent) !important; border-radius: 8px !important; width: 100% !important; box-sizing: border-box !important;
       font-family: var(--font-body) !important; padding: 12px !important; text-align: center !important;
       justify-content: center; display: flex; align-items: center; gap: 8px;
       font-weight: 650 !important; font-size: 14.5px !important; color: #fff !important;
