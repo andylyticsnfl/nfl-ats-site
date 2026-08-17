@@ -84,32 +84,32 @@ body {
 .eyebrow {
   display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 100px;
   background: var(--surface-2); border: 1px solid var(--border); font-size: 12.5px; font-weight: 600;
-  color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0.02em; margin-bottom: 22px;
+  color: var(--text-secondary); font-family: var(--font-mono); letter-spacing: 0.02em; margin-bottom: 16px;
 }
 .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--good); box-shadow: 0 0 8px var(--good); }
 
-.hero { padding: 96px 0 60px; text-align: center; }
-.hero h1 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 18px; line-height: 1.08; }
+.hero { padding: 72px 0 36px; text-align: center; }
+.hero h1 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 14px; line-height: 1.08; }
 .hero h1 .accent-text { color: var(--accent); }
-.hero p.sub { font-size: 18px; color: var(--text-secondary); max-width: 620px; margin: 0 auto 36px; }
+.hero p.sub { font-size: 18px; color: var(--text-secondary); max-width: 620px; margin: 0 auto 26px; }
 .hero .cta { display: inline-flex; gap: 14px; }
 .btn {
   display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 9px; font-weight: 650;
   font-size: 14.5px; text-decoration: none; border: 1px solid transparent; transition: all .15s; cursor: pointer;
 }
-.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary { background: var(--accent); color: #fff !important; }
 .btn-primary:hover { filter: brightness(1.1); }
-.btn-secondary { background: var(--surface-2); color: var(--text-primary); border-color: var(--border-strong); }
+.btn-secondary { background: var(--surface-2); color: var(--text-primary) !important; border-color: var(--border-strong); }
 .btn-secondary:hover { background: var(--surface-3); }
 
-.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 56px 0; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 28px 0 40px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 .stat-tile { background: var(--surface-1); padding: 28px 20px; text-align: center; }
 .stat-tile .value { font-family: var(--font-mono); font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
 .stat-tile .label { font-size: 13.5px; color: var(--text-primary); font-weight: 600; margin-top: 6px; }
 .stat-tile .n { font-size: 12px; color: var(--text-muted); margin-top: 3px; font-family: var(--font-mono); }
 
 .chart-card {
-  background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin: 40px 0;
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin: 28px 0;
 }
 .chart-card .chart-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
 .chart-card h3 { font-size: 15px; font-weight: 650; margin: 0; }
@@ -117,9 +117,9 @@ body {
 .chart-card .legend .item { display: flex; align-items: center; gap: 6px; }
 .chart-card .legend .sw { width: 9px; height: 9px; border-radius: 2px; }
 
-section { padding: 60px 0; border-top: 1px solid var(--border); }
+section { padding: 44px 0; border-top: 1px solid var(--border); }
 section h2 { font-size: 27px; font-weight: 750; letter-spacing: -0.015em; margin: 0 0 10px; }
-section p.lede { color: var(--text-secondary); font-size: 15.5px; max-width: 680px; margin: 0 0 34px; }
+section p.lede { color: var(--text-secondary); font-size: 15.5px; max-width: 680px; margin: 0 0 28px; }
 
 .philosophy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .philosophy-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 24px; position: relative; }
@@ -153,7 +153,7 @@ tr:hover td { background: var(--surface-2); }
 
 .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-1); }
 
-footer { padding: 44px 0 60px; color: var(--text-muted); font-size: 12.5px; text-align: center; border-top: 1px solid var(--border); }
+footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text-align: center; border-top: 1px solid var(--border); }
 .disclaimer { max-width: 680px; margin: 0 auto; }
 
 @media (max-width: 720px) {

@@ -34,20 +34,6 @@
   .tier-features li { display: flex; gap: 9px; align-items: flex-start; font-size: 13.5px; color: var(--text-secondary); margin-bottom: 12px; }
   .tier-features li span.check { color: var(--good); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0; }
   .term-toggle { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
-
-  .reviews-track { display: flex; gap: 18px; overflow-x: auto; padding: 8px 4px 20px; scroll-snap-type: x mandatory; }
-  .review-card {
-    flex: 0 0 300px; scroll-snap-align: start; background: var(--surface-1); border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px;
-  }
-  .review-card { position: relative; }
-  .example-badge {
-    display: inline-block; background: var(--accent-dim); color: var(--accent); font-family: var(--font-mono);
-    font-size: 10px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 5px; margin-bottom: 12px;
-  }
-  .review-card .stars { color: var(--accent-2); font-size: 13px; margin-bottom: 10px; letter-spacing: 2px; }
-  .review-card p { font-size: 13.5px; color: var(--text-secondary); margin: 0 0 14px; min-height: 60px; }
-  .review-card .who { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
 </style>
 </head>
 <body>
@@ -136,12 +122,6 @@
     </div>
   </section>
 
-  <section>
-    <h2>What subscribers are saying</h2>
-    <p class="lede" id="reviews-placeholder-note">This section is reserved for real subscriber reviews. Shown below is an example of the format — not actual feedback, and not attributed to any real person.</p>
-    <div class="reviews-track" id="reviews-track"></div>
-  </section>
-
   <p style="text-align:center; font-size:13px; color:var(--text-muted); margin: 8px 0 40px;">No guaranteed win rate — see the <a href="track-record.html" style="color:var(--accent);">full track record</a> and <a href="about.html" style="color:var(--accent);">methodology</a> before you sign up.</p>
 </div>
 
@@ -150,24 +130,6 @@
 </footer>
 
 <script>
-// Illustrative format examples only — explicitly labeled as such on every
-// card (see .example-badge below), not attributed to any real person or
-// presented as genuine feedback. Swap in real testimonials (with
-// permission) once there's an actual subscriber base to draw from.
-const PLACEHOLDER_REVIEWS = [
-  { stars: '★★★★★', text: 'This is a sample of how a 5-star review would render — short quote, star rating, and an attribution line, styled to match the rest of the site.' },
-  { stars: '★★★★☆', text: 'Cards can hold a mix of ratings, not just perfect scores — this is a placeholder for what a more measured review might look like.' },
-  { stars: '★★★★★', text: 'Once real subscribers opt in to share feedback, their actual quotes will replace these three example cards.' },
-];
-document.getElementById('reviews-track').innerHTML = PLACEHOLDER_REVIEWS.map(r => `
-  <div class="review-card">
-    <div class="example-badge">EXAMPLE — NOT A REAL REVIEW</div>
-    <div class="stars">${r.stars}</div>
-    <p>${r.text}</p>
-    <div class="who">Illustrative only</div>
-  </div>
-`).join('');
-
 document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.term-toggle .tab-btn').forEach(b => b.classList.remove('active'));
