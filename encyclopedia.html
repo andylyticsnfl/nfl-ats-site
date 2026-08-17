@@ -38,11 +38,18 @@
     <a href="track-record.html">Track Record</a>
     <a href="about.html">Methodology</a>
     <a href="encyclopedia.html" class="active">Encyclopedia</a>
-    <a href="subscribe.html">Subscribe</a>
+    <a href="subscribe.html" class="btn btn-primary" style="padding:8px 18px; font-size:13.5px;">Subscribe</a>
   </div>
 </nav>
 
 <div class="container">
+  <div class="hero" style="padding: 40px 0 4px; text-align: center;">
+    <div class="eyebrow" style="margin: 0 auto 10px;"><span class="dot"></span>ANALYTICS ENCYCLOPEDIA · SUBSCRIBERS ONLY</div>
+    <h1 style="font-size: 27px; margin: 0 0 10px;">The model's full view — every game, all season.</h1>
+    <p class="sub" style="max-width: 560px; margin: 0 auto;">The Encyclopedia is Trifecta's top tier: edge and predicted margin for every game in the NFL season, not just the picks that clear the confidence bar, updated automatically as the week unfolds.</p>
+    <p style="font-size: 13.5px; color: var(--text-muted); max-width: 560px; margin: 14px auto 0;">This page is for <strong style="color:var(--text-secondary);">Encyclopedia subscribers only</strong>. If you signed up for free Week 1 picks, that's a separate list — you won't get a sign-in link here. <a href="subscribe.html" style="color:var(--accent);">See plans &amp; pricing →</a></p>
+  </div>
+
   <div id="login" class="login-card">
     <div class="eyebrow" style="margin: 0 auto 14px;"><span class="dot"></span>ANALYTICS ENCYCLOPEDIA</div>
     <h1 style="font-size: 22px; margin: 0 0 8px;">Sign in to the Encyclopedia</h1>
@@ -56,11 +63,11 @@
     <div class="teaser-label" id="teaser-label">THIS WEEK'S EDGE BOARD · SORTED BY CONFIDENCE</div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Matchup</th><th>Edge</th></tr></thead>
+        <thead><tr><th>Matchup</th><th>Edge</th><th>Pick</th></tr></thead>
         <tbody id="teaser-body"></tbody>
       </table>
     </div>
-    <p class="teaser-note">Every matchup, blurred — sign in above to reveal them (Encyclopedia subscribers only).</p>
+    <p class="teaser-note">Every matchup and pick, blurred — sign in above to reveal them (Encyclopedia subscribers only).</p>
   </div>
 
   <div id="app">
@@ -132,6 +139,7 @@ async function loadTeaser() {
       <tr>
         <td><span class="teaser-blur">XXX @ XXX</span></td>
         <td>${edge.toFixed(2)}</td>
+        <td><span class="teaser-blur">XXX</span></td>
       </tr>
     `).join('');
   } catch (e) {
