@@ -71,6 +71,17 @@
     #sib-form-container .sib-form-block p,
     #sib-form-container .entry__label,
     #sib-form-container .entry__specification { color: var(--text-secondary) !important; }
+    /* Brevo's wrapper divs around the input (.entry__field etc.) carry their own
+       hardcoded white background + 3px border-radius from their light-theme default,
+       sized a hair larger than the input itself — that mismatch is what shows through
+       as a white sliver/ring around the input's corners. Neutralize every wrapper. */
+    #sib-form-container .entry__field,
+    #sib-form-container .form__entry,
+    #sib-form-container .form__label-row,
+    #sib-form-container .sib-input {
+      background: transparent !important; border: none !important; border-radius: 0 !important;
+      padding: 0 !important; margin: 0 !important; box-shadow: none !important;
+    }
     #sib-form-container .promo-title-text {
       font-size: 22px !important; font-weight: 800 !important; color: var(--text-primary) !important;
       font-family: var(--font-body) !important;
