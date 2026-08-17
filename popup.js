@@ -59,10 +59,14 @@
       position: absolute; top: 16px; right: 16px; background: none; border: none;
       color: var(--text-muted); font-size: 20px; cursor: pointer; line-height: 1; padding: 4px; z-index: 1;
     }
-    /* Override Brevo's default light-theme inline styles to match our dark theme */
-    #sib-form-container .sib-form { background: transparent !important; padding: 0 !important; text-align: left !important; }
+    /* Override Brevo's default light-theme inline styles to match our dark theme.
+       Note: .sib-form is the PARENT of #sib-form-container in the markup, not a
+       descendant, so it has to be targeted directly (not via #sib-form-container .sib-form,
+       which never matches and let Brevo's own ~100px of default padding through). */
+    .promo-modal .sib-form { background: transparent !important; padding: 0 !important; text-align: left !important; }
     #sib-form-container #sib-container {
       background: transparent !important; border: none !important; max-width: none !important;
+      padding: 0 !important;
     }
     #sib-form-container .sib-form-block p,
     #sib-form-container .entry__label,
@@ -79,11 +83,17 @@
       background: var(--surface-2) !important; border: 1px solid var(--border-strong) !important;
       border-radius: 8px !important; color: var(--text-primary) !important; font-family: var(--font-body) !important;
       padding: 12px 14px !important; width: 100%; box-sizing: border-box;
+      -webkit-appearance: none !important; appearance: none !important; outline: none !important; box-shadow: none !important;
+    }
+    #sib-form-container input.input:focus {
+      outline: none !important; box-shadow: 0 0 0 2px var(--accent-dim) !important; border-color: var(--accent) !important;
     }
     #sib-form-container .sib-form-block__button {
       background: var(--accent) !important; border-radius: 8px !important; width: 100%;
       font-family: var(--font-body) !important; padding: 12px !important; text-align: center !important;
       justify-content: center; display: flex; align-items: center; gap: 8px;
+      font-weight: 650 !important; font-size: 14.5px !important; color: #fff !important;
+      -webkit-appearance: none !important; appearance: none !important; outline: none !important;
     }
     #sib-form-container #success-message, #sib-form-container #error-message {
       border-radius: 8px !important; font-family: var(--font-body) !important; font-size: 13.5px !important;
