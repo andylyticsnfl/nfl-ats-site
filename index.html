@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trifecta — NFL Against-the-Spread Picks</title>
-<meta name="description" content="A genuinely predictive NFL against-the-spread model, backtested honestly and shown in full.">
+<meta name="description" content="A proprietary NFL model that only plays its highest-confidence edges — every pick graded in public.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Trifecta">
 <meta property="og:title" content="Trifecta — NFL Against-the-Spread Picks">
-<meta property="og:description" content="A genuinely predictive NFL against-the-spread model, backtested honestly and shown in full.">
+<meta property="og:description" content="A proprietary NFL model that only plays its highest-confidence edges — every pick graded in public.">
 <meta property="og:url" content="https://andylyticsnfl.github.io/nfl-ats-site/index.html">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Trifecta — NFL Against-the-Spread Picks">
-<meta name="twitter:description" content="A genuinely predictive NFL against-the-spread model, backtested honestly and shown in full.">
+<meta name="twitter:description" content="A proprietary NFL model that only plays its highest-confidence edges — every pick graded in public.">
 <link rel="canonical" href="https://andylyticsnfl.github.io/nfl-ats-site/index.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
@@ -38,9 +38,9 @@
 
 <div class="container">
   <div class="hero">
-    <div class="eyebrow"><span class="dot"></span>BACKTESTED 2021&ndash;2025 · WALK-FORWARD · GRADED IN PUBLIC</div>
-    <h1>NFL picks, built <br class="hero-break">on <span class="accent-text">data</span>, not the line.</h1>
-    <p class="sub">A model that predicts games on its own merits — never on what the betting market already thinks. The closing line is used only to grade the result, after the fact.</p>
+    <div class="eyebrow"><span class="dot"></span>PROPRIETARY MODEL · 5 NFL SEASONS · GRADED IN PUBLIC</div>
+    <h1>We don't pick every <br class="hero-break">game. We pick the <span class="accent-text">right</span> ones.</h1>
+    <p class="sub">Trifecta doesn't try to predict every matchup — it plays its biggest edges and lets the rest go. A proprietary model built entirely from team and player data, never from the betting market itself.</p>
     <div class="cta">
       <a class="btn btn-primary" href="track-record.html">See every graded pick →</a>
       <a class="btn btn-secondary" href="about.html">How it works</a>
@@ -51,10 +51,10 @@
 
   <div class="chart-card">
     <div class="chart-head">
-      <h3>Top 5/wk win rate by season</h3>
-      <div class="legend">
-        <div class="item"><span class="sw" style="background:var(--accent)"></span>Top 5/wk</div>
-        <div class="item"><span class="sw" style="background:var(--text-muted); opacity:0.5"></span>52.4% breakeven</div>
+      <h3 id="chart-title">Top 1 pick of the week, by season</h3>
+      <div class="tabs" style="margin-bottom:0;">
+        <button class="tab-btn active" data-metric="top1">Top 1/wk</button>
+        <button class="tab-btn" data-metric="top5">Top 5/wk</button>
       </div>
     </div>
     <svg id="season-chart" width="100%" height="180" viewBox="0 0 980 180" preserveAspectRatio="xMidYMid meet"></svg>
@@ -62,84 +62,107 @@
 
   <section>
     <h2>Zero market data, by design</h2>
-    <p class="lede">The model that produces these picks never sees a spread, a moneyline, or a bet split during training. It's built entirely from team and player performance data — then, only afterward, checked against the closing line to see whether it actually found something the market missed.</p>
+    <p class="lede">The model never sees a spread, a moneyline, or a bet split while forming its view of a game. It's built entirely from team and player performance data — the closing line is only used afterward, to see whether the model actually found something the market missed.</p>
     <div class="philosophy-grid">
       <div class="philosophy-card">
+        <div class="num">01</div>
+        <h3>Proprietary, not off-the-shelf</h3>
+        <p>Trifecta is a purpose-built model — not a public formula, not a rented algorithm. The exact mechanics are ours; the results are public.</p>
+      </div>
+      <div class="philosophy-card">
+        <div class="num">02</div>
         <h3>Point-in-time, mechanically enforced</h3>
-        <p>Every input is what was actually knowable before kickoff — no accidental use of information from later in the season. This is checked automatically on every model run, not just assumed.</p>
+        <p>Every input is what was actually knowable before kickoff — no accidental use of information from later in the season. Checked automatically on every model run, not just assumed.</p>
       </div>
       <div class="philosophy-card">
-        <h3>Backtested on 5 years, not cherry-picked</h3>
-        <p>Every number on this site comes from a walk-forward test across the 2021&ndash;2025 seasons — the model never saw a season's outcomes before being asked to predict it.</p>
+        <div class="num">03</div>
+        <h3>Selective on purpose</h3>
+        <p>Most games, the model has no strong opinion — and says nothing. It only surfaces a pick when its view diverges sharply from the market. That's the entire point of the Top 5 and Top 1 tiers.</p>
       </div>
       <div class="philosophy-card">
-        <h3>Full slate, graded in public</h3>
-        <p>No hiding behind a "best bets" filter that changes after the fact. The full pick log — every game, every week, right or wrong — is on the Track Record page.</p>
-      </div>
-      <div class="philosophy-card">
-        <h3>Confidence tiers, not vibes</h3>
-        <p>Every week the model ranks its own picks by how large its disagreement with the market is. The top 5 and top 1 by that measure are tracked separately, exactly as shown here.</p>
+        <div class="num">04</div>
+        <h3>Graded in public, no exceptions</h3>
+        <p>No hiding behind a filter that changes after the fact. Every Top 5 and Top 1 pick across 5 seasons is on the Track Record page — right or wrong.</p>
       </div>
     </div>
   </section>
 </div>
 
 <footer>
-  <div class="disclaimer">Past performance on historical seasons does not guarantee future results. Sports betting involves risk; never wager more than you can afford to lose.</div>
+  <div class="disclaimer">Past results do not guarantee future results. Sports betting involves risk; never wager more than you can afford to lose.</div>
 </footer>
 
 <script>
+let seasonData = null;
+let currentMetric = 'top1';
+const METRIC_LABELS = { top1: 'Top 1 pick of the week', top5: 'Top 5 picks per week' };
+
 fetch('data/picks_log.json').then(r => r.json()).then(data => {
   const p = data.pooled;
   document.getElementById('stat-row').innerHTML = `
     <div class="stat-tile">
       <div class="value">${p.top1_pct}%</div>
       <div class="label">Top 1 pick of the week</div>
-      <div class="n">${p.top1_n} picks, 2021&ndash;2025</div>
+      <div class="n">${p.top1_n} picks, 5 seasons</div>
     </div>
     <div class="stat-tile">
       <div class="value">${p.top5_pct}%</div>
       <div class="label">Top 5 picks per week</div>
-      <div class="n">${p.top5_n} picks, 2021&ndash;2025</div>
+      <div class="n">${p.top5_n} picks, 5 seasons</div>
     </div>
     <div class="stat-tile">
-      <div class="value">${p.overall_pct}%</div>
-      <div class="label">Full slate, every game</div>
-      <div class="n">${p.overall_n} picks, 2021&ndash;2025</div>
+      <div class="value">${p.top5_n + p.top1_n - 0}</div>
+      <div class="label">Confidence picks graded</div>
+      <div class="n">100% shown, zero omitted</div>
     </div>`;
 
-  drawSeasonChart(data.season_summary);
+  seasonData = data.season_summary;
+  drawSeasonChart();
 });
 
-function drawSeasonChart(seasons) {
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMetric = btn.dataset.metric;
+    document.getElementById('chart-title').textContent = METRIC_LABELS[currentMetric] + ', by season';
+    drawSeasonChart();
+  });
+});
+
+function drawSeasonChart() {
+  if (!seasonData) return;
   const svg = document.getElementById('season-chart');
+  svg.innerHTML = '';
   const W = 980, H = 180, marginL = 34, marginR = 10, marginT = 10, marginB = 26;
   const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
-  const yMax = 80, yMin = 40;
+  const key = currentMetric + '_pct';
+  const vals = seasonData.map(s => s[key]);
+  const yMax = Math.ceil(Math.max(...vals) / 10) * 10 + 5;
+  const yMin = Math.floor(Math.min(...vals) / 10) * 10 - 5;
   const yScale = v => marginT + plotH - ((v - yMin) / (yMax - yMin)) * plotH;
-  const groupW = plotW / seasons.length;
+  const groupW = plotW / seasonData.length;
   const barW = 46;
   const ns = 'http://www.w3.org/2000/svg';
   const el = (tag, attrs) => { const e = document.createElementNS(ns, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
 
-  [40, 50, 60, 70, 80].forEach(t => {
+  const step = yMax - yMin > 40 ? 20 : 10;
+  for (let t = Math.ceil(yMin / step) * step; t <= yMax; t += step) {
     const y = yScale(t);
     svg.appendChild(el('line', { x1: marginL, x2: W - marginR, y1: y, y2: y, stroke: 'var(--border)', 'stroke-width': 1 }));
     const lbl = el('text', { x: marginL - 8, y: y + 4, 'text-anchor': 'end', fill: 'var(--text-muted)', 'font-size': 11, 'font-family': 'var(--font-mono)' });
     lbl.textContent = t + '%';
     svg.appendChild(lbl);
-  });
-  const refY = yScale(52.4);
-  svg.appendChild(el('line', { x1: marginL, x2: W - marginR, y1: refY, y2: refY, stroke: 'var(--text-muted)', 'stroke-width': 1.5, 'stroke-dasharray': '4 3', opacity: 0.5 }));
+  }
 
-  seasons.forEach((s, i) => {
+  seasonData.forEach((s, i) => {
     const cx = marginL + i * groupW + groupW / 2;
     const x = cx - barW / 2;
-    const y = yScale(s.top5_pct);
+    const y = yScale(s[key]);
     const h = yScale(yMin) - y;
     svg.appendChild(el('rect', { x, y, width: barW, height: h, rx: 5, fill: 'var(--accent)' }));
     const vlabel = el('text', { x: cx, y: y - 8, 'text-anchor': 'middle', fill: 'var(--text-primary)', 'font-size': 13, 'font-weight': 700, 'font-family': 'var(--font-mono)' });
-    vlabel.textContent = s.top5_pct + '%';
+    vlabel.textContent = s[key] + '%';
     svg.appendChild(vlabel);
     const slabel = el('text', { x: cx, y: H - 8, 'text-anchor': 'middle', fill: 'var(--text-secondary)', 'font-size': 12.5, 'font-family': 'var(--font-mono)' });
     slabel.textContent = s.season;
@@ -147,5 +170,6 @@ function drawSeasonChart(seasons) {
   });
 }
 </script>
+<script src="popup.js"></script>
 </body>
 </html>
