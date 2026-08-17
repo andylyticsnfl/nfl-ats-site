@@ -12,8 +12,12 @@
   .login-card input { width: 100%; box-sizing: border-box; background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 8px; padding: 12px 14px; color: var(--text-primary); font-size: 14.5px; font-family: var(--font-body); margin: 16px 0; }
   .login-card button { width: 100%; justify-content: center; }
   .login-msg { font-size: 13.5px; color: var(--text-secondary); margin-top: 14px; min-height: 18px; }
-  .board-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
-  .board-head .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
+  .board-head { display: flex; align-items: baseline; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  .board-head .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); margin-left: auto; }
+  #week-select {
+    background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text-primary);
+    font-family: var(--font-mono); font-size: 13px; padding: 6px 10px; border-radius: 8px; cursor: pointer;
+  }
   #app { display: none; }
   #login { display: none; }
   #explainer { display: none; }
@@ -81,6 +85,7 @@
     <section style="border-top: none; padding-top: 8px;">
       <div class="board-head">
         <h2 style="margin:0; font-size: 19px;" id="week-label">This week</h2>
+        <select id="week-select" style="display:none;"></select>
         <span class="updated" id="updated-label"></span>
       </div>
       <p style="font-size: 13px; color: var(--text-muted); max-width: 640px; margin: -8px 0 16px;"><strong style="color:var(--text-secondary);">Edge</strong> is a number the model assigns to every game, measuring how far its own view diverges from the market's. The bigger the number, the bigger that disagreement, and the more confident the pick.</p>
@@ -156,7 +161,26 @@ async function loadTeaser() {
     const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/preview`);
     if (!resp.ok) { teaserEl.style.display = 'none'; return; }
     const data = await resp.json();
-    if (!data.edges || !data.edges.length) { teaserEl.style.display = 'none'; return; }
+
+    // Pre-season placeholder week: no real edges yet. Show the format
+    // subscribers will get (blurred rows, same shape) rather than hiding
+    // the section or displaying a stale prior week's numbers under it —
+    // this is illustrative, not live data.
+    if (data.picks_pending || !data.edges || !data.edges.length) {
+      document.getElementById('teaser-label').textContent =
+        `SEASON ${data.season} · WEEK ${data.week} · PREVIEW`;
+      document.getElementById('teaser-body').innerHTML = Array.from({ length: 5 }).map(() => `
+        <tr>
+          <td><span class="teaser-blur">XXX @ XXX</span></td>
+          <td><span class="teaser-blur">XXX</span></td>
+          <td><span class="teaser-blur" style="color:var(--text-muted);">--</span></td>
+        </tr>
+      `).join('');
+      document.querySelector('#teaser .teaser-note').textContent =
+        `Edge scores land once the season begins — this is what Week ${data.week}'s board will look like.`;
+      return;
+    }
+
     document.getElementById('teaser-label').textContent =
       `SEASON ${data.season} · WEEK ${data.week} · SORTED BY CONFIDENCE`;
     const min = Math.min(...data.edges);
@@ -168,6 +192,8 @@ async function loadTeaser() {
         <td style="color:${confidenceColor(edge, min, max)}; font-weight:600;">${edge.toFixed(2)}</td>
       </tr>
     `).join('');
+    document.querySelector('#teaser .teaser-note').textContent =
+      'Every matchup and pick, blurred — sign in above to reveal them (Encyclopedia subscribers only).';
   } catch (e) {
     teaserEl.style.display = 'none';
   }
@@ -218,7 +244,41 @@ function renderBoard(data) {
   showApp();
 }
 
+let currentToken = null;
+let currentSeason = null;
+const weekSelectEl = document.getElementById('week-select');
+
+async function loadWeekOptions(token, season) {
+  try {
+    const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/weeks?season=${season}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!resp.ok) return;
+    const { weeks } = await resp.json();
+    if (!weeks || weeks.length <= 1) { weekSelectEl.style.display = 'none'; return; }
+    weekSelectEl.innerHTML = weeks.map(w => `<option value="${w}">Week ${w}</option>`).join('');
+    weekSelectEl.style.display = 'inline-block';
+  } catch (e) {
+    // week picker is a nice-to-have — a failure here shouldn't block the board itself
+  }
+}
+
+async function loadWeek(season, week) {
+  const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/week?season=${season}&week=${week}`, {
+    headers: { Authorization: `Bearer ${currentToken}` },
+  });
+  if (!resp.ok) return;
+  const data = await resp.json();
+  renderBoard(data);
+  weekSelectEl.value = String(data.week);
+}
+
+weekSelectEl.addEventListener('change', () => {
+  loadWeek(currentSeason, Number(weekSelectEl.value));
+});
+
 async function loadBoard(token) {
+  currentToken = token;
   const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/current`, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -236,7 +296,11 @@ async function loadBoard(token) {
     showLogin('Something went wrong loading the board — try again shortly.');
     return;
   }
-  renderBoard(await resp.json());
+  const data = await resp.json();
+  currentSeason = data.season;
+  renderBoard(data);
+  weekSelectEl.value = String(data.week);
+  loadWeekOptions(token, data.season);
 }
 
 async function exchangeMagicToken(magicToken) {

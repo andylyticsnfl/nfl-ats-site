@@ -15,10 +15,10 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 <style>
-  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0; align-items: stretch; }
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 11px 0; align-items: stretch; }
   .tier-card {
     background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px;
-    padding: 13px 16px 12px; display: flex; flex-direction: column;
+    padding: 15px 18px 14px; display: flex; flex-direction: column;
   }
   .tier-card.featured { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--surface-1)); position: relative; }
   .tier-badge {
@@ -26,16 +26,16 @@
     background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 12px;
     border-radius: 100px; font-family: var(--font-mono); letter-spacing: 0.03em;
   }
-  .tier-name { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em; margin-bottom: 6px; }
-  .tier-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-height: 32px; }
-  .tier-price-strike { font-size: 14px; color: var(--text-muted); text-decoration: line-through; font-family: var(--font-mono); }
-  .tier-price { font-size: 25px; font-weight: 800; font-family: var(--font-mono); }
+  .tier-name { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em; margin-bottom: 9px; }
+  .tier-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-height: 34px; }
+  .tier-price-strike { font-size: 15px; color: var(--text-muted); text-decoration: line-through; font-family: var(--font-mono); }
+  .tier-price { font-size: 27px; font-weight: 800; font-family: var(--font-mono); }
   .tier-price span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-  .tier-perweek { font-size: 11.5px; color: var(--text-secondary); font-family: var(--font-mono); margin: 2px 0 0; min-height: 15px; }
-  .tier-free-badge { display: inline-block; background: var(--good-dim); color: var(--good); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; font-family: var(--font-mono); margin: 4px 0 0; }
-  .tier-desc { font-size: 12.5px; color: var(--text-secondary); margin: 6px 0; min-height: 30px; }
-  .tier-features { list-style: none; padding: 0; margin: 0 0 8px; flex-grow: 1; }
-  .tier-features li { display: flex; gap: 9px; align-items: flex-start; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 4px; }
+  .tier-perweek { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); margin: 3px 0 0; min-height: 16px; }
+  .tier-free-badge { display: inline-block; background: var(--good-dim); color: var(--good); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; font-family: var(--font-mono); margin: 5px 0 0; }
+  .tier-desc { font-size: 13px; color: var(--text-secondary); margin: 10px 0; min-height: 32px; }
+  .tier-features { list-style: none; padding: 0; margin: 0 0 12px; flex-grow: 1; }
+  .tier-features li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
   .tier-features li span.check { color: var(--good); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0; }
   .tier-login-link { display: block; text-align: center; font-size: 12px; color: var(--text-muted); margin: 0 0 8px; min-height: 15px; }
   .term-toggle { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
@@ -44,8 +44,8 @@
     display: flex; align-items: center; justify-content: center; gap: 8px;
     background: color-mix(in srgb, var(--accent-2) 12%, var(--surface-1));
     border: 1px solid color-mix(in srgb, var(--accent-2) 40%, var(--border));
-    border-radius: 10px; padding: 7px 18px; margin: 0 0 12px; text-align: center;
-    font-family: var(--font-mono); font-size: 12.5px; color: var(--text-primary); flex-wrap: wrap;
+    border-radius: 10px; padding: 9px 18px; margin: 0 0 14px; text-align: center;
+    font-family: var(--font-mono); font-size: 13px; color: var(--text-primary); flex-wrap: wrap;
   }
   .urgency-banner strong { color: var(--accent-2); }
 </style>
@@ -71,21 +71,20 @@
 </nav>
 
 <div class="container">
-  <div class="hero" style="padding: 10px 0 4px;">
-    <div class="eyebrow" style="margin-bottom: 4px;"><span class="dot"></span>2026 SEASON · PROPRIETARY MODEL</div>
-    <h1 style="font-size:23px; margin-bottom: 4px;">Winning picks, your way.</h1>
-    <p class="sub" style="margin-bottom: 8px; font-size:13.5px;">One model, three tiers — each one gives you a little more of what it sees, from the week's single highest-conviction pick to a full assessment of every game in the NFL season.</p>
+  <div class="hero" style="padding: 18px 0 6px;">
+    <div class="eyebrow" style="margin-bottom: 12px;"><span class="dot"></span>2026 SEASON · PROPRIETARY MODEL</div>
+    <h1 style="font-size:24px; margin-bottom: 7px;">Winning picks, your way.</h1>
+    <p class="sub" style="margin-bottom: 10px; font-size:14px;">One model, three tiers — each one gives you a little more of what it sees, from the week's single highest-conviction pick to a full assessment of every game in the NFL season.</p>
   </div>
 
   <section style="border-top:none; padding-top:0;">
     <div class="urgency-banner"><strong>Lock in your winning edge now</strong> — prices will rise once the season begins.</div>
-    <div class="term-toggle" style="margin-bottom: 3px;">
+    <div class="term-toggle" style="margin-bottom: 8px;">
       <button class="tab-btn active" data-term="1">1 Week</button>
       <button class="tab-btn" data-term="4">4 Weeks</button>
       <button class="tab-btn" data-term="8">8 Weeks</button>
       <button class="tab-btn" data-term="season">Full Season</button>
     </div>
-    <p style="text-align:center; font-size:12px; color:var(--text-muted); font-family:var(--font-mono); margin: 3px 0 6px;" id="term-note">Per-week price drops the longer you commit</p>
 
     <div class="tier-grid">
       <div class="tier-card">
@@ -93,7 +92,7 @@
         <div class="tier-price-row" data-tier="top1"><span class="tier-price"><span>$—</span></span></div>
         <div class="tier-perweek" data-tier="top1"></div>
         <div class="tier-billing" data-tier="top1"></div>
-        <div class="tier-desc">The week's single most confident pick — hitting <strong style="color:var(--text-secondary);">71.1%</strong> over five NFL seasons.</div>
+        <div class="tier-desc">The week's single most confident pick — hitting <strong style="color:var(--good);">71.1%</strong> over five NFL seasons.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> The week's #1 highest-conviction pick</li>
           <li><span class="check">✓</span> Delivered before kickoff</li>
@@ -109,7 +108,7 @@
         <div class="tier-price-row" data-tier="top5"><span class="tier-price"><span>$—</span></span></div>
         <div class="tier-perweek" data-tier="top5"></div>
         <div class="tier-billing" data-tier="top5"></div>
-        <div class="tier-desc">The week's five most confident picks — hitting <strong style="color:var(--good);">60.2%</strong><span style="color:var(--good); font-size:11px; font-weight:700; margin-left:2px;">&#8593;</span> over five NFL seasons.</div>
+        <div class="tier-desc">The week's five most confident picks — hitting <strong style="color:var(--good);">60.2%</strong> over five NFL seasons.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> All 5 of the week's highest-conviction picks</li>
           <li><span class="check">✓</span> Includes the week's most confident pick</li>
@@ -125,7 +124,7 @@
         <div class="tier-price-row" data-tier="pro"><span class="tier-price"><span>$—</span></span></div>
         <div class="tier-perweek" data-tier="pro"></div>
         <div class="tier-billing" data-tier="pro"></div>
-        <div class="tier-desc">A full peek behind the curtain.</div>
+        <div class="tier-desc">The same Edge score behind Snapshot's <strong style="color:var(--text-secondary);">71.1%</strong> and Digest's <strong style="color:var(--text-secondary);">60.2%</strong> — on every game, all season.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> <span>Model edge/confidence shown for <strong style="color:var(--text-secondary);">every game of the NFL season</strong></span></li>
           <li><span class="check">✓</span> <span>Everything in Analytics Digest, plus Wednesday access to the week's top picks — more lead time to plan your bets, on your schedule</span></li>
