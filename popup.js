@@ -1,17 +1,29 @@
 /* Site-wide email capture popup for the Week 1 free-picks promo.
- * Shows once per visitor (localStorage flag), on any page.
+ *
+ * Behavior:
+ *  - On index/track-record/about: shows on EVERY visit, until either the
+ *    visitor submits an email or the WEEK1_CUTOFF date passes.
+ *  - On subscribe.html: shows once (first visit only), same cutoff rules.
+ *  - Once an email is submitted, never shows again anywhere (any page).
+ *
+ * WEEK1_CUTOFF is a placeholder (~Sept 10, 2026, per the season's likely
+ * Thursday opener) — update this once the real 2026 Week 1 date is set.
  *
  * NOT WIRED TO A REAL EMAIL SERVICE YET. Replace FORM_ENDPOINT below once
- * Caleb has set up a mailing-list tool (Brevo and Mailchimp both have free
- * tiers that combine form collection + later campaign sending in one
- * place — recommended over stitching together separate collection/sending
- * tools). Until then this just shows a local "thanks" message and does not
- * actually save the email anywhere durable.
+ * Caleb has set up Brevo (recommended — free email + pay-per-message SMS
+ * from one account, see conversation). Until then this just shows a local
+ * "thanks" message and does not actually save the email anywhere durable.
  */
 (function () {
-  var FORM_ENDPOINT = null; // e.g. "https://YOUR-FORM-ENDPOINT" once set up
+  var FORM_ENDPOINT = null; // e.g. Brevo's hosted form action URL once set up
+  var WEEK1_CUTOFF = new Date('2026-09-10T00:00:00Z'); // placeholder, confirm real date
 
-  if (localStorage.getItem('trifecta_promo_seen')) return;
+  if (new Date() >= WEEK1_CUTOFF) return;
+  if (localStorage.getItem('trifecta_email_submitted')) return;
+
+  var page = location.pathname.split('/').pop() || 'index.html';
+  var isSubscribePage = page === 'subscribe.html';
+  if (isSubscribePage && sessionStorage.getItem('trifecta_subscribe_popup_seen')) return;
 
   var style = document.createElement('style');
   style.textContent = `
@@ -63,7 +75,7 @@
   function close() {
     overlay.classList.remove('show');
     setTimeout(function () { overlay.remove(); }, 200);
-    localStorage.setItem('trifecta_promo_seen', '1');
+    if (isSubscribePage) sessionStorage.setItem('trifecta_subscribe_popup_seen', '1');
   }
 
   overlay.querySelector('.promo-close').addEventListener('click', close);
@@ -80,6 +92,7 @@
     } else {
       console.warn('Trifecta promo popup: FORM_ENDPOINT not set, email not actually saved:', email);
     }
+    localStorage.setItem('trifecta_email_submitted', '1');
     overlay.querySelector('.promo-modal').innerHTML = `
       <button class="promo-close" aria-label="Close">&times;</button>
       <div class="promo-success">
@@ -89,7 +102,4 @@
     overlay.querySelector('.promo-close').addEventListener('click', close);
     setTimeout(close, 2500);
   });
-
-  // show after a short delay rather than instantly on page load
-  setTimeout(function () {}, 0);
 })();

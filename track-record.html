@@ -75,8 +75,8 @@
       <span class="summary" id="filtered-summary"></span>
     </div>
 
-    <p style="font-size:13px; color:var(--text-muted); margin: -10px 0 16px;">
-      <strong style="color:var(--text-secondary);">Edge</strong> = how many points the model's own prediction differs from the closing spread — the number that determines Top 5 / Top 1 ranking each week. A bigger edge means the model disagreed with the market more sharply that game.
+    <p style="font-size:13px; color:var(--text-muted); margin: -10px 0 16px; max-width: 640px;">
+      <strong style="color:var(--text-secondary);">Edge</strong> compares the model's prediction to the closing spread <em>before the game</em> — not to how the game actually turned out. A 12.8 edge means the model's own view of the matchup was 12.8 points more favorable to its pick than the market's line implied. It's a confidence measure, made before kickoff, not a measure of how right the model ended up being — that's what the Result column is for.
     </p>
 
     <div class="table-wrap">
@@ -149,7 +149,7 @@ function render() {
       <td>${r.away_score}-${r.home_score}</td>
       <td>${r.home} ${r.spread > 0 ? '+' : ''}${r.spread}</td>
       <td>${r.pick_team} (${r.pick_side})</td>
-      <td>${r.edge > 0 ? '+' : ''}${r.edge}</td>
+      <td>${r.edge}</td>
       <td><span class="tag ${r.correct ? 'tag-correct' : 'tag-wrong'}">${r.correct ? 'Correct' : 'Wrong'}</span></td>
     </tr>
   `).join('');
@@ -175,7 +175,7 @@ document.querySelectorAll('#picks-table th[data-sort]').forEach(th => {
   document.getElementById(id).addEventListener('input', render)
 );
 
-fetch('data/picks_log.json').then(r => r.json()).then(data => {
+fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(data => {
   allData = data;
   const p = data.pooled;
   document.getElementById('summary-row').innerHTML = `

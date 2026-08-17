@@ -97,7 +97,7 @@ let seasonData = null;
 let currentMetric = 'top1';
 const METRIC_LABELS = { top1: 'Top 1 pick of the week', top5: 'Top 5 picks per week' };
 
-fetch('data/picks_log.json').then(r => r.json()).then(data => {
+fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(data => {
   const p = data.pooled;
   document.getElementById('stat-row').innerHTML = `
     <div class="stat-tile">
