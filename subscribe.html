@@ -40,6 +40,11 @@
     flex: 0 0 300px; scroll-snap-align: start; background: var(--surface-1); border: 1px solid var(--border);
     border-radius: 12px; padding: 20px;
   }
+  .review-card { position: relative; }
+  .example-badge {
+    display: inline-block; background: var(--accent-dim); color: var(--accent); font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 5px; margin-bottom: 12px;
+  }
   .review-card .stars { color: var(--accent-2); font-size: 13px; margin-bottom: 10px; letter-spacing: 2px; }
   .review-card p { font-size: 13.5px; color: var(--text-secondary); margin: 0 0 14px; min-height: 60px; }
   .review-card .who { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
@@ -84,7 +89,7 @@
       <div class="tier-card">
         <div class="tier-name">The Signal</div>
         <div class="tier-price" data-tier="top1"><span>$—</span></div>
-        <div class="tier-desc">The Top 1 pick of the week. The single most confident call — nothing else.</div>
+        <div class="tier-desc">The week's single most confident pick. Nothing else.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> The week's #1 highest-conviction pick</li>
           <li><span class="check">✓</span> Delivered before kickoff</li>
@@ -100,7 +105,7 @@
         <div class="tier-desc">The Top 5 picks of the week. Every game that clears the model's confidence bar.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> All 5 of the week's highest-conviction picks</li>
-          <li><span class="check">✓</span> Includes the Top 1 pick</li>
+          <li><span class="check">✓</span> Includes the week's most confident pick</li>
           <li><span class="check">✓</span> Delivered before kickoff</li>
           <li><span class="check">✓</span> Updated through final inactives</li>
         </ul>
@@ -120,38 +125,46 @@
       </div>
     </div>
     <p style="text-align:center; font-size:12px; color:var(--text-muted);">Pricing goes live closer to Week 1. <a href="#" style="color:var(--accent);" id="promo-relaunch">Get Week 1 free →</a></p>
+
+    <div class="chart-card" style="max-width: 640px; margin: 32px auto 0; text-align: center;">
+      <h3 style="margin: 0 0 10px;">Subscribe before Week 1, get Week 1 free</h3>
+      <p style="font-size: 13.5px; color: var(--text-secondary); margin: 0;">
+        Sign up any time before the season opener and your first week is on us — your paid term starts with Week 2.
+        1 week gets you Weeks 1&ndash;2. 4 weeks gets you Weeks 1&ndash;5. 8 weeks gets you Weeks 1&ndash;9.
+        The full season is already priced as a discount off the week-by-week rate.
+      </p>
+    </div>
   </section>
 
   <section>
     <h2>What subscribers are saying</h2>
-    <p class="lede" id="reviews-placeholder-note">Real reviews land here once our first subscribers have a track record to talk about — nothing fabricated in the meantime.</p>
+    <p class="lede" id="reviews-placeholder-note">This section is reserved for real subscriber reviews. Shown below is an example of the format — not actual feedback, and not attributed to any real person.</p>
     <div class="reviews-track" id="reviews-track"></div>
   </section>
 
-  <section>
-    <h2>Fair warning, up front</h2>
-    <p class="lede">No guaranteed win rate, no "lock of the week." What you're subscribing to is a rigorously validated, publicly graded model — not a promise. See the <a href="track-record.html" style="color:var(--accent);">full track record</a> and <a href="about.html" style="color:var(--accent);">methodology</a> before you sign up.</p>
-  </section>
+  <p style="text-align:center; font-size:13px; color:var(--text-muted); margin: 8px 0 40px;">No guaranteed win rate — see the <a href="track-record.html" style="color:var(--accent);">full track record</a> and <a href="about.html" style="color:var(--accent);">methodology</a> before you sign up.</p>
 </div>
 
 <footer>
-  <div class="disclaimer">Past results do not guarantee future results. Sports betting involves risk; never wager more than you can afford to lose. Must be 21+ and located in a jurisdiction where sports wagering is legal.</div>
+  <div class="disclaimer">21+ and located where legal. Sports betting involves risk — never wager more than you can afford to lose.</div>
 </footer>
 
 <script>
-// Placeholder review-card markup only — clearly a template, not attributed
-// to any real person. Swap in real testimonials (with permission) once
-// there's an actual subscriber base to draw from.
-const PLACEHOLDER_REVIEWS = new Array(3).fill(0).map((_, i) => ({
-  stars: '★★★★★',
-  text: '[Review placeholder — real subscriber testimonials will go here]',
-  who: 'Coming soon',
-}));
+// Illustrative format examples only — explicitly labeled as such on every
+// card (see .example-badge below), not attributed to any real person or
+// presented as genuine feedback. Swap in real testimonials (with
+// permission) once there's an actual subscriber base to draw from.
+const PLACEHOLDER_REVIEWS = [
+  { stars: '★★★★★', text: 'This is a sample of how a 5-star review would render — short quote, star rating, and an attribution line, styled to match the rest of the site.' },
+  { stars: '★★★★☆', text: 'Cards can hold a mix of ratings, not just perfect scores — this is a placeholder for what a more measured review might look like.' },
+  { stars: '★★★★★', text: 'Once real subscribers opt in to share feedback, their actual quotes will replace these three example cards.' },
+];
 document.getElementById('reviews-track').innerHTML = PLACEHOLDER_REVIEWS.map(r => `
   <div class="review-card">
+    <div class="example-badge">EXAMPLE — NOT A REAL REVIEW</div>
     <div class="stars">${r.stars}</div>
     <p>${r.text}</p>
-    <div class="who">${r.who}</div>
+    <div class="who">Illustrative only</div>
   </div>
 `).join('');
 

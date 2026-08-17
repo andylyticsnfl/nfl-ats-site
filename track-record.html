@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Track Record — Trifecta</title>
-<meta name="description" content="Every Top 5 and Top 1 confidence pick, graded in full, most recent first.">
+<meta name="description" content="Every Top 5 pick and every week's most confident call, graded in full, most recent first.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Trifecta">
 <meta property="og:title" content="Track Record — Trifecta">
-<meta property="og:description" content="Every Top 5 and Top 1 confidence pick, graded in full, most recent first.">
+<meta property="og:description" content="Every Top 5 pick and every week's most confident call, graded in full, most recent first.">
 <meta property="og:url" content="https://andylyticsnfl.github.io/nfl-ats-site/track-record.html">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://andylyticsnfl.github.io/nfl-ats-site/track-record.html">
@@ -37,8 +37,8 @@
 <div class="container">
   <div style="padding: 48px 0 8px;">
     <div class="eyebrow"><span class="dot"></span>EVERY CONFIDENCE PICK · GRADED IN PUBLIC · NONE OMITTED</div>
-    <h1 style="font-size:34px; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px;">Every Top 5 and Top 1 pick, most recent first</h1>
-    <p style="color:var(--text-secondary); font-size:15.5px; max-width:680px; margin:0 0 32px;">Each week, the model ranks games by how sharply it disagrees with the closing line. The Top 5 and Top 1 by that measure are what you see here — nothing added or removed after the fact.</p>
+    <h1 style="font-size:34px; font-weight:800; letter-spacing:-0.02em; margin:0 0 10px;">Every graded pick, most recent first</h1>
+    <p style="color:var(--text-secondary); font-size:15.5px; max-width:680px; margin:0 0 32px;">Each week, the model ranks games by how sharply it disagrees with the closing line. The Top 5 by that measure — and separately, each week's single most confident call — are what you see here, nothing added or removed after the fact.</p>
   </div>
 
   <div class="stat-row" id="summary-row" style="grid-template-columns: repeat(2, 1fr); max-width: 620px;"></div>
@@ -47,14 +47,14 @@
     <h2>By season</h2>
     <div class="table-wrap" style="margin-bottom: 48px;">
       <table id="season-table">
-        <thead><tr><th>Season</th><th>Top 1/wk</th><th>Top 5/wk</th></tr></thead>
+        <thead><tr><th>Season</th><th>Most Confident/wk</th><th>Top 5/wk</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
 
     <div class="tabs">
       <button class="tab-btn active" data-tab="top5">Top 5 / week (450 picks)</button>
-      <button class="tab-btn" data-tab="top1">Top 1 / week (90 picks)</button>
+      <button class="tab-btn" data-tab="top1">Most Confident / week (90 picks)</button>
     </div>
 
     <div class="controls">
@@ -76,7 +76,7 @@
     </div>
 
     <p style="font-size:13px; color:var(--text-muted); margin: -10px 0 16px; max-width: 640px;">
-      <strong style="color:var(--text-secondary);">Edge</strong> compares the model's prediction to the closing spread <em>before the game</em> — not to how the game actually turned out. A 12.8 edge means the model's own view of the matchup was 12.8 points more favorable to its pick than the market's line implied. It's a confidence measure, made before kickoff, not a measure of how right the model ended up being — that's what the Result column is for.
+      <strong style="color:var(--text-secondary);">Edge</strong> is the gap between the model's own view and the closing line, measured <em>before</em> the game — not how far off the final result was. Example: NE was a 14-point home favorite over MIA; the model's own read of that matchup was closer to NE by just 1.2 &mdash; a 12.8-point edge, its biggest disagreement with the market that week. That's why it's the week's most confident pick, not why it's automatically right (NE actually won by 28 — that one graded Wrong). Edge measures pregame conviction, not accuracy; the Result column measures accuracy.
     </p>
 
     <div class="table-wrap">
@@ -100,7 +100,7 @@
 </div>
 
 <footer>
-  <div class="disclaimer">Past results do not guarantee future results. Sports betting involves risk; never wager more than you can afford to lose.</div>
+  <div class="disclaimer">21+. Sports betting involves risk — never wager more than you can afford to lose.</div>
 </footer>
 
 <script>
@@ -148,7 +148,7 @@ function render() {
       <td>${r.away} @ ${r.home}</td>
       <td>${r.away_score}-${r.home_score}</td>
       <td>${r.home} ${r.spread > 0 ? '+' : ''}${r.spread}</td>
-      <td>${r.pick_team} (${r.pick_side})</td>
+      <td>${r.pick_team}</td>
       <td>${r.edge}</td>
       <td><span class="tag ${r.correct ? 'tag-correct' : 'tag-wrong'}">${r.correct ? 'Correct' : 'Wrong'}</span></td>
     </tr>
@@ -179,7 +179,7 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
   allData = data;
   const p = data.pooled;
   document.getElementById('summary-row').innerHTML = `
-    <div class="stat-tile"><div class="value">${p.top1_pct}%</div><div class="label">Top 1/wk</div><div class="n">${p.top1_n} picks</div></div>
+    <div class="stat-tile"><div class="value">${p.top1_pct}%</div><div class="label">Most Confident/wk</div><div class="n">${p.top1_n} picks</div></div>
     <div class="stat-tile"><div class="value">${p.top5_pct}%</div><div class="label">Top 5/wk</div><div class="n">${p.top5_n} picks</div></div>`;
 
   const seasonsDesc = data.season_summary.slice().sort((a, b) => b.season - a.season);

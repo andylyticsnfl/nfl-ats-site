@@ -51,9 +51,9 @@
 
   <div class="chart-card">
     <div class="chart-head">
-      <h3 id="chart-title">Top 1 pick of the week, by season</h3>
+      <h3 id="chart-title">Most confident pick of the week, by season</h3>
       <div class="tabs" style="margin-bottom:0;">
-        <button class="tab-btn active" data-metric="top1">Top 1/wk</button>
+        <button class="tab-btn active" data-metric="top1">Most Confident/wk</button>
         <button class="tab-btn" data-metric="top5">Top 5/wk</button>
       </div>
     </div>
@@ -77,32 +77,32 @@
       <div class="philosophy-card">
         <div class="num">03</div>
         <h3>Selective on purpose</h3>
-        <p>Most games, the model has no strong opinion — and says nothing. It only surfaces a pick when its view diverges sharply from the market. That's the entire point of the Top 5 and Top 1 tiers.</p>
+        <p>Most games, the model has no strong opinion — and says nothing. It only surfaces a pick when its view diverges sharply from the market. That's the entire point of the Top 5 and Most Confident tiers.</p>
       </div>
       <div class="philosophy-card">
         <div class="num">04</div>
         <h3>Graded in public, no exceptions</h3>
-        <p>No hiding behind a filter that changes after the fact. Every Top 5 and Top 1 pick across 5 seasons is on the Track Record page — right or wrong.</p>
+        <p>No hiding behind a filter that changes after the fact. Every Top 5 pick — including each week's single most confident call — is on the Track Record page, right or wrong.</p>
       </div>
     </div>
   </section>
 </div>
 
 <footer>
-  <div class="disclaimer">Past results do not guarantee future results. Sports betting involves risk; never wager more than you can afford to lose.</div>
+  <div class="disclaimer">21+. Sports betting involves risk — never wager more than you can afford to lose.</div>
 </footer>
 
 <script>
 let seasonData = null;
 let currentMetric = 'top1';
-const METRIC_LABELS = { top1: 'Top 1 pick of the week', top5: 'Top 5 picks per week' };
+const METRIC_LABELS = { top1: 'Most confident pick of the week', top5: 'Top 5 picks per week' };
 
 fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(data => {
   const p = data.pooled;
   document.getElementById('stat-row').innerHTML = `
     <div class="stat-tile">
       <div class="value">${p.top1_pct}%</div>
-      <div class="label">Top 1 pick of the week</div>
+      <div class="label">Most confident pick of the week</div>
       <div class="n">${p.top1_n} picks, 5 seasons</div>
     </div>
     <div class="stat-tile">
