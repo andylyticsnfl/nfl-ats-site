@@ -34,6 +34,7 @@
   .tier-features li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); margin-bottom: 7px; }
   .tier-features li span.check { color: var(--good); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0; }
   .term-toggle { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .tier-billing { font-size: 11.5px; color: var(--text-muted); margin: -6px 0 12px; font-family: var(--font-mono); }
 </style>
 </head>
 <body>
@@ -75,19 +76,21 @@
       <div class="tier-card">
         <div class="tier-name">Analytics Snapshot</div>
         <div class="tier-price" data-tier="top1"><span>$—</span></div>
+        <div class="tier-billing" data-tier="top1"></div>
         <div class="tier-desc">The week's single most confident pick. Nothing else.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> The week's #1 highest-conviction pick</li>
           <li><span class="check">✓</span> Delivered before kickoff</li>
           <li><span class="check">✓</span> Updated through final inactives</li>
         </ul>
-        <button class="btn btn-secondary" style="justify-content:center;" disabled>Coming soon</button>
+        <a id="btn-top1" class="btn btn-secondary" style="justify-content:center;" target="_blank" rel="noopener">Get Snapshot</a>
       </div>
 
       <div class="tier-card featured">
         <div class="tier-badge">MOST POPULAR</div>
         <div class="tier-name">Analytics Digest</div>
         <div class="tier-price" data-tier="top5"><span>$—</span></div>
+        <div class="tier-billing" data-tier="top5"></div>
         <div class="tier-desc">The Top 5 picks of the week. Every game that clears the model's confidence bar.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> All 5 of the week's highest-conviction picks</li>
@@ -95,19 +98,20 @@
           <li><span class="check">✓</span> Delivered before kickoff</li>
           <li><span class="check">✓</span> Updated through final inactives</li>
         </ul>
-        <button class="btn btn-primary" style="justify-content:center;" disabled>Coming soon</button>
+        <a id="btn-top5" class="btn btn-primary" style="justify-content:center;" target="_blank" rel="noopener">Get Digest</a>
       </div>
 
       <div class="tier-card">
         <div class="tier-name">Analytics Encyclopedia</div>
         <div class="tier-price" data-tier="pro"><span>$—</span></div>
+        <div class="tier-billing" data-tier="pro"></div>
         <div class="tier-desc">Everything in Analytics Digest, earlier — before the lines move.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> Everything in Analytics Digest</li>
           <li><span class="check">✓</span> Model edge/confidence shown for every pick</li>
           <li><span class="check">✓</span> Wednesday early analysis — a full new week's read, days before standard delivery</li>
         </ul>
-        <button class="btn btn-secondary" style="justify-content:center;" disabled>Coming soon</button>
+        <a id="btn-pro" class="btn btn-secondary" style="justify-content:center;" target="_blank" rel="noopener">Get Encyclopedia</a>
       </div>
     </div>
     <p style="text-align:center; font-size:12px; color:var(--text-muted);">Pricing goes live closer to Week 1. <a href="#" style="color:var(--accent);" id="promo-relaunch">Get Week 1 free →</a></p>
@@ -131,12 +135,50 @@
 </footer>
 
 <script>
+const PRICING = {
+  top1: {
+    1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=lNzM4LRoW7', billing: 'billed weekly' },
+    4: { price: 39.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=xABmKeqeW1', billing: 'billed every 4 weeks' },
+    8: { price: 74.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=lKzy67gaBX', billing: 'one-time · 8 weeks of access' },
+    season: { price: 164.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=2VGJjLV4GD', billing: 'one-time · full season' },
+  },
+  top5: {
+    1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=PVBrnb1gB8', billing: 'billed weekly' },
+    4: { price: 99.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=0XB0RaVDWL', billing: 'billed every 4 weeks' },
+    8: { price: 189.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=JrGElw9YBn', billing: 'one-time · 8 weeks of access' },
+    season: { price: 409.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=rKBPQeVgGN', billing: 'one-time · full season' },
+  },
+  pro: {
+    1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=N9G84aJxGV', billing: 'billed weekly' },
+    4: { price: 199.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=lKzy67MaBX', billing: 'billed every 4 weeks' },
+    8: { price: 389.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=QyBbwevOGD', billing: 'one-time · 8 weeks of access' },
+    season: { price: 824.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=JrGElwOYBn', billing: 'one-time · full season' },
+  },
+};
+const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
+const BTN_LABEL = { top1: 'Get Snapshot', top5: 'Get Digest', pro: 'Get Encyclopedia' };
+
+function renderPricing(term) {
+  Object.keys(PRICING).forEach(tier => {
+    const plan = PRICING[tier][term];
+    document.querySelector(`.tier-price[data-tier="${tier}"]`).innerHTML =
+      `$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span>`;
+    document.querySelector(`.tier-billing[data-tier="${tier}"]`).textContent = plan.billing;
+    const btn = document.getElementById(`btn-${tier}`);
+    btn.href = plan.url;
+    btn.textContent = BTN_LABEL[tier];
+  });
+}
+
 document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.term-toggle .tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    renderPricing(btn.dataset.term);
   });
 });
+
+renderPricing('1');
 
 document.getElementById('promo-relaunch').addEventListener('click', function (e) {
   e.preventDefault();
