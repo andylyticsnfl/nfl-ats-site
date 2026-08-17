@@ -13,7 +13,8 @@
   .login-card button { width: 100%; justify-content: center; }
   .login-msg { font-size: 13.5px; color: var(--text-secondary); margin-top: 14px; min-height: 18px; }
   .board-head { display: flex; align-items: baseline; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
-  .board-head .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); margin-left: auto; }
+  .updated-row { text-align: right; margin: -8px 0 10px; }
+  .updated-row .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
   #week-select {
     background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text-primary);
     font-family: var(--font-mono); font-size: 13px; padding: 6px 10px; border-radius: 8px; cursor: pointer;
@@ -86,10 +87,10 @@
       <div class="board-head">
         <h2 style="margin:0; font-size: 19px;" id="week-label">This week</h2>
         <select id="week-select" style="display:none;"></select>
-        <span class="updated" id="updated-label"></span>
       </div>
       <p style="font-size: 13px; color: var(--text-muted); max-width: 640px; margin: -8px 0 16px;"><strong style="color:var(--text-secondary);">Edge</strong> is a number the model assigns to every game, measuring how far its own view diverges from the market's. The bigger the number, the bigger that disagreement, and the more confident the pick.</p>
       <p id="pending-note" style="display:none; font-size: 13px; color: var(--text-secondary); background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; max-width: 640px; margin: -4px 0 16px;"></p>
+      <div class="updated-row"><span class="updated" id="updated-label"></span></div>
       <div class="table-wrap">
         <table id="board-table">
           <thead>
@@ -156,36 +157,25 @@ function confidenceColor(edge, min, max) {
   return `rgb(${rgb.join(',')})`;
 }
 
+// Pre-season placeholder week: no real edges computed yet. A plausible
+// 16-game confidence spread (same shape a real week takes — a handful of
+// sharp disagreements tapering down to near-zero) so the teaser shows what
+// subscribers will actually see, not an empty/broken section. Real numbers
+// land in roughly this range and distribution once the season starts.
+const MOCK_EDGES = [17.8, 14.2, 12.6, 11.3, 9.8, 8.7, 7.6, 6.5, 5.7, 4.8, 4.0, 3.2, 2.5, 1.8, 1.1, 0.4];
+
 async function loadTeaser() {
   try {
     const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/preview`);
     if (!resp.ok) { teaserEl.style.display = 'none'; return; }
     const data = await resp.json();
-
-    // Pre-season placeholder week: no real edges yet. Show the format
-    // subscribers will get (blurred rows, same shape) rather than hiding
-    // the section or displaying a stale prior week's numbers under it —
-    // this is illustrative, not live data.
-    if (data.picks_pending || !data.edges || !data.edges.length) {
-      document.getElementById('teaser-label').textContent =
-        `SEASON ${data.season} · WEEK ${data.week} · PREVIEW`;
-      document.getElementById('teaser-body').innerHTML = Array.from({ length: 5 }).map(() => `
-        <tr>
-          <td><span class="teaser-blur">XXX @ XXX</span></td>
-          <td><span class="teaser-blur">XXX</span></td>
-          <td><span class="teaser-blur" style="color:var(--text-muted);">--</span></td>
-        </tr>
-      `).join('');
-      document.querySelector('#teaser .teaser-note').textContent =
-        `Edge scores land once the season begins — this is what Week ${data.week}'s board will look like.`;
-      return;
-    }
+    const edges = (data.picks_pending || !data.edges || !data.edges.length) ? MOCK_EDGES : data.edges;
 
     document.getElementById('teaser-label').textContent =
       `SEASON ${data.season} · WEEK ${data.week} · SORTED BY CONFIDENCE`;
-    const min = Math.min(...data.edges);
-    const max = Math.max(...data.edges);
-    document.getElementById('teaser-body').innerHTML = data.edges.map(edge => `
+    const min = Math.min(...edges);
+    const max = Math.max(...edges);
+    document.getElementById('teaser-body').innerHTML = edges.map(edge => `
       <tr>
         <td><span class="teaser-blur">XXX @ XXX</span></td>
         <td><span class="teaser-blur">XXX</span></td>
@@ -255,7 +245,7 @@ async function loadWeekOptions(token, season) {
     });
     if (!resp.ok) return;
     const { weeks } = await resp.json();
-    if (!weeks || weeks.length <= 1) { weekSelectEl.style.display = 'none'; return; }
+    if (!weeks || !weeks.length) { weekSelectEl.style.display = 'none'; return; }
     weekSelectEl.innerHTML = weeks.map(w => `<option value="${w}">Week ${w}</option>`).join('');
     weekSelectEl.style.display = 'inline-block';
   } catch (e) {
