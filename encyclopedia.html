@@ -110,7 +110,7 @@ function renderBoard(data) {
       <td>${g.home_team} ${g.spread_line > 0 ? '+' : ''}${g.spread_line}</td>
       <td>${g.predicted_margin > 0 ? '+' : ''}${g.predicted_margin}</td>
       <td>${g.edge}</td>
-      <td>${g.pick}</td>
+      <td>${g.pick === 'home' ? g.home_team : g.away_team}</td>
       <td>${g.correct === null ? '<span style="color:var(--text-muted);">Pending</span>' : `<span class="tag ${g.correct ? 'tag-correct' : 'tag-wrong'}">${g.correct ? 'Correct' : 'Wrong'}</span>`}</td>
     </tr>
   `).join('');
