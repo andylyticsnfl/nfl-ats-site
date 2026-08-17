@@ -26,15 +26,21 @@
     background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 12px;
     border-radius: 100px; font-family: var(--font-mono); letter-spacing: 0.03em;
   }
-  .tier-name { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em; margin-bottom: 6px; }
-  .tier-price { font-size: 30px; font-weight: 800; font-family: var(--font-mono); margin-bottom: 2px; }
+  .tier-name { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em; margin-bottom: 10px; }
+  .tier-tagline { font-size: 11.5px; color: var(--accent); font-family: var(--font-mono); letter-spacing: 0.03em; text-transform: uppercase; margin: -6px 0 10px; }
+  .tier-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-height: 38px; }
+  .tier-price-strike { font-size: 16px; color: var(--text-muted); text-decoration: line-through; font-family: var(--font-mono); }
+  .tier-price { font-size: 30px; font-weight: 800; font-family: var(--font-mono); }
   .tier-price span { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-  .tier-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .tier-perweek { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); margin: 2px 0 0; min-height: 16px; }
+  .tier-free-badge { display: inline-block; background: var(--good-dim); color: var(--good); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; font-family: var(--font-mono); margin: 6px 0 0; }
+  .tier-desc { font-size: 13px; color: var(--text-secondary); margin: 12px 0; min-height: 34px; }
   .tier-features { list-style: none; padding: 0; margin: 0 0 14px; flex-grow: 1; }
   .tier-features li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); margin-bottom: 7px; }
   .tier-features li span.check { color: var(--good); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0; }
+  .tier-login-link { display: block; text-align: center; font-size: 12px; color: var(--text-muted); margin: 0 0 12px; min-height: 15px; }
   .term-toggle { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
-  .tier-billing { font-size: 11.5px; color: var(--text-muted); margin: -6px 0 12px; font-family: var(--font-mono); }
+  .tier-billing { font-size: 11.5px; color: var(--text-muted); margin: 2px 0 0; font-family: var(--font-mono); }
 </style>
 </head>
 <body>
@@ -61,7 +67,7 @@
   <div class="hero" style="padding: 36px 0 10px;">
     <div class="eyebrow" style="margin-bottom: 10px;"><span class="dot"></span>2026 SEASON · PROPRIETARY MODEL</div>
     <h1 style="font-size:32px; margin-bottom: 8px;">Winning picks, your way.</h1>
-    <p class="sub" style="margin-bottom: 14px;">One model, three tiers — each one gives you a little more of what it sees, from the week's single highest-conviction pick up to the full assessment of every game in the NFL season.</p>
+    <p class="sub" style="margin-bottom: 14px;">One model, three tiers — each one gives you a little more of what it sees, from the week's single highest-conviction pick to a full assessment of every game in the NFL season.</p>
   </div>
 
   <section style="border-top:none; padding-top:0;">
@@ -76,49 +82,57 @@
     <div class="tier-grid">
       <div class="tier-card">
         <div class="tier-name">Analytics Snapshot</div>
-        <div class="tier-price" data-tier="top1"><span>$—</span></div>
+        <div class="tier-price-row" data-tier="top1"><span class="tier-price"><span>$—</span></span></div>
+        <div class="tier-perweek" data-tier="top1"></div>
         <div class="tier-billing" data-tier="top1"></div>
-        <div class="tier-desc">The week's single most confident pick. Nothing else.</div>
+        <div class="tier-desc">The week's single most confident pick — hitting <strong style="color:var(--text-secondary);">71.1%</strong> over five NFL seasons.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> The week's #1 highest-conviction pick</li>
           <li><span class="check">✓</span> Delivered before kickoff</li>
           <li><span class="check">✓</span> Updated through final inactives</li>
         </ul>
+        <div class="tier-login-link"></div>
         <a id="btn-top1" class="btn btn-secondary" style="justify-content:center;" target="_blank" rel="noopener">Get Snapshot</a>
       </div>
 
       <div class="tier-card featured">
         <div class="tier-badge">MOST POPULAR</div>
         <div class="tier-name">Analytics Digest</div>
-        <div class="tier-price" data-tier="top5"><span>$—</span></div>
+        <div class="tier-price-row" data-tier="top5"><span class="tier-price"><span>$—</span></span></div>
+        <div class="tier-perweek" data-tier="top5"></div>
         <div class="tier-billing" data-tier="top5"></div>
-        <div class="tier-desc">The Top 5 picks of the week. Every game that clears the model's confidence bar.</div>
+        <div class="tier-desc">The week's five most confident picks — hitting <strong style="color:var(--text-secondary);">60.0%</strong> over five NFL seasons.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> All 5 of the week's highest-conviction picks</li>
           <li><span class="check">✓</span> Includes the week's most confident pick</li>
           <li><span class="check">✓</span> Delivered before kickoff</li>
           <li><span class="check">✓</span> Updated through final inactives</li>
         </ul>
+        <div class="tier-login-link"></div>
         <a id="btn-top5" class="btn btn-primary" style="justify-content:center;" target="_blank" rel="noopener">Get Digest</a>
       </div>
 
       <div class="tier-card">
         <div class="tier-name">Analytics Encyclopedia</div>
-        <div class="tier-price" data-tier="pro"><span>$—</span></div>
+        <div class="tier-tagline">A full peek behind the curtain</div>
+        <div class="tier-price-row" data-tier="pro"><span class="tier-price"><span>$—</span></span></div>
+        <div class="tier-perweek" data-tier="pro"></div>
         <div class="tier-billing" data-tier="pro"></div>
-        <div class="tier-desc">Everything in Analytics Digest, earlier — before the lines move.</div>
+        <div class="tier-desc">The model's Edge score for <strong style="color:var(--text-secondary);">every game of the NFL season</strong> — not just the picks that clear the bar.</div>
         <ul class="tier-features">
-          <li><span class="check">✓</span> Everything in Analytics Digest</li>
-          <li><span class="check">✓</span> Model edge/confidence shown for every pick</li>
+          <li><span class="check">✓</span> Model edge/confidence shown for every game of the NFL season</li>
+          <li><span class="check">✓</span> Everything in Analytics Digest, earlier — before the lines move</li>
           <li><span class="check">✓</span> Wednesday early analysis — a full new week's read, days before standard delivery</li>
         </ul>
+        <a href="encyclopedia.html" class="tier-login-link">Already subscribed? Log in to the live board →</a>
         <a id="btn-pro" class="btn btn-secondary" style="justify-content:center;" target="_blank" rel="noopener">Get Encyclopedia</a>
-        <a href="encyclopedia.html" style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:10px;">Already subscribed? Log in to the live board →</a>
       </div>
     </div>
+
+    <p style="text-align:center; font-size:12.5px; color:var(--text-muted); margin: 20px 0 0;">Picks are delivered by email, sent to the address you check out with.</p>
   </section>
 
-  <p style="text-align:center; font-size:13px; color:var(--text-muted); margin: 8px 0 40px;">No guaranteed win rate — see the <a href="track-record.html" style="color:var(--accent);">full track record</a> and <a href="about.html" style="color:var(--accent);">methodology</a> before you sign up.</p>
+  <p style="text-align:center; font-size:13px; color:var(--text-muted); margin: 8px 0 40px;">Past performance doesn't guarantee future results — see the <a href="track-record.html" style="color:var(--accent);">full track record</a> and <a href="about.html" style="color:var(--accent);">methodology</a> before you sign up.</p>
 </div>
 
 <footer>
@@ -131,29 +145,47 @@ const PRICING = {
     1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=lNzM4LRoW7', billing: 'billed weekly' },
     4: { price: 39.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=xABmKeqeW1', billing: 'billed every 4 weeks' },
     8: { price: 74.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=lKzy67gaBX', billing: 'one-time · 8 weeks of access' },
-    season: { price: 164.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=2VGJjLV4GD', billing: 'one-time · full season' },
+    season: { price: 149.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=q3BoKZrABE', billing: 'one-time · full season' },
   },
   top5: {
     1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=PVBrnb1gB8', billing: 'billed weekly' },
     4: { price: 99.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=0XB0RaVDWL', billing: 'billed every 4 weeks' },
     8: { price: 189.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=JrGElw9YBn', billing: 'one-time · 8 weeks of access' },
-    season: { price: 409.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=rKBPQeVgGN', billing: 'one-time · full season' },
+    season: { price: 399.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=ZwzKaL6OG9', billing: 'one-time · full season' },
   },
   pro: {
     1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=N9G84aJxGV', billing: 'billed weekly' },
     4: { price: 199.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=lKzy67MaBX', billing: 'billed every 4 weeks' },
     8: { price: 389.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=QyBbwevOGD', billing: 'one-time · 8 weeks of access' },
-    season: { price: 824.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=JrGElwOYBn', billing: 'one-time · full season' },
+    season: { price: 799.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=YLBN5LJezK', billing: 'one-time · full season' },
   },
 };
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
+const WEEKS_IN_TERM = { 1: 1, 4: 4, 8: 8, season: 18 };
 const BTN_LABEL = { top1: 'Get Snapshot', top5: 'Get Digest', pro: 'Get Encyclopedia' };
 
 function renderPricing(term) {
   Object.keys(PRICING).forEach(tier => {
     const plan = PRICING[tier][term];
-    document.querySelector(`.tier-price[data-tier="${tier}"]`).innerHTML =
-      `$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span>`;
+    const weeks = WEEKS_IN_TERM[term];
+    const weeklyRate = PRICING[tier][1].price;
+    const perWeek = plan.price / weeks;
+
+    let strikeHtml = '';
+    let freeBadge = '';
+    if (term !== '1') {
+      const fullPrice = weeklyRate * weeks;
+      const weeksFree = Math.round((fullPrice - plan.price) / weeklyRate);
+      if (weeksFree >= 1) {
+        strikeHtml = `<span class="tier-price-strike">$${fullPrice.toFixed(2)}</span>`;
+        freeBadge = `<span class="tier-free-badge">${weeksFree} week${weeksFree > 1 ? 's' : ''} free</span>`;
+      }
+    }
+
+    document.querySelector(`.tier-price-row[data-tier="${tier}"]`).innerHTML =
+      `${strikeHtml}<span class="tier-price">$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span></span>`;
+    document.querySelector(`.tier-perweek[data-tier="${tier}"]`).innerHTML =
+      term === '1' ? '' : `$${perWeek.toFixed(2)}/wk equivalent ${freeBadge}`;
     document.querySelector(`.tier-billing[data-tier="${tier}"]`).textContent = plan.billing;
     const btn = document.getElementById(`btn-${tier}`);
     btn.href = plan.url;

@@ -110,6 +110,49 @@ let currentTab = 'top5';
 let sortKey = 'default'; // most recent first: season desc, then week desc
 let sortDir = 1;
 
+// Replaces a native <select>'s visual/interaction layer with a themed
+// trigger+menu, since native dropdown popups can't be restyled cross-
+// browser. The select itself stays in the DOM (hidden, not removed) so
+// existing .value reads and 'change' listeners keep working untouched.
+function enhanceSelect(select) {
+  const wrap = document.createElement('div');
+  wrap.className = 'select-wrap';
+  select.parentNode.insertBefore(wrap, select);
+  wrap.appendChild(select);
+
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'select-trigger';
+  trigger.textContent = select.options[select.selectedIndex].textContent;
+  wrap.appendChild(trigger);
+
+  const menu = document.createElement('div');
+  menu.className = 'select-menu';
+  Array.from(select.options).forEach(opt => {
+    const item = document.createElement('div');
+    item.className = 'select-option' + (opt.selected ? ' selected' : '');
+    item.textContent = opt.textContent;
+    item.addEventListener('click', () => {
+      select.value = opt.value;
+      trigger.textContent = opt.textContent;
+      menu.querySelectorAll('.select-option').forEach(o => o.classList.remove('selected'));
+      item.classList.add('selected');
+      wrap.classList.remove('open');
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      select.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    menu.appendChild(item);
+  });
+  wrap.appendChild(menu);
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.querySelectorAll('.select-wrap.open').forEach(w => { if (w !== wrap) w.classList.remove('open'); });
+    wrap.classList.toggle('open');
+  });
+  document.addEventListener('click', () => wrap.classList.remove('open'));
+}
+
 function render() {
   const seasonF = document.getElementById('season-filter').value;
   const resultF = document.getElementById('result-filter').value;
@@ -175,6 +218,8 @@ document.querySelectorAll('#picks-table th[data-sort]').forEach(th => {
 ['season-filter', 'result-filter', 'team-filter'].forEach(id =>
   document.getElementById(id).addEventListener('input', render)
 );
+enhanceSelect(document.getElementById('season-filter'));
+enhanceSelect(document.getElementById('result-filter'));
 
 fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(data => {
   allData = data;

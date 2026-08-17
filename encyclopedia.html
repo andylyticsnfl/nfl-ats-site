@@ -16,6 +16,7 @@
   .board-head .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
   #app { display: none; }
   #login { display: none; }
+  #explainer { display: none; }
   #teaser { display: none; max-width: 480px; margin: 20px auto 0; }
   #teaser .teaser-label { text-align: center; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 0.03em; margin-bottom: 10px; }
   .teaser-blur { display: inline-block; filter: blur(5px); color: var(--text-secondary); user-select: none; }
@@ -43,11 +44,11 @@
 </nav>
 
 <div class="container">
-  <div class="hero" style="padding: 28px 0 0; text-align: center;">
+  <div id="explainer" class="hero" style="padding: 28px 0 0; text-align: center;">
     <div class="eyebrow" style="margin: 0 auto 10px;"><span class="dot"></span>ANALYTICS ENCYCLOPEDIA · SUBSCRIBERS ONLY</div>
     <h1 style="font-size: 27px; margin: 0 0 10px;">The model's full view — every game, all season.</h1>
     <p class="sub" style="max-width: 560px; margin: 0 auto;">The Encyclopedia is Trifecta's top tier: the model's edge on every game in the NFL season, not just the picks that clear the confidence bar, updated automatically as the week unfolds.</p>
-    <p style="font-size: 13.5px; color: var(--text-muted); max-width: 560px; margin: 14px auto 0;">This page is for <strong style="color:var(--text-secondary);">Encyclopedia subscribers only</strong>. If you signed up for a different tier, you won't get a sign-in link here. <a href="subscribe.html" style="color:var(--accent);">See plans &amp; pricing →</a></p>
+    <p style="font-size: 13.5px; color: var(--text-muted); max-width: 560px; margin: 14px auto 0;">This page is for <strong style="color:var(--text-secondary);">Encyclopedia subscribers only</strong>. If you subscribed to a different tier, you won't get a sign-in link here. <a href="subscribe.html" style="color:var(--accent);">See plans &amp; pricing →</a></p>
   </div>
 
   <div id="login" class="login-card">
@@ -112,18 +113,30 @@ const TOKEN_KEY = 'trifecta_enc_token';
 const loginEl = document.getElementById('login');
 const appEl = document.getElementById('app');
 const teaserEl = document.getElementById('teaser');
+const explainerEl = document.getElementById('explainer');
 const msgEl = document.getElementById('login-msg');
 
+function showLoading() {
+  // Neutral state while a stored token is being verified — deliberately
+  // shows neither the login card nor the board, so a returning subscriber
+  // never sees the sign-in screen flash before their board loads.
+  loginEl.style.display = 'none';
+  teaserEl.style.display = 'none';
+  explainerEl.style.display = 'none';
+  appEl.style.display = 'none';
+}
 function showLogin(message) {
   loginEl.style.display = 'block';
   appEl.style.display = 'none';
   teaserEl.style.display = 'block';
+  explainerEl.style.display = 'block';
   if (message) msgEl.textContent = message;
   loadTeaser();
 }
 function showApp() {
   loginEl.style.display = 'none';
   teaserEl.style.display = 'none';
+  explainerEl.style.display = 'none';
   appEl.style.display = 'block';
 }
 
@@ -161,16 +174,29 @@ async function loadTeaser() {
 
 function renderBoard(data) {
   document.getElementById('week-label').textContent = `Season ${data.season}, Week ${data.week}`;
-  document.getElementById('updated-label').textContent = 'Updated ' + new Date(data.generated).toLocaleString();
-  document.getElementById('board-body').innerHTML = data.games.map(g => `
+  const updatedET = new Date(data.generated).toLocaleString('en-US', {
+    timeZone: 'America/New_York', month: 'short', day: 'numeric',
+    hour: 'numeric', minute: '2-digit',
+  });
+  document.getElementById('updated-label').textContent = `Updated ${updatedET} ET`;
+  document.getElementById('board-body').innerHTML = data.games.map(g => {
+    // spread_line is nflverse's raw convention (positive = HOME favored),
+    // opposite of standard sportsbook display (favorite = negative) —
+    // flip for the home team's own displayed line. Edge shown unsigned
+    // (its sign is just home-vs-away bookkeeping; Pick already states
+    // the side), matching the same convention already used on the Track
+    // Record page's export.
+    const homeSpread = -g.spread_line;
+    return `
     <tr>
       <td>${g.away_team} @ ${g.home_team}</td>
-      <td>${g.home_team} ${g.spread_line > 0 ? '+' : ''}${g.spread_line}</td>
-      <td>${g.edge}</td>
+      <td>${g.home_team} ${homeSpread > 0 ? '+' : ''}${homeSpread}</td>
+      <td>${Math.abs(g.edge).toFixed(2)}</td>
       <td>${g.pick === 'home' ? g.home_team : g.away_team}</td>
       <td>${g.correct === null ? '<span style="color:var(--text-muted);">Pending</span>' : `<span class="tag ${g.correct ? 'tag-correct' : 'tag-wrong'}">${g.correct ? 'Correct' : 'Wrong'}</span>`}</td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
   showApp();
 }
 
@@ -232,7 +258,7 @@ if (magicToken) {
   showLogin('Signing you in...');
   exchangeMagicToken(magicToken);
 } else if (storedToken) {
-  showLogin('');
+  showLoading();
   loadBoard(storedToken);
 } else {
   showLogin('');
