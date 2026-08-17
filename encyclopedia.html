@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encyclopedia — Trifecta</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+<style>
+  .login-card { max-width: 420px; margin: 64px auto; background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 32px; text-align: center; }
+  .login-card input { width: 100%; box-sizing: border-box; background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 8px; padding: 12px 14px; color: var(--text-primary); font-size: 14.5px; font-family: var(--font-body); margin: 16px 0; }
+  .login-card button { width: 100%; justify-content: center; }
+  .login-msg { font-size: 13.5px; color: var(--text-secondary); margin-top: 14px; min-height: 18px; }
+  .board-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .board-head .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
+  #app { display: none; }
+  #login { display: none; }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <rect x="2" y="14" width="5" height="10" rx="1.5" fill="var(--accent)" opacity="0.55"/>
+      <rect x="10.5" y="8" width="5" height="16" rx="1.5" fill="var(--accent)" opacity="0.8"/>
+      <rect x="19" y="2" width="5" height="22" rx="1.5" fill="var(--accent)"/>
+    </svg>
+    <span class="word">TRI<span>FECTA</span></span>
+  </a>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="track-record.html">Track Record</a>
+    <a href="about.html">Methodology</a>
+    <a href="subscribe.html">Subscribe</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div id="login" class="login-card">
+    <div class="eyebrow" style="margin: 0 auto 14px;"><span class="dot"></span>ANALYTICS ENCYCLOPEDIA</div>
+    <h1 style="font-size: 22px; margin: 0 0 8px;">Sign in to the Encyclopedia</h1>
+    <p style="font-size: 13.5px; color: var(--text-secondary); margin: 0;">Enter the email you subscribed with — we'll send a sign-in link.</p>
+    <input id="email-input" type="email" placeholder="you@email.com" autocomplete="email">
+    <button id="login-btn" class="btn btn-primary">Send sign-in link</button>
+    <div class="login-msg" id="login-msg"></div>
+  </div>
+
+  <div id="app">
+    <div style="padding: 40px 0 8px;">
+      <div class="eyebrow"><span class="dot"></span>LIVE · UPDATES THROUGH THE WEEK</div>
+      <h1 style="font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px;">The full board</h1>
+      <p style="color: var(--text-secondary); font-size: 15px; max-width: 640px; margin: 0;">Edge and predicted margin for every game this week, not just the picks that clear the confidence bar — refreshed as new information comes in.</p>
+    </div>
+
+    <section style="border-top: none; padding-top: 8px;">
+      <div class="board-head">
+        <h2 style="margin:0; font-size: 19px;" id="week-label">This week</h2>
+        <span class="updated" id="updated-label"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="board-table">
+          <thead>
+            <tr>
+              <th>Matchup</th>
+              <th>Spread</th>
+              <th>Predicted Margin</th>
+              <th>Edge</th>
+              <th>Pick</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody id="board-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<footer>
+  <div class="disclaimer">21+. Sports betting involves risk — never wager more than you can afford to lose.</div>
+</footer>
+
+<script>
+const WORKER_BASE = 'https://trifecta-encyclopedia-api.andylyticsnfl.workers.dev';
+const TOKEN_KEY = 'trifecta_enc_token';
+
+const loginEl = document.getElementById('login');
+const appEl = document.getElementById('app');
+const msgEl = document.getElementById('login-msg');
+
+function showLogin(message) {
+  loginEl.style.display = 'block';
+  appEl.style.display = 'none';
+  if (message) msgEl.textContent = message;
+}
+function showApp() {
+  loginEl.style.display = 'none';
+  appEl.style.display = 'block';
+}
+
+function renderBoard(data) {
+  document.getElementById('week-label').textContent = `Season ${data.season}, Week ${data.week}`;
+  document.getElementById('updated-label').textContent = 'Updated ' + new Date(data.generated).toLocaleString();
+  document.getElementById('board-body').innerHTML = data.games.map(g => `
+    <tr>
+      <td>${g.away_team} @ ${g.home_team}</td>
+      <td>${g.home_team} ${g.spread_line > 0 ? '+' : ''}${g.spread_line}</td>
+      <td>${g.predicted_margin > 0 ? '+' : ''}${g.predicted_margin}</td>
+      <td>${g.edge}</td>
+      <td>${g.pick}</td>
+      <td>${g.correct === null ? '<span style="color:var(--text-muted);">Pending</span>' : `<span class="tag ${g.correct ? 'tag-correct' : 'tag-wrong'}">${g.correct ? 'Correct' : 'Wrong'}</span>`}</td>
+    </tr>
+  `).join('');
+  showApp();
+}
+
+async function loadBoard(token) {
+  const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/current`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (resp.status === 401) {
+    localStorage.removeItem(TOKEN_KEY);
+    showLogin('Your session expired — sign in again.');
+    return;
+  }
+  if (resp.status === 403) {
+    const body = await resp.json();
+    showLogin(body.message || "Your Encyclopedia access isn't active.");
+    return;
+  }
+  if (!resp.ok) {
+    showLogin('Something went wrong loading the board — try again shortly.');
+    return;
+  }
+  renderBoard(await resp.json());
+}
+
+async function exchangeMagicToken(magicToken) {
+  const resp = await fetch(`${WORKER_BASE}/auth/exchange`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ magicToken }),
+  });
+  const body = await resp.json();
+  if (!resp.ok) {
+    showLogin(body.message || 'That link is invalid or has expired — request a new one.');
+    return;
+  }
+  localStorage.setItem(TOKEN_KEY, body.token);
+  history.replaceState(null, '', location.pathname);
+  loadBoard(body.token);
+}
+
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const email = document.getElementById('email-input').value.trim();
+  if (!email) return;
+  msgEl.textContent = 'Sending...';
+  const resp = await fetch(`${WORKER_BASE}/auth/request-login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+  const body = await resp.json();
+  msgEl.textContent = body.message || 'Check your email for a sign-in link.';
+});
+
+const params = new URLSearchParams(location.search);
+const magicToken = params.get('magic');
+const storedToken = localStorage.getItem(TOKEN_KEY);
+
+if (magicToken) {
+  showLogin('Signing you in...');
+  exchangeMagicToken(magicToken);
+} else if (storedToken) {
+  showLogin('');
+  loadBoard(storedToken);
+} else {
+  showLogin('');
+}
+</script>
+<script src="popup.js"></script>
+</body>
+</html>
