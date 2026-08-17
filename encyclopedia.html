@@ -16,6 +16,10 @@
   .board-head .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
   #app { display: none; }
   #login { display: none; }
+  #teaser { display: none; max-width: 480px; margin: 28px auto 0; }
+  #teaser .teaser-label { text-align: center; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 0.03em; margin-bottom: 10px; }
+  .teaser-blur { display: inline-block; filter: blur(5px); color: var(--text-secondary); user-select: none; }
+  #teaser .teaser-note { text-align: center; font-size: 12.5px; color: var(--text-muted); margin: 12px 0 0; }
 </style>
 </head>
 <body>
@@ -46,6 +50,17 @@
     <input id="email-input" type="email" placeholder="you@email.com" autocomplete="email">
     <button id="login-btn" class="btn btn-primary">Send sign-in link</button>
     <div class="login-msg" id="login-msg"></div>
+  </div>
+
+  <div id="teaser">
+    <div class="teaser-label" id="teaser-label">THIS WEEK'S EDGE BOARD · SORTED BY CONFIDENCE</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Matchup</th><th>Edge</th></tr></thead>
+        <tbody id="teaser-body"></tbody>
+      </table>
+    </div>
+    <p class="teaser-note">Every matchup, blurred — sign in above to reveal them (Encyclopedia subscribers only).</p>
   </div>
 
   <div id="app">
@@ -89,16 +104,39 @@ const TOKEN_KEY = 'trifecta_enc_token';
 
 const loginEl = document.getElementById('login');
 const appEl = document.getElementById('app');
+const teaserEl = document.getElementById('teaser');
 const msgEl = document.getElementById('login-msg');
 
 function showLogin(message) {
   loginEl.style.display = 'block';
   appEl.style.display = 'none';
+  teaserEl.style.display = 'block';
   if (message) msgEl.textContent = message;
+  loadTeaser();
 }
 function showApp() {
   loginEl.style.display = 'none';
+  teaserEl.style.display = 'none';
   appEl.style.display = 'block';
+}
+
+async function loadTeaser() {
+  try {
+    const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/preview`);
+    if (!resp.ok) { teaserEl.style.display = 'none'; return; }
+    const data = await resp.json();
+    if (!data.edges || !data.edges.length) { teaserEl.style.display = 'none'; return; }
+    document.getElementById('teaser-label').textContent =
+      `SEASON ${data.season} · WEEK ${data.week} · SORTED BY CONFIDENCE`;
+    document.getElementById('teaser-body').innerHTML = data.edges.map(edge => `
+      <tr>
+        <td><span class="teaser-blur">XXX @ XXX</span></td>
+        <td>${edge.toFixed(2)}</td>
+      </tr>
+    `).join('');
+  } catch (e) {
+    teaserEl.style.display = 'none';
+  }
 }
 
 function renderBoard(data) {
