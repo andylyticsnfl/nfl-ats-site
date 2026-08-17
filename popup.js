@@ -34,6 +34,7 @@
   if (localStorage.getItem('trifecta_email_submitted')) return;
 
   var page = location.pathname.split('/').pop() || 'index.html';
+  if (page === 'encyclopedia.html') return; // don't compete with the sign-in flow / paid-tier upsell there
   var isSubscribePage = page === 'subscribe.html';
   if (isSubscribePage && sessionStorage.getItem('trifecta_subscribe_popup_seen')) return;
 
