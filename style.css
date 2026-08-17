@@ -143,6 +143,12 @@ tr:hover td { background: var(--surface-2); }
   background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 7px;
   padding: 9px 13px; color: var(--text-primary); font-size: 13.5px; font-family: var(--font-body);
 }
+.controls select {
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239aa1ab'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; padding-right: 30px; cursor: pointer;
+  color-scheme: dark;
+}
 .controls .summary { margin-left: auto; font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
 .tabs { display: flex; gap: 8px; margin-bottom: 24px; }
 .tab-btn {
