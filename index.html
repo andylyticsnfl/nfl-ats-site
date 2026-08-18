@@ -44,7 +44,7 @@
 
 <div class="container">
   <div class="hero">
-    <div class="eyebrow"><span class="dot"></span>PROPRIETARY MODEL · 5 NFL SEASONS · GRADED IN PUBLIC</div>
+    <div class="eyebrow"><span class="dot"></span>PROPRIETARY MODEL &middot; 5 NFL SEASONS&nbsp;&middot; GRADED IN PUBLIC</div>
     <h1>We don't pick every <br class="hero-break">game. We pick the <span class="accent-text">right</span> ones.</h1>
     <p class="sub">Trifecta doesn't try to predict every matchup — it plays only its biggest edges. That selectivity is why each week's five most confident picks have covered at <span id="subhead-pct" class="accent-text" style="font-weight:700;">a remarkable rate</span>, graded in public every week.</p>
     <div class="cta">
@@ -63,7 +63,7 @@
         <button class="tab-btn" data-metric="top5">Top 5/wk</button>
       </div>
     </div>
-    <svg id="season-chart" width="100%" height="180" viewBox="0 0 980 180" preserveAspectRatio="xMidYMid meet"></svg>
+    <svg id="season-chart" width="100%" height="180" preserveAspectRatio="xMidYMid meet"></svg>
   </div>
 
   <section>
@@ -96,6 +96,7 @@
 
 <footer>
   <div class="footer-links">
+    <a href="contact.html">Contact</a>
     <a href="terms.html">Terms of Service</a>
     <a href="privacy.html">Privacy Policy</a>
     <a href="refund.html">Refund Policy</a>
@@ -142,11 +143,23 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(drawSeasonChart, 150);
+});
+
 function drawSeasonChart() {
   if (!seasonData) return;
   const svg = document.getElementById('season-chart');
   svg.innerHTML = '';
-  const W = 980, H = 180, marginL = 34, marginR = 10, marginT = 10, marginB = 26;
+  // Match the viewBox width to the SVG's actual rendered width, rather than
+  // a fixed value — with width:100% and a fixed-wide viewBox, the browser's
+  // uniform scale-to-fit shrinks the SVG text along with the bars, which is
+  // what made this chart unreadably tiny on narrow phones. Keeping 1 SVG
+  // unit == 1 real pixel means text stays legible at any width.
+  const W = Math.max(Math.round(svg.getBoundingClientRect().width) || 980, 280);
+  const H = 180, marginL = 34, marginR = 10, marginT = 10, marginB = 26;
   const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
   const key = currentMetric + '_pct';
   const vals = seasonData.map(s => s[key]);
@@ -154,9 +167,10 @@ function drawSeasonChart() {
   const yMin = Math.floor(Math.min(...vals) / 10) * 10 - 5;
   const yScale = v => marginT + plotH - ((v - yMin) / (yMax - yMin)) * plotH;
   const groupW = plotW / seasonData.length;
-  const barW = 46;
+  const barW = Math.min(46, groupW * 0.6);
   const ns = 'http://www.w3.org/2000/svg';
   const el = (tag, attrs) => { const e = document.createElementNS(ns, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
   const step = yMax - yMin > 40 ? 20 : 10;
   for (let t = Math.ceil(yMin / step) * step; t <= yMax; t += step) {
