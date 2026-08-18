@@ -1,10 +1,11 @@
-/* Site-wide email capture popup for the Week 1 free-picks promo.
+/* Site-wide name+email capture popup for the Week 1 free-picks promo.
  *
  * Behavior:
  *  - On index/track-record/about: shows on EVERY visit, until either the
- *    visitor submits an email or the WEEK1_CUTOFF date passes.
- *  - On subscribe.html: shows once (first visit only), same cutoff rules.
- *  - Once an email is submitted, never shows again anywhere (any page).
+ *    visitor submits the form or the WEEK1_CUTOFF date passes.
+ *  - Never shows on subscribe.html or encyclopedia.html — those visitors
+ *    are already mid-funnel toward a paid tier or already subscribed.
+ *  - Once submitted, never shows again anywhere (any page).
  *
  * WEEK1_CUTOFF is set to when Week 1's Snapshot/Digest picks actually go
  * out — Sunday Sept 13, 2026, 8:45am PT (matches the "main" batch send
@@ -38,9 +39,10 @@
   if (localStorage.getItem('trifecta_enc_token')) return;
 
   var page = location.pathname.split('/').pop() || 'index.html';
-  if (page === 'encyclopedia.html') return; // don't compete with the sign-in flow / paid-tier upsell there
-  var isSubscribePage = page === 'subscribe.html';
-  if (isSubscribePage && sessionStorage.getItem('trifecta_subscribe_popup_seen')) return;
+  // Neither page should compete with what's already happening there — the
+  // sign-in flow / paid-tier upsell on Encyclopedia, or the purchase
+  // decision already in progress on Subscribe.
+  if (page === 'encyclopedia.html' || page === 'subscribe.html') return;
 
   // Brevo's own stylesheet (base layout/behavior classes their script
   // expects) + our override block on top, scoped to #sib-container so it
@@ -147,7 +149,19 @@
               <div style="padding: 8px 0;">
                 <div class="sib-form-block">
                   <div class="sib-text-form-block">
-                    <p>Drop your email and we'll send you Trifecta's full Week 1 slate at no cost — no card, no catch.</p>
+                    <p>Drop your email and we'll send you Trifecta's top five picks for Week 1 at no cost — no card, no catch.</p>
+                  </div>
+                </div>
+              </div>
+              <div style="padding: 8px 0;">
+                <div class="sib-input sib-form-block">
+                  <div class="form__entry entry_block">
+                    <div class="form__label-row">
+                      <div class="entry__field">
+                        <input class="input" type="text" id="FIRSTNAME" name="FIRSTNAME" autocomplete="off" value="" placeholder="Your name" data-required="true" required />
+                      </div>
+                    </div>
+                    <label class="entry__error entry__error--primary" style="font-family:Helvetica, sans-serif; font-size:14px; text-align:left; color:#661d1d; background-color:#ffeded; border-color:#ff4949; border-radius:3px;"></label>
                   </div>
                 </div>
               </div>
@@ -189,7 +203,6 @@
   function close() {
     overlay.classList.remove('show');
     setTimeout(function () { overlay.remove(); }, 200);
-    if (isSubscribePage) sessionStorage.setItem('trifecta_subscribe_popup_seen', '1');
   }
 
   overlay.querySelector('.promo-close').addEventListener('click', close);
