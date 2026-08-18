@@ -191,6 +191,18 @@ tr:hover td { background: var(--surface-2); }
 
 footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text-align: center; border-top: 1px solid var(--border); }
 .disclaimer { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+.footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin: 0 0 14px; padding: 0 20px; }
+.footer-links a { color: var(--text-muted); text-decoration: none; }
+.footer-links a:hover { color: var(--text-secondary); }
+
+.legal { padding: 48px 0 60px; max-width: 760px; margin: 0 auto; }
+.legal h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px; }
+.legal .updated { color: var(--text-muted); font-size: 13px; margin: 0 0 36px; font-family: var(--font-mono); }
+.legal h2 { font-size: 18px; font-weight: 700; margin: 32px 0 12px; color: var(--text-primary); }
+.legal p, .legal li { color: var(--text-secondary); font-size: 14.5px; line-height: 1.65; }
+.legal ul { margin: 0 0 16px; padding-left: 20px; }
+.legal p { margin: 0 0 16px; }
+.legal a { color: var(--accent); }
 
 @media (max-width: 720px) {
   .hero h1 { font-size: 32px; }

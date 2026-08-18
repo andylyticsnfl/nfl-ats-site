@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://andylyticsnfl.github.io/nfl-ats-site/sitemap.xml
+Sitemap: https://trifectapicks.com/sitemap.xml
