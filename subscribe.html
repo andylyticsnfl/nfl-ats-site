@@ -48,6 +48,14 @@
     font-family: var(--font-mono); font-size: 13px; color: var(--text-primary); flex-wrap: wrap;
   }
   .urgency-banner strong { color: var(--accent-2); }
+  .preseason-banner {
+    display: none; align-items: center; justify-content: center; gap: 8px;
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface-1));
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+    border-radius: 10px; padding: 9px 18px; margin: 0 0 14px; text-align: center;
+    font-size: 13px; color: var(--text-primary); flex-wrap: wrap;
+  }
+  .preseason-banner strong { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -79,6 +87,7 @@
 
   <section style="border-top:none; padding-top:0;">
     <div class="urgency-banner"><strong>Lock in your winning edge now</strong> — prices will rise once the season begins.</div>
+    <div class="preseason-banner" id="preseason-banner"><strong>You're charged today</strong> — you'll receive this week's pick(s) once they're ready, delivered before Week 1 kickoff (Sept 9). One-time purchase, no auto-renewal.</div>
     <div class="term-toggle" style="margin-bottom: 22px;">
       <button class="tab-btn active" data-term="1">1 Week</button>
       <button class="tab-btn" data-term="4">4 Weeks</button>
@@ -165,13 +174,48 @@ const PRICING = {
     season: { price: 899.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=V6B73a8OBr', billing: 'one-time · full season' },
   },
 };
+
+// Temporary one-time versions of the 1-week/4-week plans, used only before
+// RECURRING_CUTOVER. A real subscription would bill immediately AND again
+// on its next cycle — which could land deep in the preseason gap with no
+// picks to deliver. These are single-delivery, no-auto-renew purchases
+// instead: paid today, access window anchored to Week 1 kickoff by the
+// Worker (see trifecta-encyclopedia-api/worker.js's SEASON_KICKOFF_MS),
+// so nobody is ever charged again for a week that had no content.
+const PRICING_PRESEASON = {
+  top1: {
+    1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=PVBrnbXqB8', billing: 'one-time · delivered before kickoff' },
+    4: { price: 54.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=nKGvxyXyzb', billing: 'one-time · starts Week 1' },
+  },
+  top5: {
+    1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=4lW53AQEB3', billing: 'one-time · delivered before kickoff' },
+    4: { price: 139.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=w9B35aQeWR', billing: 'one-time · starts Week 1' },
+  },
+  pro: {
+    1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=qLWxZPX0Bk', billing: 'one-time · delivered before kickoff' },
+    4: { price: 274.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=APzDPLQnzE', billing: 'one-time · starts Week 1' },
+  },
+};
+// Sept 6, 2026, midnight PT — a few days out from Week 1 kickoff (Sept 9),
+// close enough that "charged today, content arrives in days" genuinely
+// holds. Before this instant, 1-week/4-week checkout uses the one-time
+// PRICING_PRESEASON plans above; at/after it, they switch back to the
+// real recurring PRICING plans — automatically, purely by comparing the
+// visitor's clock against this constant. No manual step, no scheduled
+// task: same pattern as popup.js's WEEK1_CUTOFF.
+const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
+
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
 const WEEKS_IN_TERM = { 1: 1, 4: 4, 8: 8, season: 18 };
 const BTN_LABEL = { top1: 'Get Snapshot', top5: 'Get Digest', pro: 'Get Encyclopedia' };
 
 function renderPricing(term) {
+  const isPreseason = Date.now() < RECURRING_CUTOVER;
+  const usePreseasonPlan = isPreseason && (term === '1' || term === '4');
+  document.getElementById('preseason-banner').style.display = usePreseasonPlan ? 'flex' : 'none';
+
   Object.keys(PRICING).forEach(tier => {
-    const plan = PRICING[tier][term];
+    const plan = usePreseasonPlan ? PRICING_PRESEASON[tier][term] : PRICING[tier][term];
     const weeks = WEEKS_IN_TERM[term];
     const weeklyRate = PRICING[tier][1].price;
     const perWeek = plan.price / weeks;
