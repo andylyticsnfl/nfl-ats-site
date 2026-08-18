@@ -190,7 +190,7 @@ tr:hover td { background: var(--surface-2); }
 .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-1); }
 
 footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text-align: center; border-top: 1px solid var(--border); }
-.disclaimer { max-width: 680px; margin: 0 auto; }
+.disclaimer { max-width: 680px; margin: 0 auto; padding: 0 20px; }
 
 @media (max-width: 720px) {
   .hero h1 { font-size: 32px; }
