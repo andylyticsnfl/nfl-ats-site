@@ -188,6 +188,7 @@
                 </div>
               </div>
               <input type="text" name="email_address_check" value="" class="input--hidden">
+              <input type="hidden" id="LASTNAME" name="LASTNAME" value="">
               <input type="hidden" name="locale" value="en">
             </form>
           </div>
@@ -207,6 +208,21 @@
 
   overlay.querySelector('.promo-close').addEventListener('click', close);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+
+  // Single "Name" box, but Brevo has no built-in first/last split — do it
+  // ourselves before Brevo's own submit handler reads the fields. Capture
+  // phase guarantees this runs first regardless of listener registration
+  // order (Brevo's handler attaches later, once main.js finishes loading).
+  var formEl = overlay.querySelector('#sib-form');
+  var nameInput = overlay.querySelector('#FIRSTNAME');
+  var lastNameInput = overlay.querySelector('#LASTNAME');
+  formEl.addEventListener('submit', function () {
+    var parts = nameInput.value.trim().split(/\s+/);
+    if (parts.length > 1) {
+      lastNameInput.value = parts.slice(1).join(' ');
+      nameInput.value = parts[0];
+    }
+  }, true);
 
   // main.js drives the actual submit handling (validation, AJAX post,
   // showing #success-message / #error-message) — Brevo's own script,
