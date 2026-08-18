@@ -408,7 +408,7 @@ function showPaymentStep(sessionId) {
     // here) — so the "picks go to this email" reminder has to live in our
     // own chrome, right above the embed, instead of inside Whop's iframe.
     modalMount.innerHTML = `
-      <p style="font-size:13.5px; font-weight:700; color:var(--accent); text-align:center; margin:0 0 12px;">Picks are delivered to the email you enter below.</p>
+      <p style="font-size:13.5px; font-weight:700; color:var(--accent-2); text-align:center; margin:0 0 12px;">Picks are delivered to the email you enter below.</p>
       <div data-whop-checkout-session="${sessionId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/checkout-complete.html"></div>
     `;
   });
