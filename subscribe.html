@@ -217,9 +217,11 @@ function currentNflWeek() {
 function oneTimeBilling(tier, weeks) {
   const startWeek = currentNflWeek();
   const endWeek = Math.min(18, startWeek + weeks - 1);
-  const noun = tier === 'top1' ? 'Pick' : tier === 'pro' ? 'Access' : 'Picks';
+  const noun = tier === 'top1' ? 'Pick' : tier === 'pro' ? 'Model access' : 'Picks';
   const weekPhrase = weeks === 1 ? `Week ${startWeek}` : `Weeks ${startWeek}-${endWeek}`;
-  const label = `${noun} for ${weekPhrase}`;
+  // "Model access" + "for" wraps to 2 lines at this card width — drop the
+  // connector for that tier only; Pick/Picks already fit with it.
+  const label = tier === 'pro' ? `${noun} ${weekPhrase}` : `${noun} for ${weekPhrase}`;
   return `one-time payment · ${label}`;
 }
 
