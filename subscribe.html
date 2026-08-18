@@ -402,7 +402,15 @@ function showPaymentStep(sessionId) {
   // Give the loading state a paint frame before swapping in the real
   // embed div, so the loader script reliably sees a freshly-added node.
   requestAnimationFrame(() => {
-    modalMount.innerHTML = `<div data-whop-checkout-session="${sessionId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/checkout-complete.html"></div>`;
+    // Whop's plan/session "description" field only renders on their wide,
+    // two-column hosted checkout page — not in this narrow embedded view
+    // (confirmed by testing directly, Email is the very first thing shown
+    // here) — so the "picks go to this email" reminder has to live in our
+    // own chrome, right above the embed, instead of inside Whop's iframe.
+    modalMount.innerHTML = `
+      <p style="font-size:13px; color:var(--text-secondary); text-align:center; margin:0 0 12px;">Picks are delivered to the email you enter below.</p>
+      <div data-whop-checkout-session="${sessionId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/checkout-complete.html"></div>
+    `;
   });
 }
 
