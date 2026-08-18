@@ -48,6 +48,10 @@
     font-family: var(--font-mono); font-size: 13px; color: var(--text-primary); flex-wrap: wrap;
   }
   .urgency-banner strong { color: var(--accent-2); }
+  @media (max-width: 720px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .tier-badge { top: -12px; }
+  }
 </style>
 </head>
 <body>
@@ -61,6 +65,7 @@
     </svg>
     <span class="word">TRI<span>FECTA</span></span>
   </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
   <div class="links">
     <a href="index.html">Home</a>
     <a href="track-record.html">Track Record</a>
@@ -272,6 +277,7 @@ document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
 
 renderPricing('1');
 </script>
+<script src="nav.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>
