@@ -105,8 +105,6 @@ body {
 .btn-primary:hover { filter: brightness(1.1); }
 .btn-secondary { background: var(--surface-2); color: var(--text-primary) !important; border-color: var(--border-strong); }
 .btn-secondary:hover { background: var(--surface-3); }
-.btn-disabled { opacity: 0.55; cursor: not-allowed; pointer-events: none; filter: grayscale(40%); }
-.btn-disabled:hover { filter: grayscale(40%); }
 
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 28px 0 40px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 .stat-tile { background: var(--surface-1); padding: 28px 20px; text-align: center; }

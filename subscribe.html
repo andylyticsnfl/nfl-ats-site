@@ -20,6 +20,7 @@
 <link rel="canonical" href="https://trifectapicks.com/subscribe.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
+<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 <style>
   .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 9px 0; align-items: stretch; }
   .tier-card {
@@ -33,6 +34,25 @@
     border-radius: 100px; font-family: var(--font-mono); letter-spacing: 0.03em;
   }
   .tier-name { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em; margin-bottom: 7px; }
+  .checkout-modal-backdrop {
+    position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+  }
+  .checkout-modal-backdrop[hidden] { display: none; }
+  .checkout-modal {
+    position: relative; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
+    background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: 14px; padding: 20px;
+  }
+  .checkout-modal-close {
+    position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 100px;
+    background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text-primary);
+    font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1;
+  }
+  .checkout-modal-close:hover { background: var(--surface-3); }
+  .checkout-modal-loading {
+    display: flex; align-items: center; justify-content: center; min-height: 300px;
+    color: var(--text-muted); font-size: 14px;
+  }
   .tier-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-height: 32px; }
   .tier-price-strike { font-size: 15px; color: var(--text-muted); text-decoration: line-through; font-family: var(--font-mono); }
   .tier-price { font-size: 27px; font-weight: 800; font-family: var(--font-mono); }
@@ -110,7 +130,7 @@
           <li><span class="check">✓</span> Updated through final inactives</li>
         </ul>
         <div class="tier-login-link"></div>
-        <a id="btn-top1" class="btn btn-secondary" style="justify-content:center;" target="_blank" rel="noopener">Get Snapshot</a>
+        <button id="btn-top1" class="btn btn-secondary" style="justify-content:center;">Get Snapshot</button>
       </div>
 
       <div class="tier-card featured">
@@ -127,7 +147,7 @@
           <li><span class="check">✓</span> Updated through final inactives</li>
         </ul>
         <div class="tier-login-link"></div>
-        <a id="btn-top5" class="btn btn-primary" style="justify-content:center;" target="_blank" rel="noopener">Get Digest</a>
+        <button id="btn-top5" class="btn btn-primary" style="justify-content:center;">Get Digest</button>
       </div>
 
       <div class="tier-card">
@@ -141,7 +161,14 @@
           <li><span class="check">✓</span> <span>Everything in Digest, plus week-long access to the model — more time to plan your bets</span></li>
         </ul>
         <a href="encyclopedia.html" class="tier-login-link">Already subscribed? Log in to the live board →</a>
-        <a id="btn-pro" class="btn btn-secondary" style="justify-content:center;" target="_blank" rel="noopener">Get Encyclopedia</a>
+        <button id="btn-pro" class="btn btn-secondary" style="justify-content:center;">Get Encyclopedia</button>
+      </div>
+    </div>
+
+    <div id="checkout-modal-backdrop" class="checkout-modal-backdrop" hidden>
+      <div class="checkout-modal" role="dialog" aria-modal="true">
+        <button id="checkout-modal-close" class="checkout-modal-close" aria-label="Close checkout">✕</button>
+        <div id="checkout-modal-mount"></div>
       </div>
     </div>
 
@@ -164,23 +191,31 @@
 <script>
 const PRICING = {
   top1: {
-    1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=lNzM4LRoW7', billing: 'billed weekly' },
-    4: { price: 54.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=rdWQ8qyXGj', billing: 'billed every 4 weeks' },
-    8: { price: 99.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=x2GZ3el4Wp' },
-    season: { price: 179.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=MrW6dpE5BN' },
+    1: { price: 14.99, billing: 'billed weekly' },
+    4: { price: 54.99, billing: 'billed every 4 weeks' },
+    8: { price: 99.99 },
+    season: { price: 179.99 },
   },
   top5: {
-    1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=PVBrnb1gB8', billing: 'billed weekly' },
-    4: { price: 139.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=2VGJjLKjGD', billing: 'billed every 4 weeks' },
-    8: { price: 249.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=JrGElwD7Bn' },
-    season: { price: 449.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=lKzy673qBX' },
+    1: { price: 39.99, billing: 'billed weekly' },
+    4: { price: 139.99, billing: 'billed every 4 weeks' },
+    8: { price: 249.99 },
+    season: { price: 449.99 },
   },
   pro: {
-    1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=N9G84aJxGV', billing: 'billed weekly' },
-    4: { price: 274.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=18B15aZlBZ', billing: 'billed every 4 weeks' },
-    8: { price: 499.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=rKBPQeqKGN' },
-    season: { price: 899.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=V6B73a8OBr' },
+    1: { price: 74.99, billing: 'billed weekly' },
+    4: { price: 274.99, billing: 'billed every 4 weeks' },
+    8: { price: 499.99 },
+    season: { price: 899.99 },
   },
+};
+
+// Whop plan ids — created via the Whop API 2026-08-18, see
+// trifecta-encyclopedia-api/whop_products.json for the full map.
+const WHOP_PLAN_IDS = {
+  top1: { 1: 'plan_g0bJuvr1FDCgt', 4: 'plan_f0L3JQFqvIgac', 8: 'plan_8lax0DNxSWYEA', season: 'plan_UKfXhPPYeZADs' },
+  top5: { 1: 'plan_644TtLotYV7hi', 4: 'plan_1z6HxlmJ2ziFA', 8: 'plan_zNrfdmo8jpl2g', season: 'plan_IicTf3PpR8Lhy' },
+  pro: { 1: 'plan_FOvluOHgaskzw', 4: 'plan_bqU72730rQ3cq', 8: 'plan_HN3LTVMta0dFr', season: 'plan_SRzSlVtfVqruC' },
 };
 
 // Temporary one-time versions of the 1-week/4-week plans, used only before
@@ -194,18 +229,15 @@ const PRICING = {
 // itself (plan description), not here — kept off the site to avoid
 // piling on more text than a visitor needs at this stage.
 const PRICING_PRESEASON = {
-  top1: {
-    1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=PVBrnbXqB8' },
-    4: { price: 54.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=nKGvxyXyzb' },
-  },
-  top5: {
-    1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=4lW53AQEB3' },
-    4: { price: 139.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=w9B35aQeWR' },
-  },
-  pro: {
-    1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=qLWxZPX0Bk' },
-    4: { price: 274.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=APzDPLQnzE' },
-  },
+  top1: { 1: { price: 14.99 }, 4: { price: 54.99 } },
+  top5: { 1: { price: 39.99 }, 4: { price: 139.99 } },
+  pro: { 1: { price: 74.99 }, 4: { price: 274.99 } },
+};
+
+const WHOP_PLAN_IDS_PRESEASON = {
+  top1: { 1: 'plan_qTfODKTWG3Mah', 4: 'plan_ILOQjMCEeblsw' },
+  top5: { 1: 'plan_JDhOYqiLkqm1U', 4: 'plan_SoHfrnWUU9wWw' },
+  pro: { 1: 'plan_27KumQoXmGLjE', 4: 'plan_c6ZsALyVeg6d4' },
 };
 // Sept 6, 2026, midnight PT — a few days out from Week 1 kickoff (Sept 9),
 // close enough that "charged today, content arrives in days" genuinely
@@ -223,11 +255,9 @@ const SEASON_KICKOFF = Date.parse('2026-09-10T00:20:00Z');
 
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
 const WEEKS_IN_TERM = { 1: 1, 4: 4, 8: 8, season: 18 };
-const BTN_LABEL = { top1: 'Get Snapshot', top5: 'Get Digest', pro: 'Get Encyclopedia' };
-// Payhip checkout paused while payment processing migrates to a new provider.
-// Flip back to false (and the buttons resume linking to PRICING[tier][term].url)
-// once the new checkout is live.
-const CHECKOUT_DISABLED = true;
+// Payhip checkout is paused for good (moved to Whop, see HANDOFF.md) — this
+// only gates the brief window between deploying this file and Whop going live.
+const CHECKOUT_DISABLED = false;
 if (CHECKOUT_DISABLED) {
   document.getElementById('urgency-banner').innerHTML =
     '<strong>Checkout is upgrading&nbsp;—</strong> new signups open again shortly.';
@@ -282,15 +312,12 @@ function renderPricing(term) {
       term === '1' ? '' : `$${perWeek.toFixed(2)}/wk equivalent ${freeBadge}`;
     document.querySelector(`.tier-billing[data-tier="${tier}"]`).textContent = billing;
     const btn = document.getElementById(`btn-${tier}`);
-    // Checkout is being migrated off Payhip — see CHECKOUT_DISABLED below.
-    // Keep pricing/plan data intact so re-enabling later is a one-line revert.
     if (CHECKOUT_DISABLED) {
-      btn.removeAttribute('href');
-      btn.classList.add('btn-disabled');
+      btn.disabled = true;
       btn.textContent = 'Checkout upgrading — check back soon';
     } else {
-      btn.href = plan.url;
-      btn.textContent = BTN_LABEL[tier];
+      const planId = usePreseasonPlan ? WHOP_PLAN_IDS_PRESEASON[tier][term] : WHOP_PLAN_IDS[tier][term];
+      btn.dataset.planId = planId;
     }
   });
 }
@@ -304,6 +331,40 @@ document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
 });
 
 renderPricing('1');
+
+// Checkout modal — the Whop embed only mounts once a tier button is
+// clicked, so only one iframe ever loads at a time instead of three at
+// once on page load (which was both slow and, on the always-inline
+// layout this replaced, effectively a redirect-free but always-open
+// checkout for a tier nobody had chosen yet).
+const modalBackdrop = document.getElementById('checkout-modal-backdrop');
+const modalMount = document.getElementById('checkout-modal-mount');
+
+function openCheckoutModal(planId) {
+  modalMount.innerHTML = '<div class="checkout-modal-loading">Loading checkout…</div>';
+  modalBackdrop.hidden = false;
+  document.body.style.overflow = 'hidden';
+  // Give the loading state a paint frame before swapping in the real
+  // embed div, so the loader script reliably sees a freshly-added node.
+  requestAnimationFrame(() => {
+    modalMount.innerHTML = `<div data-whop-checkout-plan-id="${planId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/subscribe.html?purchased=1"></div>`;
+  });
+}
+
+function closeCheckoutModal() {
+  modalBackdrop.hidden = true;
+  document.body.style.overflow = '';
+  modalMount.innerHTML = ''; // unmount the iframe so a stale session isn't reused next open
+}
+
+['btn-top1', 'btn-top5', 'btn-pro'].forEach(id => {
+  document.getElementById(id).addEventListener('click', () => {
+    if (!CHECKOUT_DISABLED) openCheckoutModal(document.getElementById(id).dataset.planId);
+  });
+});
+document.getElementById('checkout-modal-close').addEventListener('click', closeCheckoutModal);
+modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeCheckoutModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modalBackdrop.hidden) closeCheckoutModal(); });
 </script>
 <script src="nav.js"></script>
 <script src="popup.js"></script>
