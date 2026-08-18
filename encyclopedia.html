@@ -14,10 +14,6 @@
   .login-msg { font-size: 13.5px; color: var(--text-secondary); margin-top: 14px; min-height: 18px; }
   .board-head { display: flex; align-items: baseline; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
   .updated { font-size: 12.5px; color: var(--text-muted); font-family: var(--font-mono); }
-  #week-select {
-    background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text-primary);
-    font-family: var(--font-mono); font-size: 13px; padding: 6px 10px; border-radius: 8px; cursor: pointer;
-  }
   #app { display: none; }
   #login { display: none; }
   #explainer { display: none; }
@@ -241,7 +237,62 @@ let currentToken = null;
 let currentSeason = null;
 const weekSelectEl = document.getElementById('week-select');
 
-async function loadWeekOptions(token, season) {
+// Replaces a native <select>'s visual/interaction layer with a themed
+// trigger+menu, since native dropdown popups can't be restyled cross-
+// browser. The select itself stays in the DOM (hidden, not removed) so
+// existing .value reads and 'change' listeners keep working untouched.
+// Same pattern as track-record.html's season/result filters.
+function enhanceSelect(select) {
+  const wrap = document.createElement('div');
+  wrap.className = 'select-wrap';
+  select.parentNode.insertBefore(wrap, select);
+  wrap.appendChild(select);
+
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'select-trigger';
+  trigger.textContent = select.options[select.selectedIndex].textContent;
+  wrap.appendChild(trigger);
+
+  const menu = document.createElement('div');
+  menu.className = 'select-menu';
+  Array.from(select.options).forEach(opt => {
+    const item = document.createElement('div');
+    item.className = 'select-option' + (opt.selected ? ' selected' : '');
+    item.textContent = opt.textContent;
+    item.addEventListener('click', () => {
+      select.value = opt.value;
+      trigger.textContent = opt.textContent;
+      menu.querySelectorAll('.select-option').forEach(o => o.classList.remove('selected'));
+      item.classList.add('selected');
+      wrap.classList.remove('open');
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      select.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    menu.appendChild(item);
+  });
+  wrap.appendChild(menu);
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.querySelectorAll('.select-wrap.open').forEach(w => { if (w !== wrap) w.classList.remove('open'); });
+    wrap.classList.toggle('open');
+  });
+  document.addEventListener('click', () => wrap.classList.remove('open'));
+}
+
+// enhanceSelect only builds its menu from whatever <option>s exist at
+// wrap-time and doesn't watch for later .value changes made in code
+// (as opposed to a menu click) — loadWeek/loadBoard both set
+// weekSelectEl.value directly, so the trigger label needs a manual
+// resync after those.
+function syncSelectTrigger(select) {
+  const trigger = select.parentNode.querySelector && select.parentNode.querySelector('.select-trigger');
+  const opt = select.options[select.selectedIndex];
+  if (trigger && opt) trigger.textContent = opt.textContent;
+}
+
+async function loadWeekOptions(token, season, activeWeek) {
   try {
     const resp = await fetch(`${WORKER_BASE}/api/encyclopedia/weeks?season=${season}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -250,7 +301,13 @@ async function loadWeekOptions(token, season) {
     const { weeks } = await resp.json();
     if (!weeks || !weeks.length) { weekSelectEl.style.display = 'none'; return; }
     weekSelectEl.innerHTML = weeks.map(w => `<option value="${w}">Week ${w}</option>`).join('');
+    weekSelectEl.value = String(activeWeek);
     weekSelectEl.style.display = 'inline-block';
+    if (!weekSelectEl.dataset.enhanced) {
+      weekSelectEl.dataset.enhanced = 'true';
+      enhanceSelect(weekSelectEl);
+    }
+    syncSelectTrigger(weekSelectEl);
   } catch (e) {
     // week picker is a nice-to-have — a failure here shouldn't block the board itself
   }
@@ -264,6 +321,7 @@ async function loadWeek(season, week) {
   const data = await resp.json();
   renderBoard(data);
   weekSelectEl.value = String(data.week);
+  syncSelectTrigger(weekSelectEl);
 }
 
 weekSelectEl.addEventListener('change', () => {
@@ -292,8 +350,7 @@ async function loadBoard(token) {
   const data = await resp.json();
   currentSeason = data.season;
   renderBoard(data);
-  weekSelectEl.value = String(data.week);
-  loadWeekOptions(token, data.season);
+  loadWeekOptions(token, data.season, data.week);
 }
 
 async function exchangeMagicToken(magicToken) {

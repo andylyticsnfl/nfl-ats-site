@@ -48,14 +48,6 @@
     font-family: var(--font-mono); font-size: 13px; color: var(--text-primary); flex-wrap: wrap;
   }
   .urgency-banner strong { color: var(--accent-2); }
-  .preseason-banner {
-    display: none; align-items: center; justify-content: center; gap: 8px;
-    background: color-mix(in srgb, var(--accent) 10%, var(--surface-1));
-    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
-    border-radius: 10px; padding: 9px 18px; margin: 0 0 14px; text-align: center;
-    font-size: 13px; color: var(--text-primary); flex-wrap: wrap;
-  }
-  .preseason-banner strong { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -87,7 +79,6 @@
 
   <section style="border-top:none; padding-top:0;">
     <div class="urgency-banner"><strong>Lock in your winning edge now</strong> — prices will rise once the season begins.</div>
-    <div class="preseason-banner" id="preseason-banner"><strong>You're charged today</strong> — you'll receive this week's pick(s) once they're ready, delivered before Week 1 kickoff (Sept 9). One-time purchase, no auto-renewal.</div>
     <div class="term-toggle" style="margin-bottom: 22px;">
       <button class="tab-btn active" data-term="1">1 Week</button>
       <button class="tab-btn" data-term="4">4 Weeks</button>
@@ -158,20 +149,20 @@ const PRICING = {
   top1: {
     1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=lNzM4LRoW7', billing: 'billed weekly' },
     4: { price: 54.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=rdWQ8qyXGj', billing: 'billed every 4 weeks' },
-    8: { price: 99.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=x2GZ3el4Wp', billing: 'one-time · 8 weeks of access' },
-    season: { price: 179.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=MrW6dpE5BN', billing: 'one-time · full season' },
+    8: { price: 99.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=x2GZ3el4Wp' },
+    season: { price: 179.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=MrW6dpE5BN' },
   },
   top5: {
     1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=PVBrnb1gB8', billing: 'billed weekly' },
     4: { price: 139.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=2VGJjLKjGD', billing: 'billed every 4 weeks' },
-    8: { price: 249.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=JrGElwD7Bn', billing: 'one-time · 8 weeks of access' },
-    season: { price: 449.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=lKzy673qBX', billing: 'one-time · full season' },
+    8: { price: 249.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=JrGElwD7Bn' },
+    season: { price: 449.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=lKzy673qBX' },
   },
   pro: {
     1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=N9G84aJxGV', billing: 'billed weekly' },
     4: { price: 274.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=18B15aZlBZ', billing: 'billed every 4 weeks' },
-    8: { price: 499.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=rKBPQeqKGN', billing: 'one-time · 8 weeks of access' },
-    season: { price: 899.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=V6B73a8OBr', billing: 'one-time · full season' },
+    8: { price: 499.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=rKBPQeqKGN' },
+    season: { price: 899.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=V6B73a8OBr' },
   },
 };
 
@@ -181,19 +172,22 @@ const PRICING = {
 // picks to deliver. These are single-delivery, no-auto-renew purchases
 // instead: paid today, access window anchored to Week 1 kickoff by the
 // Worker (see trifecta-encyclopedia-api/worker.js's SEASON_KICKOFF_MS),
-// so nobody is ever charged again for a week that had no content.
+// so nobody is ever charged again for a week that had no content. The
+// "you're charged today" disclosure lives on the Payhip checkout page
+// itself (plan description), not here — kept off the site to avoid
+// piling on more text than a visitor needs at this stage.
 const PRICING_PRESEASON = {
   top1: {
-    1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=PVBrnbXqB8', billing: 'one-time · delivered before kickoff' },
-    4: { price: 54.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=nKGvxyXyzb', billing: 'one-time · starts Week 1' },
+    1: { price: 14.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=PVBrnbXqB8' },
+    4: { price: 54.99, url: 'https://payhip.com/order?link=n6SYm&pricing_plan=nKGvxyXyzb' },
   },
   top5: {
-    1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=4lW53AQEB3', billing: 'one-time · delivered before kickoff' },
-    4: { price: 139.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=w9B35aQeWR', billing: 'one-time · starts Week 1' },
+    1: { price: 39.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=4lW53AQEB3' },
+    4: { price: 139.99, url: 'https://payhip.com/order?link=aTjsH&pricing_plan=w9B35aQeWR' },
   },
   pro: {
-    1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=qLWxZPX0Bk', billing: 'one-time · delivered before kickoff' },
-    4: { price: 274.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=APzDPLQnzE', billing: 'one-time · starts Week 1' },
+    1: { price: 74.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=qLWxZPX0Bk' },
+    4: { price: 274.99, url: 'https://payhip.com/order?link=IhZR4&pricing_plan=APzDPLQnzE' },
   },
 };
 // Sept 6, 2026, midnight PT — a few days out from Week 1 kickoff (Sept 9),
@@ -204,21 +198,42 @@ const PRICING_PRESEASON = {
 // visitor's clock against this constant. No manual step, no scheduled
 // task: same pattern as popup.js's WEEK1_CUTOFF.
 const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
+// Week 1's first kickoff — used only to compute which week number a
+// one-time plan's "Picks for Week(s) X-Y" label should start counting
+// from (1 before the season starts, the actual current NFL week once
+// it's underway, e.g. an 8-week pass bought in week 5 reads "Weeks 5-12").
+const SEASON_KICKOFF = Date.parse('2026-09-10T00:20:00Z');
 
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
 const WEEKS_IN_TERM = { 1: 1, 4: 4, 8: 8, season: 18 };
 const BTN_LABEL = { top1: 'Get Snapshot', top5: 'Get Digest', pro: 'Get Encyclopedia' };
 
+function currentNflWeek() {
+  if (Date.now() < SEASON_KICKOFF) return 1;
+  const weeksElapsed = Math.floor((Date.now() - SEASON_KICKOFF) / (7 * 24 * 60 * 60 * 1000));
+  return Math.min(18, weeksElapsed + 1);
+}
+
+function oneTimeBilling(tier, weeks) {
+  const startWeek = currentNflWeek();
+  const endWeek = Math.min(18, startWeek + weeks - 1);
+  const label = weeks === 1
+    ? `${tier === 'top1' ? 'Pick' : 'Picks'} for Week ${startWeek}`
+    : `Picks for Weeks ${startWeek}-${endWeek}`;
+  return `one-time payment · ${label}`;
+}
+
 function renderPricing(term) {
   const isPreseason = Date.now() < RECURRING_CUTOVER;
   const usePreseasonPlan = isPreseason && (term === '1' || term === '4');
-  document.getElementById('preseason-banner').style.display = usePreseasonPlan ? 'flex' : 'none';
+  const isOneTime = usePreseasonPlan || term === '8' || term === 'season';
 
   Object.keys(PRICING).forEach(tier => {
     const plan = usePreseasonPlan ? PRICING_PRESEASON[tier][term] : PRICING[tier][term];
     const weeks = WEEKS_IN_TERM[term];
     const weeklyRate = PRICING[tier][1].price;
     const perWeek = plan.price / weeks;
+    const billing = isOneTime ? oneTimeBilling(tier, weeks) : plan.billing;
 
     let strikeHtml = '';
     let freeBadge = '';
@@ -238,7 +253,7 @@ function renderPricing(term) {
       `${strikeHtml}<span class="tier-price">$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span></span>`;
     document.querySelector(`.tier-perweek[data-tier="${tier}"]`).innerHTML =
       term === '1' ? '' : `$${perWeek.toFixed(2)}/wk equivalent ${freeBadge}`;
-    document.querySelector(`.tier-billing[data-tier="${tier}"]`).textContent = plan.billing;
+    document.querySelector(`.tier-billing[data-tier="${tier}"]`).textContent = billing;
     const btn = document.getElementById(`btn-${tier}`);
     btn.href = plan.url;
     btn.textContent = BTN_LABEL[tier];
