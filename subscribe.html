@@ -189,7 +189,7 @@
     <a href="privacy.html">Privacy Policy</a>
     <a href="refund.html">Refund Policy</a>
   </div>
-  <div class="disclaimer">21+ and located where legal. Sports betting involves risk — never wager more than you can afford to lose.</div>
+  <div class="disclaimer">Trifecta is an informational and educational sports-analytics service — we do not accept wagers or offer gambling services. Past performance doesn't guarantee future results. 21+ and located where legal. Problem gambling? Call 1-800-GAMBLER.</div>
 </footer>
 
 <script>
@@ -228,10 +228,11 @@ const WHOP_PLAN_IDS = {
 // picks to deliver. These are single-delivery, no-auto-renew purchases
 // instead: paid today, access window anchored to Week 1 kickoff by the
 // Worker (see trifecta-encyclopedia-api/worker.js's SEASON_KICKOFF_MS),
-// so nobody is ever charged again for a week that had no content. The
-// "you're charged today" disclosure lives on the Payhip checkout page
-// itself (plan description), not here — kept off the site to avoid
-// piling on more text than a visitor needs at this stage.
+// so nobody is ever charged again for a week that had no content. No
+// separate "you're charged today" disclosure is shown anywhere — Whop's
+// plan/session description field doesn't render in the embedded checkout
+// view this site uses (confirmed by testing directly), and the one-time
+// billing language above the price already covers it.
 const PRICING_PRESEASON = {
   top1: { 1: { price: 14.99 }, 4: { price: 54.99 } },
   top5: { 1: { price: 39.99 }, 4: { price: 139.99 } },
