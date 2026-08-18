@@ -217,9 +217,9 @@ function currentNflWeek() {
 function oneTimeBilling(tier, weeks) {
   const startWeek = currentNflWeek();
   const endWeek = Math.min(18, startWeek + weeks - 1);
-  const label = weeks === 1
-    ? `${tier === 'top1' ? 'Pick' : 'Picks'} for Week ${startWeek}`
-    : `Picks for Weeks ${startWeek}-${endWeek}`;
+  const noun = tier === 'top1' ? 'Pick' : tier === 'pro' ? 'Model access' : 'Picks';
+  const weekPhrase = weeks === 1 ? `Week ${startWeek}` : `Weeks ${startWeek}-${endWeek}`;
+  const label = `${noun} for ${weekPhrase}`;
   return `one-time payment · ${label}`;
 }
 
