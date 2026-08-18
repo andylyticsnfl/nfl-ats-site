@@ -89,7 +89,7 @@
   </div>
 
   <section style="border-top:none; padding-top:0;">
-    <div class="urgency-banner"><strong>Lock in your winning edge now&nbsp;—</strong> prices will rise once the season begins.</div>
+    <div class="urgency-banner" id="urgency-banner"><strong>Lock in your winning edge now&nbsp;—</strong> prices will rise once the season begins.</div>
     <div class="term-toggle" style="margin-bottom: 22px;">
       <button class="tab-btn active" data-term="1">1 Week</button>
       <button class="tab-btn" data-term="4">4 Weeks</button>
@@ -224,6 +224,14 @@ const SEASON_KICKOFF = Date.parse('2026-09-10T00:20:00Z');
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
 const WEEKS_IN_TERM = { 1: 1, 4: 4, 8: 8, season: 18 };
 const BTN_LABEL = { top1: 'Get Snapshot', top5: 'Get Digest', pro: 'Get Encyclopedia' };
+// Payhip checkout paused while payment processing migrates to a new provider.
+// Flip back to false (and the buttons resume linking to PRICING[tier][term].url)
+// once the new checkout is live.
+const CHECKOUT_DISABLED = true;
+if (CHECKOUT_DISABLED) {
+  document.getElementById('urgency-banner').innerHTML =
+    '<strong>Checkout is upgrading&nbsp;—</strong> new signups open again shortly.';
+}
 
 function currentNflWeek() {
   if (Date.now() < SEASON_KICKOFF) return 1;
@@ -274,8 +282,16 @@ function renderPricing(term) {
       term === '1' ? '' : `$${perWeek.toFixed(2)}/wk equivalent ${freeBadge}`;
     document.querySelector(`.tier-billing[data-tier="${tier}"]`).textContent = billing;
     const btn = document.getElementById(`btn-${tier}`);
-    btn.href = plan.url;
-    btn.textContent = BTN_LABEL[tier];
+    // Checkout is being migrated off Payhip — see CHECKOUT_DISABLED below.
+    // Keep pricing/plan data intact so re-enabling later is a one-line revert.
+    if (CHECKOUT_DISABLED) {
+      btn.removeAttribute('href');
+      btn.classList.add('btn-disabled');
+      btn.textContent = 'Checkout upgrading — check back soon';
+    } else {
+      btn.href = plan.url;
+      btn.textContent = BTN_LABEL[tier];
+    }
   });
 }
 
