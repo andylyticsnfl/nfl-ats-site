@@ -44,15 +44,30 @@
   }
   .checkout-modal-backdrop[hidden] { display: none; }
   .checkout-modal {
-    position: relative; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
-    background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: 14px; padding: 20px;
+    position: relative; width: 100%; max-width: 480px; max-height: 90vh;
+    background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: 14px;
+    display: flex; flex-direction: column; overflow: hidden;
   }
   .checkout-modal-close {
     position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 100px;
     background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text-primary);
-    font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1;
+    font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2;
   }
   .checkout-modal-close:hover { background: var(--surface-3); }
+  /* The Whop iframe embed can push this taller than the viewport, so this
+     inner element (not .checkout-modal itself) owns the scroll — keeps the
+     close button and reminder text out of the scrolling content, and
+     overscroll-behavior stops iOS from chaining the drag to the page
+     behind the modal, which was the "can't scroll back up" bug. */
+  #checkout-modal-mount {
+    flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch; padding: 20px;
+  }
+  .checkout-reminder {
+    position: sticky; top: 0; z-index: 1; background: var(--surface-1);
+    margin: 0 -20px 12px; padding: 0 20px 10px; text-align: center;
+    font-size: 13.5px; font-weight: 700; color: var(--accent-2);
+  }
   .checkout-modal-loading {
     display: flex; align-items: center; justify-content: center; min-height: 300px;
     color: var(--text-muted); font-size: 14px;
@@ -410,7 +425,7 @@ function showPaymentStep(sessionId) {
     // here) — so the "picks go to this email" reminder has to live in our
     // own chrome, right above the embed, instead of inside Whop's iframe.
     modalMount.innerHTML = `
-      <p style="font-size:13.5px; font-weight:700; color:var(--accent-2); text-align:center; margin:0 0 12px;">Picks are delivered to the email you enter below.</p>
+      <p class="checkout-reminder">Picks are delivered to the email you enter below.</p>
       <div data-whop-checkout-session="${sessionId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/checkout-complete.html"></div>
     `;
   });

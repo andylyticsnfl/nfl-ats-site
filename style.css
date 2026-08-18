@@ -96,12 +96,7 @@ body {
 .hero h1 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 14px; line-height: 1.08; }
 .hero h1 .accent-text { color: var(--accent); }
 .hero p.sub { font-size: 18px; color: var(--text-secondary); max-width: 620px; margin: 0 auto 26px; }
-.hero .cta { display: inline-flex; gap: 14px; }
-.hero-x-link {
-  display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
-  color: var(--text-muted); text-decoration: none; font-size: 13.5px; font-weight: 550; transition: color .15s;
-}
-.hero-x-link:hover { color: var(--text-secondary); }
+.hero .cta { display: inline-flex; gap: 14px; flex-wrap: wrap; }
 .btn {
   display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 9px; font-weight: 650;
   font-size: 14.5px; text-decoration: none; border: 1px solid transparent; transition: all .15s; cursor: pointer;
@@ -110,6 +105,9 @@ body {
 .btn-primary:hover { filter: brightness(1.1); }
 .btn-secondary { background: var(--surface-2); color: var(--text-primary) !important; border-color: var(--border-strong); }
 .btn-secondary:hover { background: var(--surface-3); }
+.btn-x { background: #ffffff; color: #0b0c0e !important; border-color: #e2e2e2; }
+.btn-x:hover { background: #ececec; }
+.btn-x svg { flex-shrink: 0; }
 
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 28px 0 40px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 .stat-tile { background: var(--surface-1); padding: 28px 20px; text-align: center; }
