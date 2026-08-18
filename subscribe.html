@@ -20,6 +20,10 @@
 <link rel="canonical" href="https://trifectapicks.com/subscribe.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://js.whop.com">
+<link rel="preconnect" href="https://whop.com" crossorigin>
+<link rel="dns-prefetch" href="https://js.whop.com">
+<link rel="dns-prefetch" href="https://whop.com">
 <script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 <style>
   .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 9px 0; align-items: stretch; }
@@ -337,18 +341,75 @@ renderPricing('1');
 // once on page load (which was both slow and, on the always-inline
 // layout this replaced, effectively a redirect-free but always-open
 // checkout for a tier nobody had chosen yet).
+//
+// Two steps: (1) our own Full Name field — kept separate from Whop's
+// checkout because the card's billing name isn't always the actual
+// subscriber (a parent's card, a business card, etc.) — then (2) the
+// real Whop embed, mounted against a checkout SESSION (not a bare plan
+// id) so the name rides along as session metadata and comes back on the
+// webhook's data.metadata.full_name, tied unambiguously to that purchase.
+const WORKER_BASE = 'https://trifecta-encyclopedia-api.andylyticsnfl.workers.dev';
 const modalBackdrop = document.getElementById('checkout-modal-backdrop');
 const modalMount = document.getElementById('checkout-modal-mount');
 
-function openCheckoutModal(planId) {
+function showNameStep(planId) {
+  modalMount.innerHTML = `
+    <div class="checkout-name-step">
+      <div class="tier-name" style="margin-bottom:10px;">What's your name?</div>
+      <p style="font-size:13.5px; color:var(--text-secondary); margin:0 0 16px;">Separate from your card's billing name — this is who we keep on record as the subscriber.</p>
+      <input type="text" id="checkout-name-input" placeholder="Full name" autocomplete="name" style="width:100%; box-sizing:border-box; padding:12px 14px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text-primary); font-family:var(--font-body); font-size:14.5px; margin-bottom:14px;">
+      <div id="checkout-name-error" style="display:none; color:var(--bad); font-size:13px; margin-bottom:10px;"></div>
+      <button id="checkout-name-continue" class="btn btn-primary" style="width:100%; justify-content:center;">Continue to payment</button>
+    </div>
+  `;
+  const input = document.getElementById('checkout-name-input');
+  const errorEl = document.getElementById('checkout-name-error');
+  const continueBtn = document.getElementById('checkout-name-continue');
+  input.focus();
+
+  async function submitName() {
+    const fullName = input.value.trim();
+    if (!fullName || fullName.split(/\s+/).length < 2) {
+      errorEl.textContent = 'Please enter your full name.';
+      errorEl.style.display = 'block';
+      return;
+    }
+    continueBtn.disabled = true;
+    continueBtn.textContent = 'Loading…';
+    try {
+      const resp = await fetch(`${WORKER_BASE}/internal/create-checkout-session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId, fullName }),
+      });
+      if (!resp.ok) throw new Error('session request failed');
+      const { sessionId } = await resp.json();
+      showPaymentStep(sessionId);
+    } catch (err) {
+      errorEl.textContent = "Something went wrong — please try again.";
+      errorEl.style.display = 'block';
+      continueBtn.disabled = false;
+      continueBtn.textContent = 'Continue to payment';
+    }
+  }
+
+  continueBtn.addEventListener('click', submitName);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitName(); });
+}
+
+function showPaymentStep(sessionId) {
   modalMount.innerHTML = '<div class="checkout-modal-loading">Loading checkout…</div>';
-  modalBackdrop.hidden = false;
-  document.body.style.overflow = 'hidden';
   // Give the loading state a paint frame before swapping in the real
   // embed div, so the loader script reliably sees a freshly-added node.
   requestAnimationFrame(() => {
-    modalMount.innerHTML = `<div data-whop-checkout-plan-id="${planId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/subscribe.html?purchased=1"></div>`;
+    modalMount.innerHTML = `<div data-whop-checkout-session="${sessionId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/checkout-complete.html"></div>`;
   });
+}
+
+function openCheckoutModal(planId) {
+  modalBackdrop.hidden = false;
+  document.body.style.overflow = 'hidden';
+  showNameStep(planId);
 }
 
 function closeCheckoutModal() {

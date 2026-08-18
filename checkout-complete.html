@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Complete — Trifecta</title>
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Trifecta">
+<meta property="og:title" content="Order Complete — Trifecta">
+<meta property="og:url" content="https://trifectapicks.com/checkout-complete.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <rect x="2" y="14" width="5" height="10" rx="1.5" fill="var(--accent)" opacity="0.55"/>
+      <rect x="10.5" y="8" width="5" height="16" rx="1.5" fill="var(--accent)" opacity="0.8"/>
+      <rect x="19" y="2" width="5" height="22" rx="1.5" fill="var(--accent)"/>
+    </svg>
+    <span class="word">TRI<span>FECTA</span></span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="track-record.html">Track Record</a>
+    <a href="about.html">Methodology</a>
+    <a href="encyclopedia.html">Encyclopedia</a>
+    <a href="subscribe.html" class="btn btn-primary" style="padding:8px 18px; font-size:13.5px;">Subscribe</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div id="state-success" style="padding: 90px 0; text-align: center; max-width:520px; margin:0 auto;">
+    <div class="eyebrow" style="justify-content:center;"><span class="dot"></span>ORDER COMPLETE</div>
+    <h1 style="font-size:32px; font-weight:800; letter-spacing:-0.02em; margin:0 0 14px;">You're in.</h1>
+    <p style="color:var(--text-secondary); font-size:15.5px; margin:0 0 20px;">Picks are delivered by email, sent to the address you checked out with.</p>
+    <p style="color:var(--text-primary); font-weight:650; font-size:15px; background:var(--surface-1); border:1px solid var(--border-strong); border-radius:10px; padding:16px 20px; margin:0 0 24px;">
+      Check your spam folder and whitelist <a href="mailto:picks@trifectapicks.com" style="color:var(--accent);">picks@trifectapicks.com</a> so nothing gets missed.
+    </p>
+    <a href="track-record.html" class="btn btn-secondary">See the track record →</a>
+  </div>
+
+  <div id="state-error" style="display:none; padding: 90px 0; text-align: center; max-width:480px; margin:0 auto;">
+    <div class="eyebrow" style="justify-content:center;"><span class="dot"></span>PAYMENT NOT COMPLETED</div>
+    <h1 style="font-size:32px; font-weight:800; letter-spacing:-0.02em; margin:0 0 14px;">Something didn't go through.</h1>
+    <p style="color:var(--text-secondary); font-size:15.5px; margin:0 0 24px;">Your payment didn't complete — you haven't been charged. No worries, just try again.</p>
+    <a href="subscribe.html" class="btn btn-primary">Back to plans →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="contact.html">Contact</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="refund.html">Refund Policy</a>
+  </div>
+  <div class="disclaimer">21+ and located where legal. Sports betting involves risk — never wager more than you can afford to lose.</div>
+</footer>
+<script>
+  if (new URLSearchParams(location.search).get('status') === 'error') {
+    document.getElementById('state-success').style.display = 'none';
+    document.getElementById('state-error').style.display = 'block';
+  }
+</script>
+<script src="nav.js"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>
+</body>
+</html>
