@@ -93,7 +93,7 @@ body {
 }
 .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--good); box-shadow: 0 0 8px var(--good); }
 
-.hero { padding: 72px 0 36px; text-align: center; }
+.hero { padding: 72px 0 12px; text-align: center; }
 .hero h1 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 14px; line-height: 1.08; }
 .hero h1 .accent-text { color: var(--accent); }
 .hero p.sub { font-size: 18px; color: var(--text-secondary); max-width: 620px; margin: 0 auto 26px; }
