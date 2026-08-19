@@ -141,13 +141,13 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
       <div class="value">${p.top1_pct}%</div>
       <div class="label">Most confident pick of the week</div>
       <div class="n">${p.top1_n} picks, 5 seasons</div>
-      <div class="profit">${top1Profit} on $100/pick (-110)</div>
+      <div class="profit">${top1Profit} on $100/pick (-110 odds)</div>
     </div>
     <div class="stat-tile">
       <div class="value">${p.top5_pct}%</div>
       <div class="label">Top 5 picks per week</div>
       <div class="n">${p.top5_n} picks, 5 seasons</div>
-      <div class="profit">${top5Profit} on $100/pick (-110)</div>
+      <div class="profit">${top5Profit} on $100/pick (-110 odds)</div>
     </div>
     <div class="stat-tile">
       <div class="value">${p.top5_n + p.top1_n - 0}</div>
