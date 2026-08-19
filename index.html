@@ -118,16 +118,31 @@ const METRIC_LABELS = { top1: 'Most confident pick of the week', top5: 'Top 5 pi
 fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(data => {
   const p = data.pooled;
   document.getElementById('subhead-pct').textContent = p.top5_pct + '%';
+
+  // $100/pick at standard -110 odds: a win pays 100/1.1, a loss costs the full $100.
+  // Computed from the actual graded picks (not the rounded pooled %) so it's exact.
+  const profitAt110 = (picks) => {
+    const wins = picks.filter(g => g.correct === true).length;
+    const losses = picks.filter(g => g.correct === false).length;
+    return wins * (100 / 1.1) - losses * 100;
+  };
+  const fmtProfit = (n) => (n >= 0 ? '+' : '−') + '$' + Math.abs(Math.round(n)).toLocaleString();
+
+  const top1Profit = fmtProfit(profitAt110(data.top1_picks));
+  const top5Profit = fmtProfit(profitAt110(data.top5_picks));
+
   document.getElementById('stat-row').innerHTML = `
     <div class="stat-tile">
       <div class="value">${p.top1_pct}%</div>
       <div class="label">Most confident pick of the week</div>
       <div class="n">${p.top1_n} picks, 5 seasons</div>
+      <div class="profit">${top1Profit} on $100/pick (-110)</div>
     </div>
     <div class="stat-tile">
       <div class="value">${p.top5_pct}%</div>
       <div class="label">Top 5 picks per week</div>
       <div class="n">${p.top5_n} picks, 5 seasons</div>
+      <div class="profit">${top5Profit} on $100/pick (-110)</div>
     </div>
     <div class="stat-tile">
       <div class="value">${p.top5_n + p.top1_n - 0}</div>
