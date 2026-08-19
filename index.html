@@ -127,9 +127,14 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
     return wins * (100 / 1.1) - losses * 100;
   };
   const fmtProfit = (n) => (n >= 0 ? '+' : '−') + '$' + Math.abs(Math.round(n)).toLocaleString();
+  const fmtRoi = (n, count) => (n >= 0 ? '+' : '−') + (Math.abs(n) / (count * 100) * 100).toFixed(1) + '%';
 
-  const top1Profit = fmtProfit(profitAt110(data.top1_picks));
-  const top5Profit = fmtProfit(profitAt110(data.top5_picks));
+  const top1ProfitN = profitAt110(data.top1_picks);
+  const top5ProfitN = profitAt110(data.top5_picks);
+  const top1Profit = fmtProfit(top1ProfitN);
+  const top5Profit = fmtProfit(top5ProfitN);
+  const top1Roi = fmtRoi(top1ProfitN, data.top1_picks.length);
+  const top5Roi = fmtRoi(top5ProfitN, data.top5_picks.length);
 
   document.getElementById('stat-row').innerHTML = `
     <div class="stat-tile">
@@ -148,6 +153,7 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
       <div class="value">${p.top5_n + p.top1_n - 0}</div>
       <div class="label">Confidence picks graded</div>
       <div class="n">100% shown, zero omitted</div>
+      <div class="profit">${top1Roi} / ${top5Roi} ROI (Top1/Top5)</div>
     </div>`;
 
   seasonData = data.season_summary;
