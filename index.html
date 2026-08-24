@@ -58,6 +58,11 @@
     </div>
   </div>
 
+  <button type="button" class="promo-banner-home" id="promo-banner-home">
+    <span class="ptext"><strong>Get Week 1 picks free</strong> — drop your name and email, no card required.</span>
+    <span class="parrow">Sign me up →</span>
+  </button>
+
   <div class="stat-row" id="stat-row"></div>
 
   <div class="chart-card">
@@ -227,6 +232,18 @@ function drawSeasonChart() {
 </script>
 <script src="nav.js"></script>
 <script src="popup.js"></script>
+<script>
+(function () {
+  var banner = document.getElementById('promo-banner-home');
+  // Hide the permanent banner once it's no longer relevant — same rules as
+  // the popup itself (popup.js), so the two never contradict each other.
+  if (new Date() >= window.TRIFECTA_WEEK1_CUTOFF || localStorage.getItem('trifecta_email_submitted') || localStorage.getItem('trifecta_enc_token')) {
+    banner.style.display = 'none';
+    return;
+  }
+  banner.addEventListener('click', function () { window.trifectaOpenPromo(); });
+})();
+</script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>
 </body>
 </html>

@@ -110,6 +110,18 @@ body {
 .btn-x:hover { background: #ececec; }
 .btn-x svg { flex-shrink: 0; }
 
+.promo-banner-home {
+  display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
+  width: 100%; margin: 0 0 22px; padding: 15px 22px; cursor: pointer; text-align: center;
+  background: color-mix(in srgb, var(--accent-2) 12%, var(--surface-1));
+  border: 1px solid color-mix(in srgb, var(--accent-2) 40%, var(--border));
+  border-radius: 12px; font-family: var(--font-body); transition: border-color .15s, background .15s;
+}
+.promo-banner-home:hover { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 18%, var(--surface-1)); }
+.promo-banner-home .ptext { font-size: 14.5px; color: var(--text-primary); }
+.promo-banner-home .ptext strong { color: var(--accent-2); }
+.promo-banner-home .parrow { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent-2); white-space: nowrap; }
+
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 28px 0 40px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 .stat-tile { background: var(--surface-1); padding: 28px 20px; text-align: center; }
 .stat-tile .value { font-family: var(--font-mono); font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
