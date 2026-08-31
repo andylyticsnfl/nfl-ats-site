@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-30",
+ "generated": "2026-08-31",
  "pooled": {
-  "top5_pct": 60.2,
+  "top5_pct": 60.4,
   "top5_n": 450,
-  "top1_pct": 71.1,
+  "top1_pct": 70.0,
   "top1_n": 90
  },
  "season_summary": [
@@ -11,12 +11,12 @@
    "season": 2021,
    "top5_pct": 62.2,
    "top5_n": 90,
-   "top1_pct": 83.3,
+   "top1_pct": 77.8,
    "top1_n": 18
   },
   {
    "season": 2022,
-   "top5_pct": 62.2,
+   "top5_pct": 63.3,
    "top5_n": 90,
    "top1_pct": 66.7,
    "top1_n": 18
@@ -119,7 +119,7 @@
    "spread": -3.0,
    "pick_team": "DAL",
    "pick_side": "away",
-   "edge": 13.9,
+   "edge": 14.0,
    "correct": true
   },
   {
@@ -307,19 +307,6 @@
   {
    "season": 2021,
    "week": 5,
-   "away": "NYJ",
-   "home": "ATL",
-   "away_score": 20,
-   "home_score": 27,
-   "spread": -3.0,
-   "pick_team": "ATL",
-   "pick_side": "home",
-   "edge": 13.2,
-   "correct": true
-  },
-  {
-   "season": 2021,
-   "week": 5,
    "away": "LA",
    "home": "SEA",
    "away_score": 26,
@@ -329,6 +316,19 @@
    "pick_side": "home",
    "edge": 12.5,
    "correct": false
+  },
+  {
+   "season": 2021,
+   "week": 5,
+   "away": "NYJ",
+   "home": "ATL",
+   "away_score": 20,
+   "home_score": 27,
+   "spread": -3.0,
+   "pick_team": "ATL",
+   "pick_side": "home",
+   "edge": 12.3,
+   "correct": true
   },
   {
    "season": 2021,
@@ -1146,7 +1146,7 @@
    "spread": 6.5,
    "pick_team": "WAS",
    "pick_side": "home",
-   "edge": 7.7,
+   "edge": 7.6,
    "correct": true
   },
   {
@@ -1289,7 +1289,7 @@
    "spread": -5.5,
    "pick_team": "ARI",
    "pick_side": "away",
-   "edge": 21.4,
+   "edge": 21.5,
    "correct": true
   },
   {
@@ -1529,15 +1529,15 @@
   {
    "season": 2022,
    "week": 5,
-   "away": "NYG",
-   "home": "GB",
-   "away_score": 27,
-   "home_score": 22,
-   "spread": -8.5,
-   "pick_team": "GB",
-   "pick_side": "home",
-   "edge": 7.4,
-   "correct": false
+   "away": "IND",
+   "home": "DEN",
+   "away_score": 12,
+   "home_score": 9,
+   "spread": -3.5,
+   "pick_team": "IND",
+   "pick_side": "away",
+   "edge": 6.8,
+   "correct": true
   },
   {
    "season": 2022,
@@ -1640,7 +1640,7 @@
    "spread": -5.5,
    "pick_team": "SEA",
    "pick_side": "away",
-   "edge": 12.5,
+   "edge": 12.6,
    "correct": true
   },
   {
@@ -1692,7 +1692,7 @@
    "spread": -1.0,
    "pick_team": "JAX",
    "pick_side": "home",
-   "edge": 9.4,
+   "edge": 8.5,
    "correct": false
   },
   {
@@ -1815,6 +1815,19 @@
   {
    "season": 2022,
    "week": 10,
+   "away": "SEA",
+   "home": "TB",
+   "away_score": 16,
+   "home_score": 21,
+   "spread": -2.5,
+   "pick_team": "SEA",
+   "pick_side": "away",
+   "edge": 12.3,
+   "correct": false
+  },
+  {
+   "season": 2022,
+   "week": 10,
    "away": "ARI",
    "home": "LA",
    "away_score": 27,
@@ -1824,19 +1837,6 @@
    "pick_side": "away",
    "edge": 11.9,
    "correct": true
-  },
-  {
-   "season": 2022,
-   "week": 10,
-   "away": "SEA",
-   "home": "TB",
-   "away_score": 16,
-   "home_score": 21,
-   "spread": -2.5,
-   "pick_team": "SEA",
-   "pick_side": "away",
-   "edge": 11.4,
-   "correct": false
   },
   {
    "season": 2022,
@@ -1880,19 +1880,6 @@
   {
    "season": 2022,
    "week": 11,
-   "away": "SF",
-   "home": "ARI",
-   "away_score": 38,
-   "home_score": 10,
-   "spread": 10.0,
-   "pick_team": "ARI",
-   "pick_side": "home",
-   "edge": 11.6,
-   "correct": false
-  },
-  {
-   "season": 2022,
-   "week": 11,
    "away": "LV",
    "home": "DEN",
    "away_score": 22,
@@ -1902,6 +1889,19 @@
    "pick_side": "away",
    "edge": 11.0,
    "correct": true
+  },
+  {
+   "season": 2022,
+   "week": 11,
+   "away": "SF",
+   "home": "ARI",
+   "away_score": 38,
+   "home_score": 10,
+   "spread": 10.0,
+   "pick_team": "ARI",
+   "pick_side": "home",
+   "edge": 10.7,
+   "correct": false
   },
   {
    "season": 2022,
@@ -2355,7 +2355,7 @@
    "spread": 9.0,
    "pick_team": "KC",
    "pick_side": "away",
-   "edge": 9.0,
+   "edge": 9.1,
    "correct": true
   },
   {
@@ -2608,19 +2608,6 @@
   {
    "season": 2023,
    "week": 4,
-   "away": "ATL",
-   "home": "JAX",
-   "away_score": 7,
-   "home_score": 23,
-   "spread": -3.5,
-   "pick_team": "JAX",
-   "pick_side": "home",
-   "edge": 12.7,
-   "correct": true
-  },
-  {
-   "season": 2023,
-   "week": 4,
    "away": "MIA",
    "home": "BUF",
    "away_score": 20,
@@ -2629,6 +2616,19 @@
    "pick_team": "BUF",
    "pick_side": "home",
    "edge": 12.3,
+   "correct": true
+  },
+  {
+   "season": 2023,
+   "week": 4,
+   "away": "ATL",
+   "home": "JAX",
+   "away_score": 7,
+   "home_score": 23,
+   "spread": -3.5,
+   "pick_team": "JAX",
+   "pick_side": "home",
+   "edge": 11.8,
    "correct": true
   },
   {
@@ -2732,7 +2732,7 @@
    "spread": 5.5,
    "pick_team": "BAL",
    "pick_side": "away",
-   "edge": 11.0,
+   "edge": 11.9,
    "correct": true
   },
   {
@@ -2810,7 +2810,7 @@
    "spread": -3.5,
    "pick_team": "PIT",
    "pick_side": "away",
-   "edge": 8.1,
+   "edge": 8.2,
    "correct": true
   },
   {
@@ -4188,7 +4188,7 @@
    "spread": 6.5,
    "pick_team": "CAR",
    "pick_side": "home",
-   "edge": 11.1,
+   "edge": 10.3,
    "correct": true
   },
   {
@@ -4929,7 +4929,7 @@
    "spread": 2.5,
    "pick_team": "PIT",
    "pick_side": "home",
-   "edge": 17.4,
+   "edge": 16.5,
    "correct": true
   },
   {
@@ -5078,19 +5078,6 @@
   {
    "season": 2025,
    "week": 6,
-   "away": "DEN",
-   "home": "NYJ",
-   "away_score": 13,
-   "home_score": 11,
-   "spread": 7.5,
-   "pick_team": "NYJ",
-   "pick_side": "home",
-   "edge": 11.9,
-   "correct": true
-  },
-  {
-   "season": 2025,
-   "week": 6,
    "away": "TEN",
    "home": "LV",
    "away_score": 10,
@@ -5099,6 +5086,19 @@
    "pick_team": "LV",
    "pick_side": "home",
    "edge": 11.4,
+   "correct": true
+  },
+  {
+   "season": 2025,
+   "week": 6,
+   "away": "DEN",
+   "home": "NYJ",
+   "away_score": 13,
+   "home_score": 11,
+   "spread": 7.5,
+   "pick_team": "NYJ",
+   "pick_side": "home",
+   "edge": 11.0,
    "correct": true
   },
   {
@@ -5919,7 +5919,7 @@
    "spread": -3.0,
    "pick_team": "DAL",
    "pick_side": "away",
-   "edge": 13.9,
+   "edge": 14.0,
    "correct": true
   },
   {
@@ -5951,15 +5951,15 @@
   {
    "season": 2021,
    "week": 5,
-   "away": "NYJ",
-   "home": "ATL",
-   "away_score": 20,
-   "home_score": 27,
-   "spread": -3.0,
-   "pick_team": "ATL",
+   "away": "LA",
+   "home": "SEA",
+   "away_score": 26,
+   "home_score": 17,
+   "spread": 2.5,
+   "pick_team": "SEA",
    "pick_side": "home",
-   "edge": 13.2,
-   "correct": true
+   "edge": 12.5,
+   "correct": false
   },
   {
    "season": 2021,
@@ -6153,7 +6153,7 @@
    "spread": -5.5,
    "pick_team": "ARI",
    "pick_side": "away",
-   "edge": 21.4,
+   "edge": 21.5,
    "correct": true
   },
   {
@@ -6881,7 +6881,7 @@
    "spread": 2.5,
    "pick_team": "PIT",
    "pick_side": "home",
-   "edge": 17.4,
+   "edge": 16.5,
    "correct": true
   },
   {
