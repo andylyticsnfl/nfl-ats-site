@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-06",
+ "generated": "2026-09-07",
  "pooled": {
   "top5_pct": 60.4,
   "top5_n": 450,
@@ -4825,7 +4825,7 @@
    "spread": 1.5,
    "pick_team": "KC",
    "pick_side": "home",
-   "edge": 11.9,
+   "edge": 12.8,
    "correct": false
   },
   {
@@ -5475,7 +5475,7 @@
    "spread": 7.5,
    "pick_team": "CIN",
    "pick_side": "home",
-   "edge": 8.2,
+   "edge": 9.3,
    "correct": true
   },
   {
