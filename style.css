@@ -158,6 +158,7 @@ tr:hover td { background: var(--surface-2); }
 .tag { display: inline-block; padding: 3px 9px; border-radius: 5px; font-size: 11.5px; font-weight: 700; font-family: var(--font-mono); letter-spacing: 0.02em; }
 .tag-correct { background: var(--good-dim); color: var(--good); }
 .tag-wrong { background: var(--bad-dim); color: var(--bad); }
+.tag-push { background: var(--surface-3); color: var(--text-muted); }
 
 .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
 .controls input {
