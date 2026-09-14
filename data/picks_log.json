@@ -1,10 +1,10 @@
 {
- "generated": "2026-08-29",
+ "generated": "2026-09-14",
  "pooled": {
   "top5_pct": 60.2,
-  "top5_n": 450,
-  "top1_pct": 71.1,
-  "top1_n": 90
+  "top5_n": 455,
+  "top1_pct": 70.3,
+  "top1_n": 91
  },
  "season_summary": [
   {
@@ -41,6 +41,13 @@
    "top5_n": 90,
    "top1_pct": 66.7,
    "top1_n": 18
+  },
+  {
+   "season": 2026,
+   "top5_pct": 60.0,
+   "top5_n": 5,
+   "top1_pct": 0.0,
+   "top1_n": 1
   }
  ],
  "top5_picks": [
@@ -5893,6 +5900,76 @@
    "pick_side": "home",
    "edge": 6.8,
    "correct": true
+  },
+  {
+   "season": 2026,
+   "week": 1,
+   "away": "GB",
+   "home": "MIN",
+   "away_score": 22,
+   "home_score": 39,
+   "spread": -1.5,
+   "pick_team": "GB",
+   "pick_side": "away",
+   "edge": 13.4,
+   "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 1,
+   "away": "SF",
+   "home": "LA",
+   "away_score": 27,
+   "home_score": 7,
+   "spread": -3.5,
+   "pick_team": "SF",
+   "pick_side": "away",
+   "edge": 13.3,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 1,
+   "away": "NE",
+   "home": "SEA",
+   "away_score": 10,
+   "home_score": 13,
+   "spread": -3.5,
+   "pick_team": "NE",
+   "pick_side": "away",
+   "edge": 13.2,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 1,
+   "away": "DAL",
+   "home": "NYG",
+   "away_score": 20,
+   "home_score": 28,
+   "spread": 3.0,
+   "pick_team": "DAL",
+   "pick_side": "away",
+   "edge": 9.9,
+   "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 1,
+   "away": "TB",
+   "home": "CIN",
+   "away_score": 27,
+   "home_score": 33,
+   "spread": -3.5,
+   "pick_team": "CIN",
+   "pick_side": "home",
+   "edge": 9.8,
+   "correct": true,
+   "push": false
   }
  ],
  "top1_picks": [
@@ -7065,6 +7142,20 @@
    "pick_side": "away",
    "edge": 12.8,
    "correct": false
+  },
+  {
+   "season": 2026,
+   "week": 1,
+   "away": "GB",
+   "home": "MIN",
+   "away_score": 22,
+   "home_score": 39,
+   "spread": -1.5,
+   "pick_team": "GB",
+   "pick_side": "away",
+   "edge": 13.4,
+   "correct": false,
+   "push": false
   }
  ]
 }
