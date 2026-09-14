@@ -161,7 +161,7 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
       <div class="profit">${top5Profit} on $100/pick (-110 odds)</div>
     </div>
     <div class="stat-tile">
-      <div class="value">${p.top5_n + p.top1_n - 0}</div>
+      <div class="value">${p.top5_n}</div>
       <div class="label">Confidence picks graded</div>
       <div class="n">100% shown, zero omitted</div>
       <div class="profit">${top1Roi} / ${top5Roi} ROI (Top1/Top5)</div>
