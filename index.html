@@ -167,7 +167,14 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
       <div class="profit">${top1Roi} / ${top5Roi} ROI (Top1/Top5)</div>
     </div>`;
 
-  seasonData = data.season_summary;
+  // Hide the current (newest) season from the by-season bar chart until it
+  // has at least 3 weeks graded -- Caleb's rule (2026-09-15): a 1- or
+  // 2-week sample (especially the single-game Top1 metric) is noisy enough
+  // to be misleading sitting next to full-season bars. Automatic: compares
+  // against whichever season number is highest in the data, not a
+  // hardcoded year, so this applies again next season with no code change.
+  const newestSeason = Math.max(...data.season_summary.map(s => s.season));
+  seasonData = data.season_summary.filter(s => s.season !== newestSeason || s.max_week > 3);
   drawSeasonChart();
 });
 

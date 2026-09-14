@@ -12,42 +12,48 @@
    "top5_pct": 62.2,
    "top5_n": 90,
    "top1_pct": 83.3,
-   "top1_n": 18
+   "top1_n": 18,
+   "max_week": 18
   },
   {
    "season": 2022,
    "top5_pct": 62.2,
    "top5_n": 90,
    "top1_pct": 66.7,
-   "top1_n": 18
+   "top1_n": 18,
+   "max_week": 18
   },
   {
    "season": 2023,
    "top5_pct": 58.9,
    "top5_n": 90,
    "top1_pct": 66.7,
-   "top1_n": 18
+   "top1_n": 18,
+   "max_week": 18
   },
   {
    "season": 2024,
    "top5_pct": 63.3,
    "top5_n": 90,
    "top1_pct": 72.2,
-   "top1_n": 18
+   "top1_n": 18,
+   "max_week": 18
   },
   {
    "season": 2025,
    "top5_pct": 54.4,
    "top5_n": 90,
    "top1_pct": 66.7,
-   "top1_n": 18
+   "top1_n": 18,
+   "max_week": 18
   },
   {
    "season": 2026,
    "top5_pct": 60.0,
    "top5_n": 5,
    "top1_pct": 0.0,
-   "top1_n": 1
+   "top1_n": 1,
+   "max_week": 1
   }
  ],
  "top5_picks": [
