@@ -216,8 +216,8 @@ const PRICING = {
   },
   pro: {
     1: { price: 37.99, billing: 'billed weekly' },
-    4: { price: 137.99, billing: 'billed every 4 weeks' },
-    8: { price: 249.99 },
+    4: { price: 131.99, billing: 'billed every 4 weeks' },
+    8: { price: 236.99 },
   },
 };
 
@@ -233,9 +233,12 @@ const WHOP_PLAN_IDS = {
 // through Week 18, so it gets one week cheaper each time the NFL week rolls
 // over -- Tuesday 12:01am PT, right after Monday Night Football. Purely
 // clock-based, no scheduled job: one hidden one-time Whop plan exists per
-// (tier, weeks remaining), priced at ceil(rate x weeks) - 0.01 with rates of
-// $5 / $12.50 / $25 per week, and this page picks the plan for right now.
-// Source of truth: trifecta-encyclopedia-api/rest_of_season_plans.json.
+// (tier, weeks remaining) and this page picks the plan for right now (the
+// Worker also refuses any plan cheaper than the current week's). Prices are
+// the nearest .99 to a ~38% discount off the weekly rate x weeks remaining
+// (Snapshot: $5/wk; Digest and Encyclopedia: 38% off exactly, which lands on
+// 38% for every week except the very last). Source of truth:
+// trifecta-encyclopedia-api/rest_of_season_plans.json.
 // The Worker gives every one of these plans access through the end of Week 18.
 const REST_OF_SEASON = {
   top1: {
@@ -259,44 +262,44 @@ const REST_OF_SEASON = {
     1: { planId: 'plan_mV1UzNDSuLjIc', price: 4.99 },
   },
   top5: {
-    18: { planId: 'plan_IicTf3PpR8Lhy', price: 224.99 },
-    17: { planId: 'plan_9gxDk9UxzrL3y', price: 212.99 },
-    16: { planId: 'plan_gRePMzfgiooaH', price: 199.99 },
-    15: { planId: 'plan_rBJjtEulG95vO', price: 187.99 },
-    14: { planId: 'plan_VMfCfOCiRE5Al', price: 174.99 },
-    13: { planId: 'plan_WFsx72cRK3YYZ', price: 162.99 },
-    12: { planId: 'plan_xGt7f0tYXViAF', price: 149.99 },
-    11: { planId: 'plan_7tIEw2SxJ3zmq', price: 137.99 },
-    10: { planId: 'plan_oecTHn4B8Xc68', price: 124.99 },
-    9: { planId: 'plan_jnM9xY9p8jCCx', price: 112.99 },
-    8: { planId: 'plan_FtRL27zjyxE0g', price: 99.99 },
-    7: { planId: 'plan_gDYUjn7OkDX8J', price: 87.99 },
-    6: { planId: 'plan_jJnnXCTSYfAjg', price: 74.99 },
-    5: { planId: 'plan_S8zqTs4rIdiAm', price: 62.99 },
+    18: { planId: 'plan_IicTf3PpR8Lhy', price: 222.99 },
+    17: { planId: 'plan_9gxDk9UxzrL3y', price: 210.99 },
+    16: { planId: 'plan_gRePMzfgiooaH', price: 197.99 },
+    15: { planId: 'plan_rBJjtEulG95vO', price: 185.99 },
+    14: { planId: 'plan_VMfCfOCiRE5Al', price: 173.99 },
+    13: { planId: 'plan_WFsx72cRK3YYZ', price: 160.99 },
+    12: { planId: 'plan_xGt7f0tYXViAF', price: 148.99 },
+    11: { planId: 'plan_7tIEw2SxJ3zmq', price: 135.99 },
+    10: { planId: 'plan_oecTHn4B8Xc68', price: 123.99 },
+    9: { planId: 'plan_jnM9xY9p8jCCx', price: 111.99 },
+    8: { planId: 'plan_FtRL27zjyxE0g', price: 98.99 },
+    7: { planId: 'plan_gDYUjn7OkDX8J', price: 86.99 },
+    6: { planId: 'plan_jJnnXCTSYfAjg', price: 73.99 },
+    5: { planId: 'plan_S8zqTs4rIdiAm', price: 61.99 },
     4: { planId: 'plan_jF2Q4uCCx8pjB', price: 49.99 },
-    3: { planId: 'plan_p6mDuJRNLXsPb', price: 37.99 },
+    3: { planId: 'plan_p6mDuJRNLXsPb', price: 36.99 },
     2: { planId: 'plan_1GiYh9HHMuFM9', price: 24.99 },
-    1: { planId: 'plan_Zs0LbkpQk44AW', price: 12.99 },
+    1: { planId: 'plan_Zs0LbkpQk44AW', price: 11.99 },
   },
   pro: {
-    18: { planId: 'plan_SRzSlVtfVqruC', price: 449.99 },
-    17: { planId: 'plan_FbLPJbQZeJ1J3', price: 424.99 },
-    16: { planId: 'plan_uRDt68TPz0nBs', price: 399.99 },
-    15: { planId: 'plan_Z69H0nIJDAVbF', price: 374.99 },
-    14: { planId: 'plan_7ehkI2NDlJZuT', price: 349.99 },
-    13: { planId: 'plan_wtTZNctVdcWKB', price: 324.99 },
-    12: { planId: 'plan_FnjqLVy4saGbL', price: 299.99 },
-    11: { planId: 'plan_W27zT97nc5X6H', price: 274.99 },
-    10: { planId: 'plan_YhNSnkqFbtDyV', price: 249.99 },
-    9: { planId: 'plan_Q2XpPjE9JcHvA', price: 224.99 },
-    8: { planId: 'plan_btxzn1F9dft6W', price: 199.99 },
-    7: { planId: 'plan_TSmymqVZ8po68', price: 174.99 },
-    6: { planId: 'plan_477MTXIGpnAu2', price: 149.99 },
-    5: { planId: 'plan_N2p06hp7XUZYd', price: 124.99 },
-    4: { planId: 'plan_UNHwe7OyRvqpw', price: 99.99 },
-    3: { planId: 'plan_OiQ8iulXjGspu', price: 74.99 },
-    2: { planId: 'plan_9IAJmAwPOhAEd', price: 49.99 },
-    1: { planId: 'plan_ezmezdOo8vQiu', price: 24.99 },
+    18: { planId: 'plan_SRzSlVtfVqruC', price: 423.99 },
+    17: { planId: 'plan_FbLPJbQZeJ1J3', price: 400.99 },
+    16: { planId: 'plan_uRDt68TPz0nBs', price: 376.99 },
+    15: { planId: 'plan_Z69H0nIJDAVbF', price: 352.99 },
+    14: { planId: 'plan_7ehkI2NDlJZuT', price: 329.99 },
+    13: { planId: 'plan_wtTZNctVdcWKB', price: 305.99 },
+    12: { planId: 'plan_FnjqLVy4saGbL', price: 282.99 },
+    11: { planId: 'plan_W27zT97nc5X6H', price: 258.99 },
+    10: { planId: 'plan_YhNSnkqFbtDyV', price: 235.99 },
+    9: { planId: 'plan_Q2XpPjE9JcHvA', price: 211.99 },
+    8: { planId: 'plan_btxzn1F9dft6W', price: 187.99 },
+    7: { planId: 'plan_TSmymqVZ8po68', price: 164.99 },
+    6: { planId: 'plan_477MTXIGpnAu2', price: 140.99 },
+    5: { planId: 'plan_N2p06hp7XUZYd', price: 117.99 },
+    4: { planId: 'plan_UNHwe7OyRvqpw', price: 93.99 },
+    3: { planId: 'plan_OiQ8iulXjGspu', price: 70.99 },
+    2: { planId: 'plan_9IAJmAwPOhAEd', price: 46.99 },
+    1: { planId: 'plan_ezmezdOo8vQiu', price: 23.99 },
   },
 };
 
@@ -326,7 +329,7 @@ const WEEK2_START_PT_WALL = Date.UTC(2026, 8, 15, 0, 1);
 const PRICING_PRESEASON = {
   top1: { 1: { price: 7.99 }, 4: { price: 27.99 } },
   top5: { 1: { price: 19.99 }, 4: { price: 69.99 } },
-  pro: { 1: { price: 37.99 }, 4: { price: 137.99 } },
+  pro: { 1: { price: 37.99 }, 4: { price: 131.99 } },
 };
 
 const WHOP_PLAN_IDS_PRESEASON = {
