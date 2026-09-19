@@ -125,7 +125,7 @@
       <button class="tab-btn active" data-term="1">1 Week</button>
       <button class="tab-btn" data-term="4">4 Weeks</button>
       <button class="tab-btn" data-term="8">8 Weeks</button>
-      <button class="tab-btn" data-term="season">Full Season</button>
+      <button class="tab-btn" data-term="season">Rest of Season</button>
     </div>
 
     <div class="tier-grid">
@@ -208,29 +208,109 @@ const PRICING = {
     1: { price: 7.99, billing: 'billed weekly' },
     4: { price: 27.99, billing: 'billed every 4 weeks' },
     8: { price: 49.99 },
-    season: { price: 89.99 },
   },
   top5: {
     1: { price: 19.99, billing: 'billed weekly' },
     4: { price: 69.99, billing: 'billed every 4 weeks' },
     8: { price: 124.99 },
-    season: { price: 224.99 },
   },
   pro: {
     1: { price: 37.99, billing: 'billed weekly' },
     4: { price: 137.99, billing: 'billed every 4 weeks' },
     8: { price: 249.99 },
-    season: { price: 449.99 },
   },
 };
 
 // Whop plan ids — created via the Whop API 2026-08-18, see
 // trifecta-encyclopedia-api/whop_products.json for the full map.
 const WHOP_PLAN_IDS = {
-  top1: { 1: 'plan_g0bJuvr1FDCgt', 4: 'plan_f0L3JQFqvIgac', 8: 'plan_8lax0DNxSWYEA', season: 'plan_UKfXhPPYeZADs' },
-  top5: { 1: 'plan_644TtLotYV7hi', 4: 'plan_1z6HxlmJ2ziFA', 8: 'plan_zNrfdmo8jpl2g', season: 'plan_IicTf3PpR8Lhy' },
-  pro: { 1: 'plan_FOvluOHgaskzw', 4: 'plan_bqU72730rQ3cq', 8: 'plan_HN3LTVMta0dFr', season: 'plan_SRzSlVtfVqruC' },
+  top1: { 1: 'plan_g0bJuvr1FDCgt', 4: 'plan_f0L3JQFqvIgac', 8: 'plan_8lax0DNxSWYEA' },
+  top5: { 1: 'plan_644TtLotYV7hi', 4: 'plan_1z6HxlmJ2ziFA', 8: 'plan_zNrfdmo8jpl2g' },
+  pro: { 1: 'plan_FOvluOHgaskzw', 4: 'plan_bqU72730rQ3cq', 8: 'plan_HN3LTVMta0dFr' },
 };
+
+// "Rest of Season": the pass covers every week from the current NFL week
+// through Week 18, so it gets one week cheaper each time the NFL week rolls
+// over -- Tuesday 12:01am PT, right after Monday Night Football. Purely
+// clock-based, no scheduled job: one hidden one-time Whop plan exists per
+// (tier, weeks remaining), priced at ceil(rate x weeks) - 0.01 with rates of
+// $5 / $12.50 / $25 per week, and this page picks the plan for right now.
+// Source of truth: trifecta-encyclopedia-api/rest_of_season_plans.json.
+// The Worker gives every one of these plans access through the end of Week 18.
+const REST_OF_SEASON = {
+  top1: {
+    18: { planId: 'plan_UKfXhPPYeZADs', price: 89.99 },
+    17: { planId: 'plan_XuUSl2ESLFd9k', price: 84.99 },
+    16: { planId: 'plan_dcTaubDRXBCq3', price: 79.99 },
+    15: { planId: 'plan_EOVFvUlCJx42c', price: 74.99 },
+    14: { planId: 'plan_597MnNSE4RGmu', price: 69.99 },
+    13: { planId: 'plan_BDlrT7ieA6jch', price: 64.99 },
+    12: { planId: 'plan_V0OtT6iCN4yJt', price: 59.99 },
+    11: { planId: 'plan_t5YfC51gF2pRU', price: 54.99 },
+    10: { planId: 'plan_La3bTWmVWoute', price: 49.99 },
+    9: { planId: 'plan_7uHYqjkQXz3aa', price: 44.99 },
+    8: { planId: 'plan_tOcGPzaKLFWHf', price: 39.99 },
+    7: { planId: 'plan_ej4FnWzDOs2qT', price: 34.99 },
+    6: { planId: 'plan_Bke7Tf8JslWcc', price: 29.99 },
+    5: { planId: 'plan_6cnYbLv6kdxec', price: 24.99 },
+    4: { planId: 'plan_uQCwdfaU05WDL', price: 19.99 },
+    3: { planId: 'plan_3gjzkGYYzgzQI', price: 14.99 },
+    2: { planId: 'plan_kSRVnpy5ReJ8w', price: 9.99 },
+    1: { planId: 'plan_mV1UzNDSuLjIc', price: 4.99 },
+  },
+  top5: {
+    18: { planId: 'plan_IicTf3PpR8Lhy', price: 224.99 },
+    17: { planId: 'plan_9gxDk9UxzrL3y', price: 212.99 },
+    16: { planId: 'plan_gRePMzfgiooaH', price: 199.99 },
+    15: { planId: 'plan_rBJjtEulG95vO', price: 187.99 },
+    14: { planId: 'plan_VMfCfOCiRE5Al', price: 174.99 },
+    13: { planId: 'plan_WFsx72cRK3YYZ', price: 162.99 },
+    12: { planId: 'plan_xGt7f0tYXViAF', price: 149.99 },
+    11: { planId: 'plan_7tIEw2SxJ3zmq', price: 137.99 },
+    10: { planId: 'plan_oecTHn4B8Xc68', price: 124.99 },
+    9: { planId: 'plan_jnM9xY9p8jCCx', price: 112.99 },
+    8: { planId: 'plan_FtRL27zjyxE0g', price: 99.99 },
+    7: { planId: 'plan_gDYUjn7OkDX8J', price: 87.99 },
+    6: { planId: 'plan_jJnnXCTSYfAjg', price: 74.99 },
+    5: { planId: 'plan_S8zqTs4rIdiAm', price: 62.99 },
+    4: { planId: 'plan_jF2Q4uCCx8pjB', price: 49.99 },
+    3: { planId: 'plan_p6mDuJRNLXsPb', price: 37.99 },
+    2: { planId: 'plan_1GiYh9HHMuFM9', price: 24.99 },
+    1: { planId: 'plan_Zs0LbkpQk44AW', price: 12.99 },
+  },
+  pro: {
+    18: { planId: 'plan_SRzSlVtfVqruC', price: 449.99 },
+    17: { planId: 'plan_FbLPJbQZeJ1J3', price: 424.99 },
+    16: { planId: 'plan_uRDt68TPz0nBs', price: 399.99 },
+    15: { planId: 'plan_Z69H0nIJDAVbF', price: 374.99 },
+    14: { planId: 'plan_7ehkI2NDlJZuT', price: 349.99 },
+    13: { planId: 'plan_wtTZNctVdcWKB', price: 324.99 },
+    12: { planId: 'plan_FnjqLVy4saGbL', price: 299.99 },
+    11: { planId: 'plan_W27zT97nc5X6H', price: 274.99 },
+    10: { planId: 'plan_YhNSnkqFbtDyV', price: 249.99 },
+    9: { planId: 'plan_Q2XpPjE9JcHvA', price: 224.99 },
+    8: { planId: 'plan_btxzn1F9dft6W', price: 199.99 },
+    7: { planId: 'plan_TSmymqVZ8po68', price: 174.99 },
+    6: { planId: 'plan_477MTXIGpnAu2', price: 149.99 },
+    5: { planId: 'plan_N2p06hp7XUZYd', price: 124.99 },
+    4: { planId: 'plan_UNHwe7OyRvqpw', price: 99.99 },
+    3: { planId: 'plan_OiQ8iulXjGspu', price: 74.99 },
+    2: { planId: 'plan_9IAJmAwPOhAEd', price: 49.99 },
+    1: { planId: 'plan_ezmezdOo8vQiu', price: 24.99 },
+  },
+};
+
+// Wall-clock time in Pacific (DST-aware), as a UTC-style number so week math
+// is unaffected by the March/November clock change.
+function ptWallClockMs() {
+  const p = {};
+  new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hourCycle: 'h23',
+    year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
+    .formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
+  return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute);
+}
+// Week 2 began Tuesday Sept 15, 2026 at 12:01am PT; every later week starts 7 days after the last.
+const WEEK2_START_PT_WALL = Date.UTC(2026, 8, 15, 0, 1);
 
 // Temporary one-time versions of the 1-week/4-week plans, used only before
 // RECURRING_CUTOVER. A real subscription would bill immediately AND again
@@ -262,14 +342,7 @@ const WHOP_PLAN_IDS_PRESEASON = {
 // visitor's clock against this constant. No manual step, no scheduled
 // task: same pattern as popup.js's WEEK1_CUTOFF.
 const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
-// Week 1's first kickoff — used only to compute which week number a
-// one-time plan's "Picks for Week(s) X-Y" label should start counting
-// from (1 before the season starts, the actual current NFL week once
-// it's underway, e.g. an 8-week pass bought in week 5 reads "Weeks 5-12").
-const SEASON_KICKOFF = Date.parse('2026-09-10T00:20:00Z');
-
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
-const WEEKS_IN_TERM = { 1: 1, 4: 4, 8: 8, season: 18 };
 // Payhip checkout is paused for good (moved to Whop, see HANDOFF.md) — this
 // only gates the brief window between deploying this file and Whop going live.
 const CHECKOUT_DISABLED = false;
@@ -283,9 +356,14 @@ if (CHECKOUT_DISABLED) {
 }
 
 function currentNflWeek() {
-  if (Date.now() < SEASON_KICKOFF) return 1;
-  const weeksElapsed = Math.floor((Date.now() - SEASON_KICKOFF) / (7 * 24 * 60 * 60 * 1000));
-  return Math.min(18, weeksElapsed + 1);
+  const wall = ptWallClockMs();
+  if (wall < WEEK2_START_PT_WALL) return 1;
+  return Math.min(18, 2 + Math.floor((wall - WEEK2_START_PT_WALL) / (7 * 24 * 60 * 60 * 1000)));
+}
+
+// Weeks a purchase of this term covers right now (Rest of Season = current week through Week 18).
+function weeksInTerm(term) {
+  return term === 'season' ? 19 - currentNflWeek() : Number(term);
 }
 
 function oneTimeBilling(tier, weeks) {
@@ -305,8 +383,9 @@ function renderPricing(term) {
   const isOneTime = usePreseasonPlan || term === '8' || term === 'season';
 
   Object.keys(PRICING).forEach(tier => {
-    const plan = usePreseasonPlan ? PRICING_PRESEASON[tier][term] : PRICING[tier][term];
-    const weeks = WEEKS_IN_TERM[term];
+    const weeks = weeksInTerm(term);
+    const plan = term === 'season' ? REST_OF_SEASON[tier][weeks]
+      : usePreseasonPlan ? PRICING_PRESEASON[tier][term] : PRICING[tier][term];
     const weeklyRate = PRICING[tier][1].price;
     const perWeek = plan.price / weeks;
     const billing = isOneTime ? oneTimeBilling(tier, weeks) : plan.billing;
@@ -335,7 +414,8 @@ function renderPricing(term) {
       btn.disabled = true;
       btn.textContent = 'Checkout upgrading — check back soon';
     } else {
-      const planId = usePreseasonPlan ? WHOP_PLAN_IDS_PRESEASON[tier][term] : WHOP_PLAN_IDS[tier][term];
+      const planId = term === 'season' ? REST_OF_SEASON[tier][weeks].planId
+        : usePreseasonPlan ? WHOP_PLAN_IDS_PRESEASON[tier][term] : WHOP_PLAN_IDS[tier][term];
       btn.dataset.planId = planId;
     }
   });
