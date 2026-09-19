@@ -477,11 +477,14 @@ function showNameStep(planId) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ planId, fullName }),
       });
+      if (resp.status === 409) throw new Error('price not available yet');
       if (!resp.ok) throw new Error('session request failed');
       const { sessionId } = await resp.json();
       showPaymentStep(sessionId);
     } catch (err) {
-      errorEl.textContent = "Something went wrong — please try again.";
+      errorEl.textContent = err.message === 'price not available yet'
+        ? "That price isn't available yet — please refresh the page to see the current price."
+        : "Something went wrong — please try again.";
       errorEl.style.display = 'block';
       continueBtn.disabled = false;
       continueBtn.textContent = 'Continue to payment';
