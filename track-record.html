@@ -69,6 +69,7 @@
     <div class="controls">
       <select id="season-filter">
         <option value="">All seasons</option>
+        <option value="2026">2026</option>
         <option value="2025">2025</option>
         <option value="2024">2024</option>
         <option value="2023">2023</option>
@@ -235,7 +236,6 @@ document.querySelectorAll('#picks-table th[data-sort]').forEach(th => {
 ['season-filter', 'result-filter', 'team-filter'].forEach(id =>
   document.getElementById(id).addEventListener('input', render)
 );
-enhanceSelect(document.getElementById('season-filter'));
 enhanceSelect(document.getElementById('result-filter'));
 
 fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(data => {
@@ -246,6 +246,17 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
     <div class="stat-tile"><div class="value">${p.top5_pct}%</div><div class="label">Top 5/wk</div><div class="n">${p.top5_n} picks</div></div>`;
 
   const seasonsDesc = data.season_summary.slice().sort((a, b) => b.season - a.season);
+
+  // Season dropdown: built from the data itself so a new season (2026, 2027...) shows up
+  // without editing this file, then themed like the results dropdown.
+  const seasonSelect = document.getElementById('season-filter');
+  seasonSelect.innerHTML = '<option value="">All seasons</option>' +
+    seasonsDesc.map(s => `<option value="${s.season}">${s.season}</option>`).join('');
+  enhanceSelect(seasonSelect);
+
+  // Tab labels' pick counts come from the data too (they were hard-coded at 90 / 450).
+  document.querySelector('.tab-btn[data-tab="top1"]').textContent = `Most Confident / week (${p.top1_n} picks)`;
+  document.querySelector('.tab-btn[data-tab="top5"]').textContent = `Top 5 / week (${p.top5_n} picks)`;
   document.querySelector('#season-table tbody').innerHTML = seasonsDesc.map(s => `
     <tr>
       <td>${s.season}</td>
