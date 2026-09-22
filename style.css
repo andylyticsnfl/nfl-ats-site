@@ -121,12 +121,12 @@ body {
 .promo-banner-home .ptext { font-size: 14.5px; color: var(--text-primary); }
 .promo-banner-home .ptext strong { color: var(--accent-2); }
 .promo-banner-home .parrow { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent-2); white-space: nowrap; }
-.promo-banner-deal { text-decoration: none; background: color-mix(in srgb, var(--accent-2) 16%, var(--surface-1)); border-color: var(--accent-2); flex-wrap: nowrap; }
+.promo-banner-deal { text-decoration: none; background: color-mix(in srgb, var(--accent-2) 16%, var(--surface-1)); border-color: var(--accent-2); flex-wrap: nowrap; padding: 11px 22px; }
 .promo-banner-deal:hover { background: color-mix(in srgb, var(--accent-2) 24%, var(--surface-1)); }
-.promo-banner-deal .ptext { font-weight: 700; line-height: 23px; white-space: nowrap; min-width: 0; overflow: hidden; }
+.promo-banner-deal .ptext { font-weight: 700; text-transform: uppercase; line-height: 31px; white-space: nowrap; min-width: 0; overflow: hidden; }
 .promo-banner-deal .parrow { flex-shrink: 0; }
 @media (max-width: 480px) {
-  .promo-banner-deal { padding: 15px 12px; gap: 6px; }
+  .promo-banner-deal { padding: 11px 12px; gap: 6px; }
   .promo-banner-deal .parrow-label { display: none; }
 }
 
