@@ -24,24 +24,19 @@
 <link rel="preconnect" href="https://whop.com" crossorigin>
 <link rel="dns-prefetch" href="https://js.whop.com">
 <link rel="dns-prefetch" href="https://whop.com">
-<!-- Whop's embedded checkout also loads Stripe Elements, a fraud-detection
-     collector (Sardine), and hCaptcha inside it -- traced by opening a real
-     checkout session and reading its network requests (2026-09-22, while
-     investigating why the modal takes a while to become interactive).
-     Warming the connection to these ahead of time (checkout doesn't mount
-     until a tier button is clicked) can only help; it does not fix the
-     underlying cause, which is Whop's own checkout app loading 200+ JS
-     chunks -- present on whop.com's own checkout page too, not something
-     introduced by this site or fixable from here. -->
-<link rel="preconnect" href="https://js.stripe.com" crossorigin>
-<link rel="dns-prefetch" href="https://js.stripe.com">
-<link rel="preconnect" href="https://api.sardine.ai" crossorigin>
-<link rel="dns-prefetch" href="https://api.sardine.ai">
-<link rel="dns-prefetch" href="https://d.sardine.ai">
-<link rel="dns-prefetch" href="https://p.sardine.ai">
-<link rel="preconnect" href="https://newassets.hcaptcha.com" crossorigin>
-<link rel="dns-prefetch" href="https://newassets.hcaptcha.com">
-<link rel="dns-prefetch" href="https://hcaptcha.com">
+<!-- Tried adding preconnect/dns-prefetch for Stripe/Sardine/hCaptcha here
+     (2026-09-22) to warm the checkout embed's sub-origins early. Reverted
+     the same day -- Caleb reported checkout got slower after that change
+     went out, and 6 extra preconnects opening real connections on every
+     Subscribe page load can plausibly compete with the page's own more
+     urgent requests (including the Worker call this page makes to create
+     the checkout session) for a browser's limited concurrent-connection
+     budget. Removed rather than tuned, since the live site was still
+     serving the OLD version when the slowdown was reported, which points
+     more at a GitHub Pages/CDN propagation delay than this change -- but
+     given real doubt, don't leave an unproven, plausibly-harmful change in.
+     See trifecta-encyclopedia-api/week3_top5_deal_promo.json for the fuller
+     writeup of the checkout-speed investigation. -->
 <script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 <style>
   .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 9px 0; align-items: stretch; }

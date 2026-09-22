@@ -124,6 +124,18 @@ body {
 .promo-banner-deal { text-decoration: none; background: color-mix(in srgb, var(--accent-2) 16%, var(--surface-1)); border-color: var(--accent-2); }
 .promo-banner-deal:hover { background: color-mix(in srgb, var(--accent-2) 24%, var(--surface-1)); }
 
+.deal-ticker { display: block; overflow: hidden; background: var(--accent-2); text-decoration: none; position: relative; }
+.deal-ticker-track { display: flex; width: max-content; animation: deal-ticker-scroll 16s linear infinite; }
+.deal-ticker-item {
+  display: inline-block; white-space: nowrap; padding: 7px 0;
+  font-family: var(--font-mono); font-weight: 800; font-size: 12.5px; letter-spacing: 0.04em; color: #14100a;
+}
+.deal-ticker:hover .deal-ticker-track { animation-play-state: paused; }
+@keyframes deal-ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .deal-ticker-track { animation: none; overflow-x: auto; }
+}
+
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 28px 0 40px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 .stat-tile { background: var(--surface-1); padding: 28px 20px; text-align: center; }
 .stat-tile .value { font-family: var(--font-mono); font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
