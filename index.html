@@ -70,7 +70,7 @@
 
   <a href="subscribe.html#deal" class="promo-banner-home promo-banner-deal" id="promo-banner-deal">
     <span class="ptext">Get Week 3's Top 5 picks for only $4.99 — 75% off!</span>
-    <span class="parrow">Get the deal →</span>
+    <span class="parrow"><span class="parrow-label">Get the deal </span>→</span>
   </a>
 
   <div class="stat-row" id="stat-row"></div>
@@ -275,6 +275,41 @@ function drawSeasonChart() {
     ticker.style.display = 'none';
     return;
   }
+
+  // Same guaranteed-one-row text-fit as the Subscribe page's deal banner:
+  // measure against the real available width and shrink until it provably
+  // fits, so the bubble itself never grows no matter how big the text gets.
+  (function () {
+    var text = deal.querySelector('.ptext');
+    var arrow = deal.querySelector('.parrow');
+    var REFERENCE = 20, FLOOR = 1;
+    function fitPromoDealText() {
+      text.style.fontSize = REFERENCE + 'px';
+      var dealStyle = getComputedStyle(deal);
+      var gap = parseFloat(dealStyle.columnGap) || 10;
+      var available = deal.clientWidth
+        - parseFloat(dealStyle.paddingLeft) - parseFloat(dealStyle.paddingRight)
+        - arrow.getBoundingClientRect().width - gap - 2;
+      var natural = text.scrollWidth;
+      if (natural > available) {
+        var size = Math.max(FLOOR, Math.floor(REFERENCE * available / natural));
+        text.style.fontSize = size + 'px';
+        while (text.scrollWidth > available && size > FLOOR) {
+          size -= 1;
+          text.style.fontSize = size + 'px';
+        }
+      }
+    }
+    fitPromoDealText();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitPromoDealText);
+    }
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(fitPromoDealText, 150);
+    });
+  })();
 
   // Seamless infinite marquee: clone the one text item enough times that the
   // track is comfortably wider than the viewport (>= 3x), then loop by
