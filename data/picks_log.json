@@ -5998,10 +5998,10 @@
    "home": "TEN",
    "away_score": 24,
    "home_score": 20,
-   "spread": 7.0,
+   "spread": 7.5,
    "pick_team": "TEN",
    "pick_side": "home",
-   "edge": 12.7,
+   "edge": 13.2,
    "correct": true,
    "push": false
   },
