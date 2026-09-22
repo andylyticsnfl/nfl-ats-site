@@ -63,6 +63,11 @@
     <span class="parrow">Sign me up →</span>
   </button>
 
+  <a href="subscribe.html#deal" class="promo-banner-home promo-banner-deal" id="promo-banner-deal">
+    <span class="ptext"><strong>Week 3 Top 5 picks — first week $4.99</strong>, then $19.99/wk. Code WEEK3TOP5, new subscribers only.</span>
+    <span class="parrow">Get the deal →</span>
+  </a>
+
   <div class="stat-row" id="stat-row"></div>
 
   <div class="chart-card">
@@ -253,6 +258,15 @@ function drawSeasonChart() {
     return;
   }
   banner.addEventListener('click', function () { window.trifectaOpenPromo(); });
+})();
+(function () {
+  var deal = document.getElementById('promo-banner-deal');
+  // Same auto-expire pattern as the banner above, plus hiding it from anyone
+  // who already looks subscribed (trifecta_enc_token) since the deal is for
+  // new subscribers only.
+  if (new Date() >= window.TRIFECTA_WEEK3_DEAL_CUTOFF || localStorage.getItem('trifecta_enc_token')) {
+    deal.style.display = 'none';
+  }
 })();
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>

@@ -85,6 +85,23 @@
   .term-toggle { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
   .tier-login-link { display: block; text-align: center; font-size: 12px; color: var(--text-muted); margin: 0 0 6px; min-height: 15px; }
   .tier-billing { font-size: 11.5px; color: var(--text-muted); margin: 2px 0 0; font-family: var(--font-mono); }
+  .tier-billing .deal-note { color: var(--accent-2); font-weight: 700; }
+  .deal-banner {
+    display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+    margin: 0 0 20px; padding: 13px 20px; text-align: center; border-radius: 12px;
+    background: color-mix(in srgb, var(--accent-2) 14%, var(--surface-1));
+    border: 1px solid var(--accent-2);
+  }
+  .deal-banner-text { font-size: 14px; color: var(--text-primary); }
+  .deal-banner-text strong { color: var(--accent-2); }
+  .deal-code-chip {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 1px;
+    font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent-2);
+    background: var(--surface-2); border: 1px dashed var(--accent-2); border-radius: 8px;
+    padding: 5px 14px; cursor: pointer; letter-spacing: 0.03em;
+  }
+  .deal-code-chip:hover { background: var(--surface-3); }
+  .deal-code-copy { font-size: 10px; font-weight: 500; color: var(--text-muted); letter-spacing: 0; }
   @media (max-width: 720px) {
     .tier-grid { grid-template-columns: 1fr; }
     .tier-badge { top: -12px; }
@@ -118,6 +135,13 @@
     <div class="eyebrow" style="margin-bottom: 12px;"><span class="dot"></span>2026 SEASON · PROPRIETARY MODEL</div>
     <h1 style="font-size:24px; margin-bottom: 7px;">Winning picks, your way.</h1>
     <p class="sub" style="margin-bottom: 10px; font-size:14px;">One model, three tiers — each one gives you a little more of what it sees, from the week's single highest-conviction pick to a full assessment of every game in the NFL season.</p>
+  </div>
+
+  <div id="deal" class="deal-banner" hidden>
+    <div class="deal-banner-text"><strong>Week 3 Top 5 picks — first week just $4.99</strong>, then $19.99/wk. New subscribers only.</div>
+    <button type="button" class="deal-code-chip" id="deal-code-chip" title="Copy code">
+      <span>WEEK3TOP5</span><span class="deal-code-copy" id="deal-code-copy">Copy code</span>
+    </button>
   </div>
 
   <section style="border-top:none; padding-top:0;">
@@ -345,6 +369,25 @@ const WHOP_PLAN_IDS_PRESEASON = {
 // visitor's clock against this constant. No manual step, no scheduled
 // task: same pattern as popup.js's WEEK1_CUTOFF.
 const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
+
+// Week 3 Top 5 deal (Caleb's call, 2026-09-22): the Digest 1-week plan's
+// first payment is $4.99 instead of $19.99, via Whop promo code WEEK3TOP5
+// entered at checkout (Whop's promo_duration_months=1 == "once" -- applies
+// to exactly one charge, confirmed by testing a real checkout session
+// directly; there's no API field to pre-apply it server-side, so this page
+// just surfaces the code prominently and reminds people to enter it).
+// New subscribers only -- Whop's own new_users_only flag enforces that, not
+// this page. Doesn't touch PRICING/WHOP_PLAN_IDS at all: same $19.99 plan,
+// same checkout flow, only the display + a reminder change.
+// Cutoff = Week 3's first kickoff (ATL @ GB, Thu Sept 24 2026, 8:15pm ET) --
+// defined locally rather than read from popup.js's window.TRIFECTA_WEEK3_DEAL_CUTOFF
+// because this script's first renderPricing() call below runs before
+// popup.js (loaded later in the page) has executed -- same reason
+// RECURRING_CUTOVER above is its own local Date.parse rather than a
+// cross-file read.
+const WEEK3_DEAL_CUTOFF = Date.parse('2026-09-25T00:15:00Z');
+function dealActive() { return Date.now() < WEEK3_DEAL_CUTOFF; }
+
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
 // Payhip checkout is paused for good (moved to Whop, see HANDOFF.md) — this
 // only gates the brief window between deploying this file and Whop going live.
@@ -407,11 +450,22 @@ function renderPricing(term) {
       }
     }
 
-    document.querySelector(`.tier-price-row[data-tier="${tier}"]`).innerHTML =
-      `${strikeHtml}<span class="tier-price">$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span></span>`;
+    // Week 3 deal: the Digest 1-week card gets its own price display instead
+    // of the normal one -- same plan, same $19.99 charge in Whop, the $4.99
+    // only happens if the code is entered at checkout (see dealActive() above).
+    const isDeal = tier === 'top5' && term === '1' && dealActive();
+    const priceRow = document.querySelector(`.tier-price-row[data-tier="${tier}"]`);
+    const billingRow = document.querySelector(`.tier-billing[data-tier="${tier}"]`);
+    if (isDeal) {
+      priceRow.innerHTML = `<span class="tier-price-strike">$${plan.price.toFixed(2)}</span>` +
+        `<span class="tier-price" style="color:var(--accent-2);">$4.99<span>first week</span></span>`;
+      billingRow.innerHTML = `then $19.99/wk &middot; <span class="deal-note">code WEEK3TOP5 at checkout</span>`;
+    } else {
+      priceRow.innerHTML = `${strikeHtml}<span class="tier-price">$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span></span>`;
+      billingRow.textContent = billing;
+    }
     document.querySelector(`.tier-perweek[data-tier="${tier}"]`).innerHTML =
       term === '1' ? '' : `$${perWeek.toFixed(2)}/wk equivalent ${freeBadge}`;
-    document.querySelector(`.tier-billing[data-tier="${tier}"]`).textContent = billing;
     const btn = document.getElementById(`btn-${tier}`);
     if (CHECKOUT_DISABLED) {
       btn.disabled = true;
@@ -420,8 +474,12 @@ function renderPricing(term) {
       const planId = term === 'season' ? REST_OF_SEASON[tier][weeks].planId
         : usePreseasonPlan ? WHOP_PLAN_IDS_PRESEASON[tier][term] : WHOP_PLAN_IDS[tier][term];
       btn.dataset.planId = planId;
+      btn.dataset.dealEligible = isDeal ? 'true' : 'false';
     }
   });
+
+  const dealBanner = document.getElementById('deal');
+  dealBanner.hidden = !dealActive();
 }
 
 document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
@@ -450,7 +508,7 @@ const WORKER_BASE = 'https://trifecta-encyclopedia-api.andylyticsnfl.workers.dev
 const modalBackdrop = document.getElementById('checkout-modal-backdrop');
 const modalMount = document.getElementById('checkout-modal-mount');
 
-function showNameStep(planId) {
+function showNameStep(planId, dealEligible) {
   modalMount.innerHTML = `
     <div class="checkout-name-step">
       <div class="tier-name" style="margin-bottom:10px;">What's your name?</div>
@@ -483,7 +541,7 @@ function showNameStep(planId) {
       if (resp.status === 409) throw new Error('price not available yet');
       if (!resp.ok) throw new Error('session request failed');
       const { sessionId } = await resp.json();
-      showPaymentStep(sessionId);
+      showPaymentStep(sessionId, dealEligible);
     } catch (err) {
       errorEl.textContent = err.message === 'price not available yet'
         ? "That price isn't available yet — please refresh the page to see the current price."
@@ -498,7 +556,7 @@ function showNameStep(planId) {
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitName(); });
 }
 
-function showPaymentStep(sessionId) {
+function showPaymentStep(sessionId, dealEligible) {
   modalMount.innerHTML = '<div class="checkout-modal-loading">Loading checkout…</div>';
   // Give the loading state a paint frame before swapping in the real
   // embed div, so the loader script reliably sees a freshly-added node.
@@ -508,17 +566,25 @@ function showPaymentStep(sessionId) {
     // (confirmed by testing directly, Email is the very first thing shown
     // here) — so the "picks go to this email" reminder has to live in our
     // own chrome, right above the embed, instead of inside Whop's iframe.
+    // Same reason the Week 3 deal reminder below lives here too: there's no
+    // API way to pre-apply a promo code to a checkout session (tried it --
+    // see renderPricing's dealActive() comment), so the code has to be
+    // typed into the embed's own "Promo code & details" panel by hand.
+    const dealNote = dealEligible
+      ? `<p class="checkout-reminder" style="color:var(--accent-2);">Enter code <strong>WEEK3TOP5</strong> under &ldquo;Promo code &amp; details&rdquo; below for $4.99 this week.</p>`
+      : '';
     modalMount.innerHTML = `
       <p class="checkout-reminder">Picks are delivered to the email you enter below.</p>
+      ${dealNote}
       <div data-whop-checkout-session="${sessionId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/checkout-complete.html"></div>
     `;
   });
 }
 
-function openCheckoutModal(planId) {
+function openCheckoutModal(planId, dealEligible) {
   modalBackdrop.hidden = false;
   document.body.style.overflow = 'hidden';
-  showNameStep(planId);
+  showNameStep(planId, dealEligible);
 }
 
 function closeCheckoutModal() {
@@ -529,9 +595,22 @@ function closeCheckoutModal() {
 
 ['btn-top1', 'btn-top5', 'btn-pro'].forEach(id => {
   document.getElementById(id).addEventListener('click', () => {
-    if (!CHECKOUT_DISABLED) openCheckoutModal(document.getElementById(id).dataset.planId);
+    const btn = document.getElementById(id);
+    if (!CHECKOUT_DISABLED) openCheckoutModal(btn.dataset.planId, btn.dataset.dealEligible === 'true');
   });
 });
+
+const dealCodeChip = document.getElementById('deal-code-chip');
+if (dealCodeChip) {
+  dealCodeChip.addEventListener('click', () => {
+    const label = document.getElementById('deal-code-copy');
+    navigator.clipboard.writeText('WEEK3TOP5').then(() => {
+      const prev = label.textContent;
+      label.textContent = 'Copied!';
+      setTimeout(() => { label.textContent = prev; }, 1500);
+    }).catch(() => {}); // clipboard permission denied — the code is already visible to read/type manually
+  });
+}
 document.getElementById('checkout-modal-close').addEventListener('click', closeCheckoutModal);
 modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeCheckoutModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modalBackdrop.hidden) closeCheckoutModal(); });
