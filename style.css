@@ -124,7 +124,7 @@ body {
 .promo-banner-deal { text-decoration: none; background: color-mix(in srgb, var(--accent-2) 16%, var(--surface-1)); border-color: var(--accent-2); flex-wrap: nowrap; padding: 11px 22px; }
 .promo-banner-deal:hover { background: color-mix(in srgb, var(--accent-2) 24%, var(--surface-1)); }
 .promo-banner-deal .ptext { font-weight: 700; text-transform: uppercase; line-height: 31px; white-space: nowrap; min-width: 0; overflow: hidden; }
-.promo-banner-deal .parrow { flex-shrink: 0; }
+.promo-banner-deal .parrow { flex-shrink: 0; font-size: 16px; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 480px) {
   .promo-banner-deal { padding: 11px 12px; gap: 6px; }
   .promo-banner-deal .parrow-label { display: none; }
