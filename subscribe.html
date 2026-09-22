@@ -107,8 +107,8 @@
     border: 1px solid var(--accent-2);
   }
   .deal-banner-text {
-    font-size: 14px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; text-align: center;
-    line-height: 44px;
+    font-size: 36px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; text-align: center;
+    line-height: 1.2;
   }
   .deal-banner-text strong { color: var(--accent-2); }
   .deal-code-chip {
@@ -122,6 +122,10 @@
   @media (max-width: 720px) {
     .tier-grid { grid-template-columns: 1fr; }
     .tier-badge { top: -12px; }
+    /* The 36px desktop size (matched to the code chip's height, see .deal-banner-text
+       below) turns into a wall of text once the banner has to wrap on a narrow
+       screen -- scale it back down here instead. */
+    .deal-banner-text { font-size: 17px; }
   }
 </style>
 </head>
