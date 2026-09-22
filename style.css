@@ -127,13 +127,18 @@ body {
 .deal-ticker { display: block; overflow: hidden; background: var(--accent-2); text-decoration: none; position: relative; }
 .deal-ticker-track { display: flex; width: max-content; animation: deal-ticker-scroll 16s linear infinite; }
 .deal-ticker-item {
-  display: inline-block; white-space: nowrap; padding: 7px 0;
+  display: inline-block; white-space: nowrap; padding: 7px 0; margin-right: 56px;
   font-family: var(--font-mono); font-weight: 800; font-size: 12.5px; letter-spacing: 0.04em; color: #14100a;
 }
 .deal-ticker:hover .deal-ticker-track { animation-play-state: paused; }
-@keyframes deal-ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* -100%/N (N = --ticker-copies, set by index.html's script once it knows how
+   many identical copies it cloned in) moves the track by exactly one item's
+   width, however many copies exist -- see the JS comment for why this is
+   what makes the loop seamless at any screen width. Static 16s/2-copy
+   fallback above is only for the no-JS case. */
+@keyframes deal-ticker-scroll { to { transform: translateX(calc(-100% / var(--ticker-copies, 2))); } }
 @media (prefers-reduced-motion: reduce) {
-  .deal-ticker-track { animation: none; overflow-x: auto; }
+  .deal-ticker-track { animation: none !important; overflow-x: auto; }
 }
 
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 28px 0 40px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }

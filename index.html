@@ -22,10 +22,9 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<a href="subscribe.html#deal" class="deal-ticker" id="deal-ticker" aria-label="Week 3 Top 5 picks for $4.99, code WEEK3">
-  <div class="deal-ticker-track">
-    <span class="deal-ticker-item">WEEK 3 TOP 5 PICKS — ONLY $4.99 (75% OFF) &bull; CODE WEEK3 AT CHECKOUT &bull; NEW SUBSCRIBERS ONLY &bull; THEN $19.99/WK &bull;&nbsp; &nbsp;</span>
-    <span class="deal-ticker-item" aria-hidden="true">WEEK 3 TOP 5 PICKS — ONLY $4.99 (75% OFF) &bull; CODE WEEK3 AT CHECKOUT &bull; NEW SUBSCRIBERS ONLY &bull; THEN $19.99/WK &bull;&nbsp; &nbsp;</span>
+<a href="subscribe.html#deal" class="deal-ticker" id="deal-ticker" aria-label="Week 3 Top 5 picks for $4.99, code WEEK3 at checkout">
+  <div class="deal-ticker-track" id="deal-ticker-track" aria-hidden="true">
+    <span class="deal-ticker-item">WEEK 3 TOP 5 PICKS &mdash; ONLY $4.99 (75% OFF) &bull; CODE WEEK3 AT CHECKOUT</span>
   </div>
 </a>
 <div class="grid-bg"></div>
@@ -162,13 +161,13 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
     <div class="stat-tile">
       <div class="value">${p.top1_pct}%</div>
       <div class="label">Most confident pick of the week</div>
-      <div class="n">${p.top1_n} picks, 5 seasons</div>
+      <div class="n">${p.top1_n} picks, 5+ seasons</div>
       <div class="profit">${top1Profit} on $100/pick (-110 odds)</div>
     </div>
     <div class="stat-tile">
       <div class="value">${p.top5_pct}%</div>
       <div class="label">Top 5 picks per week</div>
-      <div class="n">${p.top5_n} picks, 5 seasons</div>
+      <div class="n">${p.top5_n} picks, 5+ seasons</div>
       <div class="profit">${top5Profit} on $100/pick (-110 odds)</div>
     </div>
     <div class="stat-tile">
@@ -274,7 +273,37 @@ function drawSeasonChart() {
   if (new Date() >= window.TRIFECTA_WEEK3_DEAL_CUTOFF || localStorage.getItem('trifecta_enc_token')) {
     deal.style.display = 'none';
     ticker.style.display = 'none';
+    return;
   }
+
+  // Seamless infinite marquee: clone the one text item enough times that the
+  // track is comfortably wider than the viewport (>= 3x), then loop by
+  // exactly one item's width via translateX(-100%/copies) -- since every
+  // copy is identical, the frame at the loop point is pixel-identical to the
+  // frame at the start, so the reset is invisible: no blank gap, no visible
+  // restart, ever, regardless of window width or how long the text is.
+  // (A fixed 2-copy version broke on wide screens where 2 copies didn't
+  // reach the edge of the viewport, leaving blank space after the text
+  // passed -- this is why: see the same reasoning generalized to N copies.)
+  var track = document.getElementById('deal-ticker-track');
+  var itemHTML = track.innerHTML;
+  var pxPerSecond = 65; // constant scroll speed regardless of text length or screen width
+  function fillTicker() {
+    var oneWidth = track.scrollWidth / (track.childElementCount || 1);
+    var target = Math.max(window.innerWidth, document.documentElement.clientWidth) * 3;
+    while (track.scrollWidth < target && track.childElementCount < 40) {
+      track.insertAdjacentHTML('beforeend', itemHTML);
+    }
+    var copies = track.childElementCount;
+    track.style.setProperty('--ticker-copies', copies);
+    track.style.animationDuration = Math.max(4, oneWidth / pxPerSecond) + 's';
+  }
+  fillTicker();
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fillTicker, 200); // only ever adds copies, never removes -- cheap to over-call
+  });
 })();
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>
