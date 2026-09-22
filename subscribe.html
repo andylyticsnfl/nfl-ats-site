@@ -24,6 +24,24 @@
 <link rel="preconnect" href="https://whop.com" crossorigin>
 <link rel="dns-prefetch" href="https://js.whop.com">
 <link rel="dns-prefetch" href="https://whop.com">
+<!-- Whop's embedded checkout also loads Stripe Elements, a fraud-detection
+     collector (Sardine), and hCaptcha inside it -- traced by opening a real
+     checkout session and reading its network requests (2026-09-22, while
+     investigating why the modal takes a while to become interactive).
+     Warming the connection to these ahead of time (checkout doesn't mount
+     until a tier button is clicked) can only help; it does not fix the
+     underlying cause, which is Whop's own checkout app loading 200+ JS
+     chunks -- present on whop.com's own checkout page too, not something
+     introduced by this site or fixable from here. -->
+<link rel="preconnect" href="https://js.stripe.com" crossorigin>
+<link rel="dns-prefetch" href="https://js.stripe.com">
+<link rel="preconnect" href="https://api.sardine.ai" crossorigin>
+<link rel="dns-prefetch" href="https://api.sardine.ai">
+<link rel="dns-prefetch" href="https://d.sardine.ai">
+<link rel="dns-prefetch" href="https://p.sardine.ai">
+<link rel="preconnect" href="https://newassets.hcaptcha.com" crossorigin>
+<link rel="dns-prefetch" href="https://newassets.hcaptcha.com">
+<link rel="dns-prefetch" href="https://hcaptcha.com">
 <script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 <style>
   .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 9px 0; align-items: stretch; }
@@ -77,6 +95,7 @@
   .tier-price { font-size: 27px; font-weight: 800; font-family: var(--font-mono); }
   .tier-price span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
   .tier-perweek { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); margin: 2px 0 0; min-height: 16px; }
+  .tier-perweek:empty { min-height: 0; margin: 0; }
   .tier-free-badge { display: inline-block; background: var(--good-dim); color: var(--good); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; font-family: var(--font-mono); margin: 4px 0 0; }
   .tier-desc { font-size: 13px; color: var(--text-secondary); margin: 7px 0; min-height: 32px; }
   .tier-features { list-style: none; padding: 0; margin: 0 0 9px; flex-grow: 1; }
@@ -88,7 +107,7 @@
   .tier-billing .deal-note { color: var(--accent-2); font-weight: 700; }
   .deal-banner {
     display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
-    margin: 0 0 20px; padding: 13px 20px; text-align: center; border-radius: 12px;
+    margin: 0 0 20px; padding: 9px 20px; text-align: center; border-radius: 12px;
     background: color-mix(in srgb, var(--accent-2) 14%, var(--surface-1));
     border: 1px solid var(--accent-2);
   }
@@ -140,7 +159,7 @@
   <div id="deal" class="deal-banner" hidden>
     <div class="deal-banner-text"><strong>Week 3 Top 5 picks — first week just $4.99</strong>, then $19.99/wk. New subscribers only.</div>
     <button type="button" class="deal-code-chip" id="deal-code-chip" title="Copy code">
-      <span>WEEK3TOP5</span><span class="deal-code-copy" id="deal-code-copy">Copy code</span>
+      <span>WEEK3</span><span class="deal-code-copy" id="deal-code-copy">Copy code</span>
     </button>
   </div>
 
@@ -371,7 +390,7 @@ const WHOP_PLAN_IDS_PRESEASON = {
 const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
 
 // Week 3 Top 5 deal (Caleb's call, 2026-09-22): the Digest 1-week plan's
-// first payment is $4.99 instead of $19.99, via Whop promo code WEEK3TOP5
+// first payment is $4.99 instead of $19.99, via Whop promo code WEEK3
 // entered at checkout (Whop's promo_duration_months=1 == "once" -- applies
 // to exactly one charge, confirmed by testing a real checkout session
 // directly; there's no API field to pre-apply it server-side, so this page
@@ -379,13 +398,13 @@ const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
 // New subscribers only -- Whop's own new_users_only flag enforces that, not
 // this page. Doesn't touch PRICING/WHOP_PLAN_IDS at all: same $19.99 plan,
 // same checkout flow, only the display + a reminder change.
-// Cutoff = Week 3's first kickoff (ATL @ GB, Thu Sept 24 2026, 8:15pm ET) --
+// Cutoff = Sunday Sept 27 2026, 9:30am PT (Caleb's call, 2026-09-22) --
 // defined locally rather than read from popup.js's window.TRIFECTA_WEEK3_DEAL_CUTOFF
 // because this script's first renderPricing() call below runs before
 // popup.js (loaded later in the page) has executed -- same reason
 // RECURRING_CUTOVER above is its own local Date.parse rather than a
 // cross-file read.
-const WEEK3_DEAL_CUTOFF = Date.parse('2026-09-25T00:15:00Z');
+const WEEK3_DEAL_CUTOFF = Date.parse('2026-09-27T16:30:00Z');
 function dealActive() { return Date.now() < WEEK3_DEAL_CUTOFF; }
 
 const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
@@ -458,8 +477,8 @@ function renderPricing(term) {
     const billingRow = document.querySelector(`.tier-billing[data-tier="${tier}"]`);
     if (isDeal) {
       priceRow.innerHTML = `<span class="tier-price-strike">$${plan.price.toFixed(2)}</span>` +
-        `<span class="tier-price" style="color:var(--accent-2);">$4.99<span>first week</span></span>`;
-      billingRow.innerHTML = `then $19.99/wk &middot; <span class="deal-note">code WEEK3TOP5 at checkout</span>`;
+        `<span class="tier-price" style="color:var(--accent-2);">$4.99 <span>first week</span></span>`;
+      billingRow.innerHTML = `<span class="deal-note">use code WEEK3 at checkout</span>`;
     } else {
       priceRow.innerHTML = `${strikeHtml}<span class="tier-price">$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span></span>`;
       billingRow.textContent = billing;
@@ -571,7 +590,7 @@ function showPaymentStep(sessionId, dealEligible) {
     // see renderPricing's dealActive() comment), so the code has to be
     // typed into the embed's own "Promo code & details" panel by hand.
     const dealNote = dealEligible
-      ? `<p class="checkout-reminder" style="color:var(--accent-2);">Enter code <strong>WEEK3TOP5</strong> under &ldquo;Promo code &amp; details&rdquo; below for $4.99 this week.</p>`
+      ? `<p class="checkout-reminder" style="color:var(--accent-2);">Enter code <strong>WEEK3</strong> under &ldquo;Promo code &amp; details&rdquo; below for $4.99 this week.</p>`
       : '';
     modalMount.innerHTML = `
       <p class="checkout-reminder">Picks are delivered to the email you enter below.</p>
@@ -604,7 +623,7 @@ const dealCodeChip = document.getElementById('deal-code-chip');
 if (dealCodeChip) {
   dealCodeChip.addEventListener('click', () => {
     const label = document.getElementById('deal-code-copy');
-    navigator.clipboard.writeText('WEEK3TOP5').then(() => {
+    navigator.clipboard.writeText('WEEK3').then(() => {
       const prev = label.textContent;
       label.textContent = 'Copied!';
       setTimeout(() => { label.textContent = prev; }, 1500);

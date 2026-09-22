@@ -30,14 +30,13 @@
 
   // Week 3 Top 5 deal (Caleb's call, 2026-09-22): $4.99 for the first week on
   // the Digest 1-week plan (normally $19.99/wk), via Whop promo code
-  // WEEK3TOP5 entered at checkout — auto-renews at the normal $19.99/wk after
+  // WEEK3 entered at checkout — auto-renews at the normal $19.99/wk after
   // that. New subscribers only (enforced by Whop's own new_users_only flag on
-  // the promo code, not by this site). Cutoff = Week 3's first kickoff
-  // (ATL @ GB, Thu Sept 24 2026, 8:15pm ET) — same "expire by the real
-  // instant, not a guessed date" pattern as WEEK1_CUTOFF above. Exposed the
-  // same way so index.html/subscribe.html share one source of truth instead
-  // of each hard-coding the date.
-  var WEEK3_DEAL_CUTOFF = new Date('2026-09-25T00:15:00Z');
+  // the promo code, not by this site). Cutoff = Sunday Sept 27 2026, 9:30am
+  // PT (Caleb's call, 2026-09-22) — exposed the same way as WEEK1_CUTOFF so
+  // index.html/subscribe.html share one source of truth instead of each
+  // hard-coding the date.
+  var WEEK3_DEAL_CUTOFF = new Date('2026-09-27T16:30:00Z');
   window.TRIFECTA_WEEK3_DEAL_CUTOFF = WEEK3_DEAL_CUTOFF;
 
   var page = location.pathname.split('/').pop() || 'index.html';
