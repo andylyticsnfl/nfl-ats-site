@@ -472,7 +472,7 @@ function renderPricing(term) {
     const billingRow = document.querySelector(`.tier-billing[data-tier="${tier}"]`);
     if (isDeal) {
       priceRow.innerHTML = `<span class="tier-price-strike">$${plan.price.toFixed(2)}</span>` +
-        `<span class="tier-price" style="color:var(--accent-2);">$4.99 <span>first week</span></span>`;
+        `<span class="tier-price" style="color:var(--accent-2);">$4.99<span> first week</span></span>`;
       billingRow.innerHTML = `<span class="deal-note">use code WEEK3 at checkout</span>`;
     } else {
       priceRow.innerHTML = `${strikeHtml}<span class="tier-price">$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span></span>`;
