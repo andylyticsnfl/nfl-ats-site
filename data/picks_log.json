@@ -1,9 +1,9 @@
 {
  "generated": "2026-09-22",
  "pooled": {
-  "top5_pct": 60.7,
+  "top5_pct": 60.4,
   "top5_n": 460,
-  "top1_pct": 70.7,
+  "top1_pct": 69.6,
   "top1_n": 92
  },
  "season_summary": [
@@ -49,9 +49,9 @@
   },
   {
    "season": 2026,
-   "top5_pct": 80.0,
+   "top5_pct": 70.0,
    "top5_n": 10,
-   "top1_pct": 50.0,
+   "top1_pct": 0.0,
    "top1_n": 2,
    "max_week": 2
   }
@@ -5985,10 +5985,10 @@
    "away_score": 9,
    "home_score": 3,
    "spread": -4.5,
-   "pick_team": "MIN",
-   "pick_side": "away",
+   "pick_team": "CHI",
+   "pick_side": "home",
    "edge": 17.6,
-   "correct": true,
+   "correct": false,
    "push": false
   },
   {
@@ -7241,10 +7241,10 @@
    "away_score": 9,
    "home_score": 3,
    "spread": -4.5,
-   "pick_team": "MIN",
-   "pick_side": "away",
+   "pick_team": "CHI",
+   "pick_side": "home",
    "edge": 17.6,
-   "correct": true,
+   "correct": false,
    "push": false
   }
  ]
