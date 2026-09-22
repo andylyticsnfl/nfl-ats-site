@@ -101,25 +101,25 @@
   .tier-billing { font-size: 11.5px; color: var(--text-muted); margin: 2px 0 0; font-family: var(--font-mono); }
   .tier-billing .deal-note { color: var(--accent-2); font-weight: 700; }
   .deal-banner {
-    display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+    display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: nowrap;
     margin: 0 0 20px; padding: 9px 20px; text-align: center; border-radius: 12px;
     background: color-mix(in srgb, var(--accent-2) 14%, var(--surface-1));
     border: 1px solid var(--accent-2);
   }
   .deal-banner-text {
-    /* Fluid instead of a hard breakpoint -- a fixed cutoff (previously 36px
-       above 720px, 17px below it) meant any window that happened to land
-       under 720px CSS width saw barely more than the original 14px, which
-       is exactly why "made it bigger" still looked like nothing changed.
-       This scales continuously with the viewport: ~18px on a phone up to
-       36px (matching the code chip's 44px height) at the page's own 1100px
-       content cap, with no width where it snaps back down. */
-    font-size: clamp(18px, 4vw, 36px); font-weight: 700; color: var(--text-primary);
+    /* font-size is set by JS (fitDealBannerText below), not CSS -- the text
+       and the code chip must always share exactly one row, at whatever
+       size makes that true for the current width, so this can't be a fixed
+       breakpoint or a vw-based clamp() (both were tried and both left
+       widths where it either barely changed or wrapped/overflowed). 36px
+       here is only the fallback before JS runs. */
+    font-size: 36px; font-weight: 700; color: var(--text-primary);
     text-transform: uppercase; text-align: center; line-height: 1.2;
+    white-space: nowrap; min-width: 0;
   }
   .deal-banner-text strong { color: var(--accent-2); }
   .deal-code-chip {
-    display: inline-flex; flex-direction: column; align-items: center; gap: 1px;
+    display: inline-flex; flex-direction: column; align-items: center; gap: 1px; flex-shrink: 0;
     font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent-2);
     background: var(--surface-2); border: 1px dashed var(--accent-2); border-radius: 8px;
     padding: 5px 14px; cursor: pointer; letter-spacing: 0.03em;
@@ -129,6 +129,11 @@
   @media (max-width: 720px) {
     .tier-grid { grid-template-columns: 1fr; }
     .tier-badge { top: -12px; }
+    /* Claws back some width for the deal banner's text-fitting script on
+       narrow screens, where a long sentence + the code chip on one row is
+       already tight -- every pixel here is a pixel the JS doesn't have to
+       shrink the font to make up for. */
+    .deal-banner { padding: 9px 12px; gap: 8px; }
   }
 </style>
 </head>
@@ -622,6 +627,62 @@ function closeCheckoutModal() {
     const btn = document.getElementById(id);
     if (!CHECKOUT_DISABLED) openCheckoutModal(btn.dataset.planId, btn.dataset.dealEligible === 'true');
   });
+});
+
+// The deal banner's text and its code chip must always share exactly one
+// row, at whatever size makes that true -- a fixed size or a vw-based
+// clamp() both leave some window width where it's too big (wraps/overflows)
+// or too small (barely bigger than before it was "made bigger" at all).
+// Measures the text's own natural width at a large reference size, scales
+// down only by exactly the ratio needed to fit next to the chip, floors at
+// the original 14px so it never becomes illegible, and never scales up
+// past that reference size on very wide screens.
+function fitDealBannerText() {
+  const banner = document.getElementById('deal');
+  const text = document.querySelector('.deal-banner-text');
+  const chip = document.getElementById('deal-code-chip');
+  if (!banner || !text || banner.hidden) return;
+  // FLOOR is a sanity guard against a literal 0px, not a "stay legible"
+  // minimum -- a real legibility floor caused the actual bug here: at a
+  // narrow enough width, 14px was STILL too wide to fit next to the chip,
+  // so clamping to it forced an overflow instead of honoring "always fits
+  // on one line." Letting it shrink however far it has to is what
+  // guarantees that; there's no width where this breaks.
+  // FLOOR=1 is not a "stay legible" minimum -- it's just short of literally
+  // zero. A real legibility floor is what caused the original bug: at a
+  // narrow enough width, even 14px was still too wide to fit next to the
+  // chip, so clamping to it forced an overflow instead of honoring "always
+  // fits on one line, no exceptions." Letting it shrink however far it
+  // actually has to is what guarantees that on any width.
+  const REFERENCE = 36, FLOOR = 1;
+  text.style.fontSize = REFERENCE + 'px';
+  const bannerStyle = getComputedStyle(banner);
+  const gap = parseFloat(bannerStyle.columnGap) || 14; // reads the real CSS gap (which the 720px breakpoint shrinks) instead of assuming it
+  const available = banner.clientWidth
+    - parseFloat(bannerStyle.paddingLeft) - parseFloat(bannerStyle.paddingRight)
+    - chip.getBoundingClientRect().width - gap - 2; // 2px rounding safety margin
+  const natural = text.scrollWidth;
+  if (natural > available) {
+    let size = Math.max(FLOOR, Math.floor(REFERENCE * available / natural));
+    text.style.fontSize = size + 'px';
+    // The scale-by-ratio estimate above assumes width scales exactly
+    // linearly with font-size, which font hinting/rounding doesn't always
+    // honor to the pixel -- step down further if it's still actually too
+    // wide, so this is a guarantee, not just an approximation.
+    while (text.scrollWidth > available && size > FLOOR) {
+      size -= 1;
+      text.style.fontSize = size + 'px';
+    }
+  }
+}
+fitDealBannerText();
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(fitDealBannerText); // web fonts can still be loading at the call above
+}
+let dealFitResizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(dealFitResizeTimer);
+  dealFitResizeTimer = setTimeout(fitDealBannerText, 150);
 });
 
 const dealCodeChip = document.getElementById('deal-code-chip');
