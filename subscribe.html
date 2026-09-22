@@ -107,8 +107,15 @@
     border: 1px solid var(--accent-2);
   }
   .deal-banner-text {
-    font-size: 36px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; text-align: center;
-    line-height: 1.2;
+    /* Fluid instead of a hard breakpoint -- a fixed cutoff (previously 36px
+       above 720px, 17px below it) meant any window that happened to land
+       under 720px CSS width saw barely more than the original 14px, which
+       is exactly why "made it bigger" still looked like nothing changed.
+       This scales continuously with the viewport: ~18px on a phone up to
+       36px (matching the code chip's 44px height) at the page's own 1100px
+       content cap, with no width where it snaps back down. */
+    font-size: clamp(18px, 4vw, 36px); font-weight: 700; color: var(--text-primary);
+    text-transform: uppercase; text-align: center; line-height: 1.2;
   }
   .deal-banner-text strong { color: var(--accent-2); }
   .deal-code-chip {
@@ -122,10 +129,6 @@
   @media (max-width: 720px) {
     .tier-grid { grid-template-columns: 1fr; }
     .tier-badge { top: -12px; }
-    /* The 36px desktop size (matched to the code chip's height, see .deal-banner-text
-       below) turns into a wall of text once the banner has to wrap on a narrow
-       screen -- scale it back down here instead. */
-    .deal-banner-text { font-size: 17px; }
   }
 </style>
 </head>
