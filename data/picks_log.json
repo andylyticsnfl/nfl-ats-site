@@ -1,10 +1,10 @@
 {
- "generated": "2026-09-14",
+ "generated": "2026-09-22",
  "pooled": {
-  "top5_pct": 60.2,
-  "top5_n": 455,
-  "top1_pct": 70.3,
-  "top1_n": 91
+  "top5_pct": 60.4,
+  "top5_n": 460,
+  "top1_pct": 69.6,
+  "top1_n": 92
  },
  "season_summary": [
   {
@@ -49,11 +49,11 @@
   },
   {
    "season": 2026,
-   "top5_pct": 60.0,
-   "top5_n": 5,
+   "top5_pct": 70.0,
+   "top5_n": 10,
    "top1_pct": 0.0,
-   "top1_n": 1,
-   "max_week": 1
+   "top1_n": 2,
+   "max_week": 2
   }
  ],
  "top5_picks": [
@@ -5976,6 +5976,76 @@
    "edge": 9.8,
    "correct": true,
    "push": false
+  },
+  {
+   "season": 2026,
+   "week": 2,
+   "away": "MIN",
+   "home": "CHI",
+   "away_score": 9,
+   "home_score": 3,
+   "spread": -4.5,
+   "pick_team": "CHI",
+   "pick_side": "home",
+   "edge": 17.6,
+   "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 2,
+   "away": "PHI",
+   "home": "TEN",
+   "away_score": 24,
+   "home_score": 20,
+   "spread": 7.0,
+   "pick_team": "TEN",
+   "pick_side": "home",
+   "edge": 12.7,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 2,
+   "away": "IND",
+   "home": "KC",
+   "away_score": 30,
+   "home_score": 33,
+   "spread": -6.0,
+   "pick_team": "IND",
+   "pick_side": "away",
+   "edge": 10.7,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 2,
+   "away": "JAX",
+   "home": "DEN",
+   "away_score": 13,
+   "home_score": 20,
+   "spread": -2.5,
+   "pick_team": "DEN",
+   "pick_side": "home",
+   "edge": 8.7,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 2,
+   "away": "NYG",
+   "home": "LA",
+   "away_score": 6,
+   "home_score": 28,
+   "spread": -6.5,
+   "pick_team": "LA",
+   "pick_side": "home",
+   "edge": 8.5,
+   "correct": true,
+   "push": false
   }
  ],
  "top1_picks": [
@@ -7160,6 +7230,20 @@
    "pick_team": "GB",
    "pick_side": "away",
    "edge": 13.4,
+   "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 2,
+   "away": "MIN",
+   "home": "CHI",
+   "away_score": 9,
+   "home_score": 3,
+   "spread": -4.5,
+   "pick_team": "CHI",
+   "pick_side": "home",
+   "edge": 17.6,
    "correct": false,
    "push": false
   }
