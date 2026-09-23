@@ -278,7 +278,7 @@ footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text
 
 /* ---- SmackTok partner promo: nav tab, Subscribe ring, homepage card ---- */
 :root { --st-green: #17f6a4; }
-.nav .links .btn-primary { border: 1px solid rgba(79,143,255,0.55); box-shadow: 0 0 18px rgba(79,143,255,0.28); }
+.nav .links .btn-primary { border: 1px solid rgba(150,192,255,0.75); box-shadow: 0 0 18px rgba(79,143,255,0.38); }
 .nav-st-btn { background: #0b9d6b; color: #fff !important; font-weight: 800; border: 1px solid rgba(23,246,164,0.55); box-shadow: 0 0 18px rgba(23,246,164,0.28); white-space: nowrap; }
 .nav-st-btn:hover { filter: brightness(1.1); }
 @media (min-width: 961px) { .nav-st-btn { margin-right: -10px; } }
