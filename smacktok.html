@@ -20,10 +20,11 @@
   .container { position: relative; z-index: 1; }
 
   .lockup { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 16px; margin-bottom: 26px; }
-  .lockup .t { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
+  .lockup .t { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 27px; line-height: 1; letter-spacing: -0.01em; }
+  .lockup .t svg { width: 33px; height: 33px; display: block; }
   .lockup .t span span { color: var(--accent); }
   .lockup .x { color: var(--text-muted); font-family: var(--font-mono); font-size: 18px; }
-  .lockup img { height: 22px; width: auto; display: block; }
+  .lockup img { height: 28px; width: auto; display: block; }
 
   .hero-split { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: center; padding: 44px 0 6px; }
   .hero-split > div { min-width: 0; }
@@ -32,7 +33,7 @@
   .st-code { color: var(--st-green); text-shadow: 0 0 28px rgba(23,246,164,0.45); }
 
   .offer-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 26px 0 24px; }
-  .offer-tile { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-2) 9%, var(--surface-1)), var(--surface-1)); border: 1px solid color-mix(in srgb, var(--accent-2) 35%, var(--border)); border-radius: 14px; padding: 20px 14px 18px; text-align: center; box-shadow: 0 0 34px rgba(255,138,61,0.10); }
+  .offer-tile { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-2) 9%, var(--surface-1)), var(--surface-1)); border: 1px solid color-mix(in srgb, var(--accent-2) 35%, var(--border)); border-radius: 14px; padding: 16px 12px 14px; text-align: center; box-shadow: 0 0 34px rgba(255,138,61,0.10); }
   .offer-tile .big, .hot { font-family: var(--font-mono); font-weight: 800; font-size: 42px; line-height: 1; letter-spacing: -0.02em; color: var(--accent-2); text-shadow: 0 0 22px rgba(255,138,61,0.45); }
   .offer-tile .lbl { margin-top: 10px; font-weight: 700; font-size: 14px; line-height: 1.3; color: var(--text-primary); }
 
@@ -47,7 +48,7 @@
 
   .deal-strip { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--st-green) 40%, var(--border)); box-shadow: 0 0 60px rgba(23,246,164,0.16); margin: 34px 0 0; }
 
-  .gate-card { position: relative; background: linear-gradient(160deg, color-mix(in srgb, var(--st-green) 7%, var(--surface-1)), var(--surface-1) 55%); border: 1px solid color-mix(in srgb, var(--st-green) 38%, var(--border)); border-radius: 18px; padding: 30px; margin: 26px 0; box-shadow: 0 0 70px rgba(23,246,164,0.10); }
+  .gate-card { scroll-margin-top: 96px; position: relative; background: linear-gradient(160deg, color-mix(in srgb, var(--st-green) 7%, var(--surface-1)), var(--surface-1) 55%); border: 1px solid color-mix(in srgb, var(--st-green) 38%, var(--border)); border-radius: 18px; padding: 30px; margin: 26px 0; box-shadow: 0 0 70px rgba(23,246,164,0.10); }
   .gate-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
   .gate-head img { width: 34px; height: auto; display: block; }
   .gate-card h2 { font-size: 22px; margin: 0; }
@@ -67,12 +68,20 @@
   .result .fine { margin: 14px 0 0; font-size: 12.5px; color: var(--text-muted); }
   .code-chip { display: inline-flex; align-items: center; gap: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 28px; letter-spacing: 0.05em; padding: 10px 20px; border-radius: 12px; border: 1.5px dashed var(--st-green); color: var(--st-green); background: var(--surface-1); margin-bottom: 18px; text-shadow: 0 0 22px rgba(23,246,164,0.4); }
   .code-chip button { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border-strong, var(--border)); background: var(--surface-2); color: var(--text-primary); cursor: pointer; text-shadow: none; letter-spacing: 0; }
-  .no-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .result.avail-no { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 9%, var(--surface-1)); box-shadow: 0 0 40px rgba(255,138,61,0.14); }
+  .no-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .btn-orange { background: var(--accent-2); color: #1a0d04 !important; font-weight: 800; box-shadow: 0 0 28px rgba(255,138,61,0.32); }
+  .btn-orange:hover { filter: brightness(1.08); }
+  .btn-orange-ghost { background: transparent; color: var(--accent-2) !important; border: 1px solid var(--accent-2); font-weight: 700; }
+  .btn-orange-ghost:hover { background: color-mix(in srgb, var(--accent-2) 12%, transparent); }
 
   .about-title { font-size: 21px; margin: 40px 0 6px; }
   .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0 6px; }
-  .about-grid div { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
-  .about-grid b { display: block; color: var(--text-primary); font-size: 15.5px; margin-bottom: 6px; }
+  .about-card { position: relative; overflow: hidden; background: linear-gradient(160deg, color-mix(in srgb, var(--st-green) 10%, var(--surface-1)), var(--surface-1) 62%); border: 1px solid color-mix(in srgb, var(--st-green) 22%, var(--border)); border-top: 2px solid color-mix(in srgb, var(--st-green) 70%, transparent); border-radius: 14px; padding: 22px 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.55; box-shadow: 0 0 34px rgba(23,246,164,0.06); transition: transform .15s, box-shadow .15s, border-color .15s; }
+  .about-card:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(23,246,164,0.14); border-color: color-mix(in srgb, var(--st-green) 45%, var(--border)); }
+  .about-card .ico { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; margin-bottom: 14px; color: var(--st-green); background: rgba(23,246,164,0.12); border: 1px solid rgba(23,246,164,0.28); }
+  .about-card .ico svg { width: 21px; height: 21px; }
+  .about-card b { display: block; color: var(--text-primary); font-size: 15.5px; margin-bottom: 6px; }
   .terms { font-size: 12.5px; color: var(--text-muted); line-height: 1.65; margin: 30px 0 0; padding-bottom: 64px; }
 
   @media (max-width: 860px) {
@@ -85,8 +94,9 @@
     .offer-row, .about-grid { grid-template-columns: 1fr; }
     .offer-tile { padding: 16px 12px; }
     .gate-card { padding: 22px 18px; }
-    .lockup .t { font-size: 17px; }
-    .lockup img { height: 18px; }
+    .lockup .t { font-size: 21px; }
+    .lockup .t svg { width: 26px; height: 26px; }
+    .lockup img { height: 22px; }
   }
 </style>
 </head>
@@ -118,17 +128,17 @@
     <div>
       <div class="lockup">
         <div class="t">
-          <svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="2" y="14" width="5" height="10" rx="1.5" fill="var(--accent)" opacity="0.55"/><rect x="10.5" y="8" width="5" height="16" rx="1.5" fill="var(--accent)" opacity="0.8"/><rect x="19" y="2" width="5" height="22" rx="1.5" fill="var(--accent)"/></svg>
+          <svg viewBox="0 0 26 26" fill="none"><rect x="2" y="14" width="5" height="10" rx="1.5" fill="var(--accent)" opacity="0.55"/><rect x="10.5" y="8" width="5" height="16" rx="1.5" fill="var(--accent)" opacity="0.8"/><rect x="19" y="2" width="5" height="22" rx="1.5" fill="var(--accent)"/></svg>
           <span>TRI<span>FECTA</span></span>
         </div>
         <span class="x">×</span>
         <img src="img/smacktok-logo.png" alt="SmackTok">
       </div>
       <h1>New DFS app. Here's what you get with <span class="st-code">code TRIFECTA</span>.</h1>
-      <p class="sub">SmackTok's welcome offer for new users: a first deposit match of up to $50, a 25% profit boost and a free mystery player pick.</p>
+      <p class="sub">SmackTok's welcome offer for new users: a first deposit match of up to $50, a 25% profit boost, and a free mystery player pick.</p>
 
       <div class="offer-row">
-        <div class="offer-tile"><div class="big">$50</div><div class="lbl">First deposit match, up to</div></div>
+        <div class="offer-tile"><div class="big">$50</div><div class="lbl">First deposit match</div></div>
         <div class="offer-tile"><div class="big">25%</div><div class="lbl">Profit boost</div></div>
         <div class="offer-tile"><div class="big">FREE</div><div class="lbl">Mystery player pick</div></div>
       </div>
@@ -156,7 +166,7 @@
 
     <div class="result ok" id="result-ok">
       <h3>SmackTok is live in your state.</h3>
-      <p>Use this code when you register so your welcome offer is applied. The link below fills it in for you.</p>
+      <p>Use this code when you register so your welcome offer is applied.</p>
       <div class="code-chip"><span id="code-text">TRIFECTA</span><button type="button" id="copy-code">Copy</button></div>
       <div><a class="btn btn-st" id="claim-link" href="#" target="_blank" rel="noopener sponsored">Claim the offer on SmackTok →</a></div>
       <p class="fine">Advertisement. Trifecta earns a commission when you sign up with this code.</p>
@@ -165,17 +175,17 @@
       <h3 id="no-title">SmackTok isn't available for you yet.</h3>
       <p id="no-text"></p>
       <div class="no-btns" id="no-btns">
-        <a class="btn btn-primary" href="track-record.html">See the track record →</a>
-        <a class="btn btn-secondary" href="subscribe.html">Subscribe</a>
+        <a class="btn btn-orange-ghost" href="track-record.html">See the track record →</a>
+        <a class="btn btn-orange" href="subscribe.html">Subscribe →</a>
       </div>
     </div>
   </div>
 
   <h2 class="about-title">What's in the app</h2>
   <div class="about-grid">
-    <div><b>Daily fantasy</b>Build a fantasy lineup, call higher or lower on player projections and put in a cash entry.</div>
-    <div><b>Huddles</b>Post player picks, talk through a slate and tail or fade what other fans are doing.</div>
-    <div><b>Reward shop</b>Earn Smacks for chatting in huddles and placing entries, then redeem them for graded sports cards.</div>
+    <div class="about-card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1.5"/><rect x="3" y="11" width="18" height="5" rx="1.5"/><path d="M8 20h8"/></svg></div><b>Daily fantasy</b>Build a fantasy lineup, call higher or lower, and win real cash!</div>
+    <div class="about-card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></div><b>Huddles</b>Post player picks, talk through a slate, and tail or fade what other fans are playing.</div>
+    <div class="about-card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8M7.5 8a2.5 2.5 0 1 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 1 1 0 5"/></svg></div><b>Reward shop</b>Earn Smacks for chatting in huddles and placing entries, then redeem them for graded sports cards.</div>
   </div>
 
   <p class="terms"><strong>Offer terms (from SmackTok):</strong> Must be 18+ (21+ in some states). Void where prohibited. Daily fantasy sports only. Promotional credits are non-withdrawable and subject to wagering requirements. SmackTok is not a sportsbook. Not affiliated with or endorsed by the NFL, NBA, MLB, NHL, or any professional / NCAA league or team. Deposit match up to $50 eligible for first-time deposit only. Terms and conditions apply. Availability changes as SmackTok expands. Nothing on this page is a promise of results. Play responsibly. Help is available 24/7: 1-800-GAMBLER.</p>
@@ -227,6 +237,7 @@
     document.getElementById('no-title').textContent = title;
     document.getElementById('no-text').textContent = text;
     noBtns.style.display = withPicks ? 'flex' : 'none';
+    no.classList.toggle('avail-no', !!withPicks);
     no.style.display = 'block';
   }
 
@@ -241,7 +252,7 @@
     }
     if (LIVE.indexOf(st) === -1) {
       showNo("SmackTok isn't available in " + STATES[st] + ' yet.',
-        "It's live in a limited number of states and is adding more over time. In the meantime, Trifecta publishes NFL picks every week and grades every one of them in public.", true);
+        "It's live in a limited number of states and is adding more over time. In the meantime, Trifecta publishes NFL picks every week and grades every one of them in public. Pick of the week hits at 71.1% over 5 years; Top 5 picks of the week hit at 60.2% over 5 years.", true);
       return;
     }
     document.getElementById('code-text').textContent = code;
