@@ -4,45 +4,95 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SmackTok Offer — Trifecta</title>
-<meta name="description" content="A $50 first deposit match, a 25% profit boost and a free mystery player pick on SmackTok, a new daily fantasy app. Paid partnership.">
+<meta name="description" content="A first deposit match of up to $50, a 25% profit boost and a free mystery player pick on SmackTok, a new daily fantasy app.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://trifectapicks.com/smacktok.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 <style>
-  .ad-banner { margin: 20px 0 0; padding: 12px 16px; border: 1px solid var(--border-strong, var(--border)); border-radius: 10px; background: var(--surface-1); font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
-  .ad-banner strong { color: var(--text-primary); letter-spacing: 0.06em; font-family: var(--font-mono); font-size: 12px; margin-right: 8px; }
-  .offer-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 26px 0 8px; }
-  .offer-tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 22px 20px; text-align: center; }
-  .offer-tile .big { font-family: var(--font-mono); font-weight: 800; font-size: 44px; line-height: 1; letter-spacing: -0.02em; color: var(--accent-2); }
-  .offer-tile .lbl { margin-top: 10px; font-weight: 700; font-size: 15px; color: var(--text-primary); }
-  .gate-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 26px 0; }
-  .gate-card h2 { font-size: 21px; margin: 0 0 6px; }
-  .gate-card p.sub2 { color: var(--text-secondary); font-size: 14.5px; margin: 0 0 18px; }
-  .gate-form { display: grid; gap: 14px; max-width: 460px; }
-  .gate-form select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-strong, var(--border)); background: var(--surface-2); color: var(--text-primary); font-size: 15px; font-family: var(--font-body); }
+  :root { --st-green: #17f6a4; --st-green-dim: #0fc484; }
+  body { position: relative; }
+  .st-glow { position: absolute; inset: 0 0 auto 0; height: 1100px; pointer-events: none; z-index: 0; overflow: hidden;
+    background:
+      radial-gradient(ellipse 700px 520px at 88% 12%, rgba(23,246,164,0.20), transparent 66%),
+      radial-gradient(ellipse 620px 480px at 6% 34%, rgba(255,138,61,0.13), transparent 66%),
+      radial-gradient(ellipse 700px 500px at 50% 78%, rgba(23,246,164,0.09), transparent 68%); }
+  .container { position: relative; z-index: 1; }
+
+  .lockup { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 16px; margin-bottom: 26px; }
+  .lockup .t { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
+  .lockup .t span span { color: var(--accent); }
+  .lockup .x { color: var(--text-muted); font-family: var(--font-mono); font-size: 18px; }
+  .lockup img { height: 22px; width: auto; display: block; }
+
+  .hero-split { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: center; padding: 44px 0 6px; }
+  .hero-split > div { min-width: 0; }
+  .hero-split h1 { font-size: 42px; line-height: 1.08; margin: 0 0 16px; }
+  .hero-split .sub { font-size: 17px; margin: 0 0 8px; max-width: 560px; }
+  .st-code { color: var(--st-green); text-shadow: 0 0 28px rgba(23,246,164,0.45); }
+
+  .offer-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 26px 0 24px; }
+  .offer-tile { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-2) 9%, var(--surface-1)), var(--surface-1)); border: 1px solid color-mix(in srgb, var(--accent-2) 35%, var(--border)); border-radius: 14px; padding: 20px 14px 18px; text-align: center; box-shadow: 0 0 34px rgba(255,138,61,0.10); }
+  .offer-tile .big, .hot { font-family: var(--font-mono); font-weight: 800; font-size: 42px; line-height: 1; letter-spacing: -0.02em; color: var(--accent-2); text-shadow: 0 0 22px rgba(255,138,61,0.45); }
+  .offer-tile .lbl { margin-top: 10px; font-weight: 700; font-size: 14px; line-height: 1.3; color: var(--text-primary); }
+
+  .btn-st { background: var(--st-green); color: #03140d !important; font-weight: 800; box-shadow: 0 0 30px rgba(23,246,164,0.35); }
+  .btn-st:hover { filter: brightness(1.08); }
+
+  .hero-art { position: relative; display: flex; justify-content: center; align-self: stretch; min-height: 420px; }
+  .hero-art::before { content: ''; position: absolute; inset: 8% 4% 4% 4%; background: radial-gradient(closest-side, rgba(23,246,164,0.34), transparent 72%); filter: blur(20px); }
+  .hero-art img { position: relative; width: 100%; max-width: 400px; height: auto; align-self: flex-start;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%); mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.6)); }
+
+  .deal-strip { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--st-green) 40%, var(--border)); box-shadow: 0 0 60px rgba(23,246,164,0.16); margin: 34px 0 0; }
+
+  .gate-card { position: relative; background: linear-gradient(160deg, color-mix(in srgb, var(--st-green) 7%, var(--surface-1)), var(--surface-1) 55%); border: 1px solid color-mix(in srgb, var(--st-green) 38%, var(--border)); border-radius: 18px; padding: 30px; margin: 26px 0; box-shadow: 0 0 70px rgba(23,246,164,0.10); }
+  .gate-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+  .gate-head img { width: 34px; height: auto; display: block; }
+  .gate-card h2 { font-size: 22px; margin: 0; }
+  .gate-card p.sub2 { color: var(--text-secondary); font-size: 14.5px; margin: 0 0 20px; }
+  .gate-form { display: grid; gap: 16px; max-width: 460px; }
+  .gate-form .select-wrap { display: block; }
+  .gate-form .select-trigger { width: 100%; padding: 13px 34px 13px 14px; font-size: 15px; border-radius: 10px; }
+  .gate-form .select-option { font-size: 14.5px; }
   .gate-form label.chk { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text-secondary); line-height: 1.45; cursor: pointer; }
-  .gate-form label.chk input { margin-top: 3px; }
-  .gate-err { color: #ff6b6b; font-size: 13.5px; min-height: 18px; }
-  .result { display: none; margin-top: 22px; padding: 22px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface-2); }
-  .result.ok { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 10%, var(--surface-1)); }
-  .result h3 { margin: 0 0 8px; font-size: 18px; }
+  .gate-form label.chk input { margin-top: 3px; accent-color: var(--st-green); }
+  .gate-err { color: #ff6b6b; font-size: 13.5px; }
+  .gate-err:empty { display: none; }
+  .result { display: none; margin-top: 24px; padding: 24px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface-2); }
+  .result.ok { border-color: var(--st-green); background: color-mix(in srgb, var(--st-green) 8%, var(--surface-1)); box-shadow: 0 0 40px rgba(23,246,164,0.14); }
+  .result h3 { margin: 0 0 8px; font-size: 19px; }
   .result p { margin: 0 0 14px; color: var(--text-secondary); font-size: 14.5px; }
-  .code-chip { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-weight: 800; font-size: 26px; letter-spacing: 0.04em; padding: 10px 20px; border-radius: 10px; border: 1.5px dashed var(--accent-2); color: var(--text-primary); background: var(--surface-1); margin-bottom: 16px; }
-  .code-chip button { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border-strong, var(--border)); background: var(--surface-2); color: var(--text-primary); cursor: pointer; }
+  .result .fine { margin: 14px 0 0; font-size: 12.5px; color: var(--text-muted); }
+  .code-chip { display: inline-flex; align-items: center; gap: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 28px; letter-spacing: 0.05em; padding: 10px 20px; border-radius: 12px; border: 1.5px dashed var(--st-green); color: var(--st-green); background: var(--surface-1); margin-bottom: 18px; text-shadow: 0 0 22px rgba(23,246,164,0.4); }
+  .code-chip button { font-family: var(--font-mono); font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border-strong, var(--border)); background: var(--surface-2); color: var(--text-primary); cursor: pointer; text-shadow: none; letter-spacing: 0; }
+  .no-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .about-title { font-size: 21px; margin: 40px 0 6px; }
   .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0 6px; }
-  .about-grid div { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-  .about-grid b { display: block; color: var(--text-primary); font-size: 15px; margin-bottom: 6px; }
-  .terms { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 22px 0 0; }
-  @media (max-width: 720px) {
+  .about-grid div { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+  .about-grid b { display: block; color: var(--text-primary); font-size: 15.5px; margin-bottom: 6px; }
+  .terms { font-size: 12.5px; color: var(--text-muted); line-height: 1.65; margin: 30px 0 0; padding-bottom: 64px; }
+
+  @media (max-width: 860px) {
+    .hero-split { grid-template-columns: minmax(0, 1fr); padding-top: 30px; }
+    .hero-split h1 { font-size: 34px; }
+    .hero-art { min-height: 0; order: 2; }
+    .hero-art img { max-width: 300px; }
+  }
+  @media (max-width: 640px) {
     .offer-row, .about-grid { grid-template-columns: 1fr; }
-    .offer-tile .big { font-size: 38px; }
+    .offer-tile { padding: 16px 12px; }
     .gate-card { padding: 22px 18px; }
+    .lockup .t { font-size: 17px; }
+    .lockup img { height: 18px; }
   }
 </style>
 </head>
 <body>
 <div class="grid-bg"></div>
+<div class="st-glow"></div>
 <nav class="nav">
   <a class="brand" href="index.html">
     <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -64,22 +114,36 @@
 </nav>
 
 <div class="container">
-  <div class="ad-banner"><strong>AD · PAID PARTNERSHIP</strong>Trifecta earns a commission when you sign up for SmackTok with our code. SmackTok is a separate company and is not part of Trifecta's pick service.</div>
+  <section class="hero-split">
+    <div>
+      <div class="lockup">
+        <div class="t">
+          <svg width="24" height="24" viewBox="0 0 26 26" fill="none"><rect x="2" y="14" width="5" height="10" rx="1.5" fill="var(--accent)" opacity="0.55"/><rect x="10.5" y="8" width="5" height="16" rx="1.5" fill="var(--accent)" opacity="0.8"/><rect x="19" y="2" width="5" height="22" rx="1.5" fill="var(--accent)"/></svg>
+          <span>TRI<span>FECTA</span></span>
+        </div>
+        <span class="x">×</span>
+        <img src="img/smacktok-logo.png" alt="SmackTok">
+      </div>
+      <h1>New DFS app. Here's what you get with <span class="st-code">code TRIFECTA</span>.</h1>
+      <p class="sub">SmackTok's welcome offer for new users: a first deposit match of up to $50, a 25% profit boost and a free mystery player pick.</p>
 
-  <div class="hero" style="padding: 40px 0 6px;">
-    <div class="eyebrow" style="margin-bottom: 14px;"><span class="dot"></span>NEW DAILY FANTASY APP</div>
-    <h1 style="font-size:36px;">New DFS app. Here's what you get with <span class="accent-text">code TRIFECTA</span>.</h1>
-    <p class="sub" style="font-size:16.5px;">SmackTok's welcome offer for new users: a first deposit match, a profit boost and a free mystery player pick.</p>
-  </div>
+      <div class="offer-row">
+        <div class="offer-tile"><div class="big">$50</div><div class="lbl">First deposit match, up to</div></div>
+        <div class="offer-tile"><div class="big">25%</div><div class="lbl">Profit boost</div></div>
+        <div class="offer-tile"><div class="big">FREE</div><div class="lbl">Mystery player pick</div></div>
+      </div>
+      <a class="btn btn-st" href="#gate">Check availability in your state ↓</a>
+    </div>
+    <div class="hero-art"><img src="img/smacktok-app.webp" alt="The SmackTok app"></div>
+  </section>
 
-  <div class="offer-row">
-    <div class="offer-tile"><div class="big">$50</div><div class="lbl">First deposit match</div></div>
-    <div class="offer-tile"><div class="big">25%</div><div class="lbl">Profit boost</div></div>
-    <div class="offer-tile"><div class="big" style="font-size:34px; padding-top:5px;">FREE</div><div class="lbl">Mystery player pick</div></div>
-  </div>
+  <img class="deal-strip" src="img/smacktok-deposit-match.jpg" alt="SmackTok deposit match up to $50">
 
   <div class="gate-card" id="gate">
-    <h2>Check availability in your state</h2>
+    <div class="gate-head">
+      <img src="img/smacktok-icon.png" alt="">
+      <h2>Check availability in your state</h2>
+    </div>
     <p class="sub2">SmackTok is only live in some states, and you must meet the age requirement. Confirm both to see the offer.</p>
     <form class="gate-form" id="gate-form" novalidate>
       <select id="state" aria-label="Your state">
@@ -87,30 +151,34 @@
       </select>
       <label class="chk"><input type="checkbox" id="age"> I am 21 years of age or older.</label>
       <div class="gate-err" id="gate-err" role="alert"></div>
-      <button type="submit" class="btn btn-primary" style="justify-self:start;">Check my state</button>
+      <button type="submit" class="btn btn-st" style="justify-self:start;">Check my state</button>
     </form>
 
     <div class="result ok" id="result-ok">
       <h3>SmackTok is live in your state.</h3>
       <p>Use this code when you register so your welcome offer is applied. The link below fills it in for you.</p>
       <div class="code-chip"><span id="code-text">TRIFECTA</span><button type="button" id="copy-code">Copy</button></div>
-      <div><a class="btn btn-primary" id="claim-link" href="#" target="_blank" rel="noopener sponsored">Claim the offer on SmackTok →</a></div>
+      <div><a class="btn btn-st" id="claim-link" href="#" target="_blank" rel="noopener sponsored">Claim the offer on SmackTok →</a></div>
+      <p class="fine">Advertisement. Trifecta earns a commission when you sign up with this code.</p>
     </div>
     <div class="result" id="result-no">
       <h3 id="no-title">SmackTok isn't available for you yet.</h3>
       <p id="no-text"></p>
-      <a class="btn btn-secondary" href="free-nfl-picks.html">See Trifecta's free picks →</a>
+      <div class="no-btns" id="no-btns">
+        <a class="btn btn-primary" href="track-record.html">See the track record →</a>
+        <a class="btn btn-secondary" href="subscribe.html">Subscribe</a>
+      </div>
     </div>
   </div>
 
-  <h2 style="font-size:20px; margin: 34px 0 4px;">What's in the app</h2>
+  <h2 class="about-title">What's in the app</h2>
   <div class="about-grid">
     <div><b>Daily fantasy</b>Build a fantasy lineup, call higher or lower on player projections and put in a cash entry.</div>
     <div><b>Huddles</b>Post player picks, talk through a slate and tail or fade what other fans are doing.</div>
     <div><b>Reward shop</b>Earn Smacks for chatting in huddles and placing entries, then redeem them for graded sports cards.</div>
   </div>
 
-  <p class="terms"><strong>Offer terms (from SmackTok):</strong> Must be 18+ (21+ in some states). Void where prohibited. Daily fantasy sports only. Promotional credits are non-withdrawable and subject to wagering requirements. SmackTok is not a sportsbook. Availability changes as SmackTok expands. Nothing on this page is a promise of results. Play responsibly. Help is available 24/7: 1-800-GAMBLER.</p>
+  <p class="terms"><strong>Offer terms (from SmackTok):</strong> Must be 18+ (21+ in some states). Void where prohibited. Daily fantasy sports only. Promotional credits are non-withdrawable and subject to wagering requirements. SmackTok is not a sportsbook. Not affiliated with or endorsed by the NFL, NBA, MLB, NHL, or any professional / NCAA league or team. Deposit match up to $50 eligible for first-time deposit only. Terms and conditions apply. Availability changes as SmackTok expands. Nothing on this page is a promise of results. Play responsibly. Help is available 24/7: 1-800-GAMBLER.</p>
 </div>
 
 <footer>
@@ -121,10 +189,11 @@
     <a href="privacy.html">Privacy Policy</a>
     <a href="refund.html">Refund Policy</a>
   </div>
-  <div class="disclaimer">Trifecta is an informational and educational sports-analytics service. This page is an advertisement for SmackTok, a separate company, and is a paid partnership. 21+ and located where SmackTok is available. Play responsibly. Help is available 24/7: 1-800-GAMBLER.</div>
+  <div class="disclaimer">Trifecta is an informational and educational sports-analytics service. This page is an advertisement (ad) for SmackTok, a separate company, and is a paid partnership: Trifecta earns a commission when you sign up with code TRIFECTA. 21+ and located where SmackTok is available. Play responsibly. Help is available 24/7: 1-800-GAMBLER.</div>
 </footer>
 
 <script src="nav.js"></script>
+<script src="select.js"></script>
 <script>
 (function () {
   // States where SmackTok is live -- from SmackTok's partner handbook (2026-09-23).
@@ -147,10 +216,19 @@
     o.value = abbr; o.textContent = STATES[abbr];
     sel.appendChild(o);
   });
+  enhanceSelect(sel);
 
   var ok = document.getElementById('result-ok');
   var no = document.getElementById('result-no');
   var err = document.getElementById('gate-err');
+  var noBtns = document.getElementById('no-btns');
+
+  function showNo(title, text, withPicks) {
+    document.getElementById('no-title').textContent = title;
+    document.getElementById('no-text').textContent = text;
+    noBtns.style.display = withPicks ? 'flex' : 'none';
+    no.style.display = 'block';
+  }
 
   document.getElementById('gate-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -158,15 +236,12 @@
     var st = sel.value;
     if (!st) { err.textContent = 'Please select your state.'; return; }
     if (!document.getElementById('age').checked) {
-      document.getElementById('no-title').textContent = 'You must be 21 or older.';
-      document.getElementById('no-text').textContent = 'This offer is only for adults who meet the age requirement.';
-      no.style.display = 'block';
+      showNo('You must be 21 or older.', 'This offer is only for adults who meet the age requirement.', false);
       return;
     }
     if (LIVE.indexOf(st) === -1) {
-      document.getElementById('no-title').textContent = "SmackTok isn't available in " + STATES[st] + ' yet.';
-      document.getElementById('no-text').textContent = "It's live in a limited number of states and is adding more over time. In the meantime, Trifecta's picks are free to browse.";
-      no.style.display = 'block';
+      showNo("SmackTok isn't available in " + STATES[st] + ' yet.',
+        "It's live in a limited number of states and is adding more over time. In the meantime, Trifecta publishes NFL picks every week and grades every one of them in public.", true);
       return;
     }
     document.getElementById('code-text').textContent = code;

@@ -215,6 +215,7 @@ tr:hover td { background: var(--surface-2); }
   position: absolute; top: calc(100% + 6px); left: 0; min-width: 100%; z-index: 20;
   background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: 10px;
   padding: 6px; box-shadow: 0 16px 36px rgba(0,0,0,0.45); display: none;
+  max-height: 300px; overflow-y: auto;
 }
 .select-wrap.open .select-menu { display: block; }
 .select-option {
