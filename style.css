@@ -371,20 +371,21 @@ footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text
 @media (max-width: 760px) { .cap { grid-template-columns: 1fr; padding: 26px 20px; gap: 20px; } .cap .row { grid-template-columns: 1fr; } .cap h3 { font-size: 24px; } }
 
 /* ---- Track Record: free signup + paid subscribe in one module ---- */
-.combo { margin: 40px 0 44px; border-radius: 18px; overflow: hidden;
+.combo { margin: 32px 0 36px; border-radius: 18px; overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
   background: radial-gradient(ellipse 620px 240px at 50% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
               linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface-1)), var(--surface-1));
   box-shadow: 0 0 60px rgba(79,143,255,0.12); }
-.combo-head { text-align: center; padding: 34px 28px 8px; }
-.combo-head h2 { font-size: 34px; margin: 0 0 6px; letter-spacing: -0.02em; }
-.combo-head p { color: var(--text-secondary); font-size: 17px; margin: 0; }
-.combo-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; }
-.combo-col { padding: 30px 40px 38px; display: flex; flex-direction: column; align-items: flex-start; }
-.combo-paid { border-left: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border)); }
+.combo-head { text-align: center; padding: 26px 28px 0; }
+.combo-head h2 { font-size: 30px; margin: 0; letter-spacing: -0.02em; }
+.combo-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+.combo-col { padding: 22px 36px 28px; display: flex; flex-direction: column; align-items: flex-start; }
+.combo-or { position: absolute; left: 50%; top: 24px; bottom: 24px; width: 1px; transform: translateX(-50%); pointer-events: none;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--accent) 40%, var(--border)) 18%, color-mix(in srgb, var(--accent) 40%, var(--border)) 82%, transparent); }
+.combo-or span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--surface-1); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border)); color: var(--text-muted); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 6px 8px; border-radius: 20px; }
 .combo-col .eb { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
-.combo-col h3 { font-size: 24px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 8px; }
-.combo-col > p { color: var(--text-secondary); font-size: 15px; margin: 0 0 20px; max-width: 420px; }
+.combo-col h3 { font-size: 22px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 6px; }
+.combo-col > p { color: var(--text-secondary); font-size: 14.5px; margin: 0 0 16px; max-width: 420px; }
 .combo-col form { width: 100%; display: grid; gap: 12px; }
 .combo-col input[type=text], .combo-col input[type=email] { width: 100%; padding: 13px 15px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text-primary); font-size: 15px; font-family: var(--font-body); }
 .combo-col input:focus { outline: none; border-color: var(--accent); }
@@ -398,11 +399,14 @@ footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text
 .cap-btn-ghost { padding: 14px 20px; font-size: 15.5px; font-weight: 700; border-radius: 10px; background: transparent; color: var(--accent); border: 1px solid var(--accent); cursor: pointer; font-family: var(--font-body); }
 .cap-btn-ghost:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
 .cap-btn-ghost:disabled { opacity: .7; cursor: default; }
-.combo-paid .btn-lg { padding: 16px 38px; font-size: 18px; margin-top: auto; }
+.combo-paid .btn-lg { padding: 15px 34px; font-size: 17px; margin-top: auto; }
 @media (max-width: 820px) {
   .combo-grid { grid-template-columns: 1fr; }
-  .combo-paid { border-left: none; border-top: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border)); }
-  .combo-head h2 { font-size: 26px; }
-  .combo-col { padding: 26px 22px 30px; }
+  .combo-or { display: none; }
+  .combo-paid { border-top: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border)); }
+  .combo-head h2 { font-size: 24px; }
+  .combo-col { padding: 22px 22px 26px; }
   .combo-col .row { grid-template-columns: 1fr; }
 }
+.combo-list { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 8px; font-size: 14.5px; color: var(--text-secondary); }
+.combo-list li::before { content: '\2713'; color: var(--good); font-weight: 800; margin-right: 9px; }
