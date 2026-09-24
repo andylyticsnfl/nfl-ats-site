@@ -505,6 +505,9 @@ function renderPricing(term) {
         : usePreseasonPlan ? WHOP_PLAN_IDS_PRESEASON[tier][term] : WHOP_PLAN_IDS[tier][term];
       btn.dataset.planId = planId;
       btn.dataset.dealEligible = isDeal ? 'true' : 'false';
+      btn.dataset.tier = tier;
+      btn.dataset.term = term;
+      btn.dataset.price = String(plan.price);
     }
   });
 
@@ -517,6 +520,7 @@ document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
     document.querySelectorAll('.term-toggle .tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderPricing(btn.dataset.term);
+    if (window.trifectaTrack) trifectaTrack('select_term', { term: btn.dataset.term });
   });
 });
 
@@ -571,6 +575,10 @@ function showNameStep(planId, dealEligible) {
       if (resp.status === 409) throw new Error('price not available yet');
       if (!resp.ok) throw new Error('session request failed');
       const { sessionId } = await resp.json();
+      const pend = pendingCheckout();
+      if (pend) { pend.sessionId = sessionId; savePendingCheckout(pend); }
+      checkoutStep = 'payment';
+      if (pend && window.trifectaTrack) trifectaTrack('add_payment_info', { currency: 'USD', value: pend.price, deal_eligible: pend.deal, items: checkoutItems(pend) });
       showPaymentStep(sessionId, dealEligible);
     } catch (err) {
       errorEl.textContent = err.message === 'price not available yet'
@@ -611,6 +619,25 @@ function showPaymentStep(sessionId, dealEligible) {
   });
 }
 
+// ---- Analytics: checkout funnel (Google Analytics 4 recommended ecommerce events) ----
+// begin_checkout (tier button) -> add_payment_info (name accepted, payment form shown) ->
+// purchase (fired on checkout-complete.html from the details saved here) or checkout_closed.
+const TIER_NAME = { top1: 'Analytics Snapshot', top5: 'Analytics Digest', pro: 'Analytics Encyclopedia' };
+let checkoutStep = null;
+function pendingCheckout() {
+  try { return JSON.parse(localStorage.getItem('trifecta_pending_checkout') || 'null'); } catch (e) { return null; }
+}
+function savePendingCheckout(d) { try { localStorage.setItem('trifecta_pending_checkout', JSON.stringify(d)); } catch (e) {} }
+function checkoutItems(d) {
+  return [{ item_id: d.planId, item_name: TIER_NAME[d.tier] || d.tier, item_category: d.tier, item_variant: d.term, price: d.price, quantity: 1 }];
+}
+function trackCheckoutStart(btn) {
+  const d = { planId: btn.dataset.planId, tier: btn.dataset.tier, term: btn.dataset.term, price: parseFloat(btn.dataset.price), deal: btn.dataset.dealEligible === 'true', ts: Date.now() };
+  savePendingCheckout(d);
+  checkoutStep = 'name';
+  if (window.trifectaTrack) trifectaTrack('begin_checkout', { currency: 'USD', value: d.price, deal_eligible: d.deal, items: checkoutItems(d) });
+}
+
 function openCheckoutModal(planId, dealEligible) {
   modalBackdrop.hidden = false;
   document.body.style.overflow = 'hidden';
@@ -618,6 +645,8 @@ function openCheckoutModal(planId, dealEligible) {
 }
 
 function closeCheckoutModal() {
+  if (checkoutStep && window.trifectaTrack) trifectaTrack('checkout_closed', { step: checkoutStep });
+  checkoutStep = null;
   modalBackdrop.hidden = true;
   document.body.style.overflow = '';
   modalMount.innerHTML = ''; // unmount the iframe so a stale session isn't reused next open
@@ -626,7 +655,7 @@ function closeCheckoutModal() {
 ['btn-top1', 'btn-top5', 'btn-pro'].forEach(id => {
   document.getElementById(id).addEventListener('click', () => {
     const btn = document.getElementById(id);
-    if (!CHECKOUT_DISABLED) openCheckoutModal(btn.dataset.planId, btn.dataset.dealEligible === 'true');
+    if (!CHECKOUT_DISABLED) { trackCheckoutStart(btn); openCheckoutModal(btn.dataset.planId, btn.dataset.dealEligible === 'true'); }
   });
 });
 
