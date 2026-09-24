@@ -69,6 +69,25 @@
     <p>Every week's Top 5 and most confident pick, straight to your inbox.</p>
     <a class="btn btn-primary btn-lg btn-glow" href="subscribe.html">Subscribe →</a>
   </div>
+
+  <div class="cap" id="free-pick-signup">
+      <div>
+        <div class="eb">FREE &middot; EVERY WEEK</div>
+        <h3>Get a free pick every week.</h3>
+        <p class="sub">The model's free take on Thursday Night Football, plus first look at each week's deal, straight to your inbox.</p>
+        <ul><li>A free Thursday Night Football pick or lean each week</li><li>First look at each week's deal on the full picks</li><li>Official picks graded in public, right or wrong</li></ul>
+      </div>
+      <div id="cap-form-wrap">
+        <form id="cap-form" novalidate>
+          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="row"><input type="text" id="cap-name" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="email" id="cap-email" placeholder="Email address" autocomplete="email" aria-label="Email address" required></div>
+          <div class="cap-err" id="cap-err" role="alert"></div>
+          <button type="submit" class="cap-btn" id="cap-btn">Send me the free pick &rarr;</button>
+          <p class="fine">Free. No card required. Unsubscribe anytime.<br>A lean is the model's view on a game outside its Top 5: not an official pick, and not tracked.</p>
+        </form>
+      </div>
+    </div>
+
     <div class="tabs">
       <button class="tab-btn active" data-tab="top1">Most Confident / week (90 picks)</button>
       <button class="tab-btn" data-tab="top5">Top 5 / week (450 picks)</button>
@@ -278,6 +297,7 @@ fetch('data/picks_log.json', { cache: 'no-store' }).then(r => r.json()).then(dat
 </script>
 <script src="nav.js"></script>
 <script src="popup.js"></script>
+<script src="free-signup.js" defer></script>
 <script src="analytics.js" defer></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>
 </body>
