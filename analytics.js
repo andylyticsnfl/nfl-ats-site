@@ -3,7 +3,7 @@
    To switch Google Analytics on, paste the GA4 Measurement ID (looks like G-XXXXXXXXXX) below.
    While it is empty this file loads nothing and sends nothing. */
 (function () {
-  var GA_ID = '';
+  var GA_ID = 'G-C8BSBX4F3Q';
 
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
