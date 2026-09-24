@@ -156,7 +156,7 @@
     <a href="encyclopedia.html">Encyclopedia</a>
     <a href="https://x.com/TrifectaNFL" target="_blank" rel="noopener" class="nav-x-link" aria-label="Trifecta on X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
     <a href="smacktok.html" class="btn nav-st-btn" style="padding:8px 18px; font-size:13.5px;">DFS $50 Match</a>
-    <a href="subscribe.html" class="active">Subscribe</a>
+    <a href="subscribe.html" class="btn btn-primary" style="padding:8px 18px; font-size:13.5px;">Subscribe</a>
   </div>
 </nav>
 
@@ -188,7 +188,7 @@
         <div class="tier-price-row" data-tier="top1"><span class="tier-price"><span>$—</span></span></div>
         <div class="tier-perweek" data-tier="top1"></div>
         <div class="tier-billing" data-tier="top1"></div>
-        <div class="tier-desc">The week's single most confident pick — hitting <strong style="color:var(--good);">71.1% (+35.8% ROI)</strong> over five NFL seasons.</div>
+        <div class="tier-desc">The week's single most confident pick — hitting <strong id="stat-snap" style="color:var(--good);">69.6% (+32.8% ROI)</strong> over 5+ NFL seasons.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> The week's #1 highest-conviction pick</li>
           <li><span class="check">✓</span> Delivered before kickoff</li>
@@ -204,7 +204,7 @@
         <div class="tier-price-row" data-tier="top5"><span class="tier-price"><span>$—</span></span></div>
         <div class="tier-perweek" data-tier="top5"></div>
         <div class="tier-billing" data-tier="top5"></div>
-        <div class="tier-desc">The week's five most confident picks — hitting <strong style="color:var(--good);">60.2% (+15.0% ROI)</strong> over five NFL seasons.</div>
+        <div class="tier-desc">The week's five most confident picks — hitting <strong id="stat-digest" style="color:var(--good);">60.4% (+15.4% ROI)</strong> over 5+ NFL seasons.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> All 5 of the week's highest-conviction picks</li>
           <li><span class="check">✓</span> Includes the week's most confident pick</li>
@@ -704,5 +704,23 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modalBa
 <script src="nav.js"></script>
 <script src="popup.js"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>
+
+<script>
+// Snapshot / Digest hit rate + ROI, read from the same data file as the homepage so they refresh
+// whenever the site's track record does (no hand-edited numbers). ROI is $100/pick at -110,
+// pushes excluded -- identical math to the homepage tiles.
+fetch('data/picks_log.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+  function roi(picks) {
+    var w = picks.filter(function (g) { return g.correct === true; }).length;
+    var l = picks.filter(function (g) { return g.correct === false; }).length;
+    if (!w && !l) return null;
+    return (w * (100 / 1.1) - l * 100) / ((w + l) * 100) * 100;
+  }
+  function fmt(pct, r) { return pct.toFixed(1) + '% (' + (r >= 0 ? '+' : '\u2212') + Math.abs(r).toFixed(1) + '% ROI)'; }
+  var p = d.pooled, r1 = roi(d.top1_picks), r5 = roi(d.top5_picks);
+  if (p && r1 !== null) document.getElementById('stat-snap').textContent = fmt(p.top1_pct, r1);
+  if (p && r5 !== null) document.getElementById('stat-digest').textContent = fmt(p.top5_pct, r5);
+}).catch(function () {});
+</script>
 </body>
 </html>
