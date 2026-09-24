@@ -76,6 +76,24 @@
 
   <div class="stat-row" id="stat-row"></div>
 
+  <div class="cap" id="free-pick-signup">
+    <div>
+      <div class="eb">FREE &middot; EVERY WEEK</div>
+      <h3>Get a free pick every week.</h3>
+      <p class="sub">One free pick from the model, plus first look at each week's deal, straight to your inbox.</p>
+      <ul><li>A free pick every week (Thursday Night Football)</li><li>First look at each week's deal on the full picks</li><li>Every pick graded in public, right or wrong</li></ul>
+    </div>
+    <div id="cap-form-wrap">
+      <form id="cap-form" novalidate>
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="row"><input type="text" id="cap-name" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="email" id="cap-email" placeholder="Email address" autocomplete="email" aria-label="Email address" required></div>
+        <div class="cap-err" id="cap-err" role="alert"></div>
+        <button type="submit" class="cap-btn" id="cap-btn">Send me the free pick &rarr;</button>
+        <p class="fine">Free. No card required. Unsubscribe anytime.</p>
+      </form>
+    </div>
+  </div>
+
   <a class="st-promo" href="smacktok.html" id="st-promo" data-track="home_smacktok_card_click">
     <div>
       <img class="st-logo" src="img/smacktok-logo.png" alt="SmackTok">
@@ -355,6 +373,35 @@ function drawSeasonChart() {
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(fillTicker, 200); // only ever adds copies, never removes -- cheap to over-call
+  });
+})();
+</script>
+
+<script>
+// Free weekly pick signup -> worker -> Brevo list + welcome email (see worker.js handleFreePickSignup).
+(function () {
+  var form = document.getElementById('cap-form');
+  if (!form) return;
+  var WORKER = 'https://trifecta-encyclopedia-api.andylyticsnfl.workers.dev';
+  var err = document.getElementById('cap-err'), btn = document.getElementById('cap-btn');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.textContent = '';
+    var email = document.getElementById('cap-email').value.trim();
+    var name = document.getElementById('cap-name').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Please enter a valid email address.'; return; }
+    btn.disabled = true; btn.textContent = 'Sending\u2026';
+    fetch(WORKER + '/internal/signup-free', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName: name, email: email, website: form.website.value })
+    }).then(function (r) {
+      if (!r.ok) throw new Error('bad');
+      if (window.trifectaTrack) trifectaTrack('free_pick_signup', { page: location.pathname });
+      document.getElementById('cap-form-wrap').innerHTML = '<div class="cap-done"><h4>You\u2019re in.</h4><p>Check your inbox for a welcome email. Your first free pick arrives 75 minutes before Thursday\u2019s game.</p></div>';
+    }).catch(function () {
+      err.textContent = 'Something went wrong. Please try again.';
+      btn.disabled = false; btn.innerHTML = 'Send me the free pick &rarr;';
+    });
   });
 })();
 </script>

@@ -343,3 +343,29 @@ footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text
 .sub-cta p { color: var(--text-secondary); margin: 0 auto 24px; max-width: 640px; font-size: 19px; line-height: 1.45; }
 .sub-cta .btn-lg { padding: 16px 38px; font-size: 18px; }
 @media (max-width: 720px) { .sub-cta { padding: 28px 20px; margin: 36px 0 44px; min-height: 0; } .sub-cta h2 { font-size: 28px; } .sub-cta p { font-size: 16px; } .sub-cta .btn-lg { padding: 14px 30px; font-size: 16px; } }
+
+/* ---- Free weekly pick signup band (homepage) ---- */
+.cap { position: relative; overflow: hidden; margin: 0 0 28px; padding: 34px 36px; border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border));
+  background: radial-gradient(ellipse 520px 260px at 12% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+              linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface-1)), var(--surface-1));
+  box-shadow: 0 0 60px rgba(79,143,255,0.12); display: grid; grid-template-columns: 1.05fr 1fr; gap: 32px; align-items: center; }
+.cap .eb { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+.cap h3 { font-size: 30px; line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 10px; }
+.cap p.sub { color: var(--text-secondary); font-size: 15.5px; margin: 0; }
+.cap ul { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 7px; font-size: 14px; color: var(--text-secondary); }
+.cap li::before { content: '\2713'; color: var(--good); font-weight: 800; margin-right: 9px; }
+.cap form { display: grid; gap: 12px; }
+.cap input[type=text], .cap input[type=email] { width: 100%; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text-primary); font-size: 15px; font-family: var(--font-body); }
+.cap input:focus { outline: none; border-color: var(--accent); }
+.cap .row { display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px; }
+.cap button.cap-btn { padding: 15px 22px; font-size: 16px; font-weight: 700; border-radius: 10px; border: 1px solid rgba(150,192,255,.75); background: var(--accent); color: #fff; box-shadow: 0 0 28px rgba(79,143,255,.42); cursor: pointer; font-family: var(--font-body); }
+.cap button.cap-btn:disabled { opacity: .7; cursor: default; }
+.cap .fine { font-size: 12.5px; color: var(--text-muted); margin: 2px 0 0; }
+.cap .cap-err { color: #ff6b6b; font-size: 13.5px; }
+.cap .cap-err:empty { display: none; }
+.cap .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.cap .cap-done { text-align: center; padding: 10px 0; }
+.cap .cap-done h4 { font-size: 22px; margin: 0 0 8px; }
+.cap .cap-done p { color: var(--text-secondary); margin: 0; font-size: 15px; }
+@media (max-width: 760px) { .cap { grid-template-columns: 1fr; padding: 26px 20px; gap: 20px; } .cap .row { grid-template-columns: 1fr; } .cap h3 { font-size: 24px; } }
