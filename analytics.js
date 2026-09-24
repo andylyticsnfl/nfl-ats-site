@@ -8,10 +8,26 @@
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
 
+  // Channel: ?c=x_bio (or ?utm_source=...) on a landing URL is remembered for the visitor's later
+  // signups/clicks, even after the visitor clicks through to other pages.
+  window.trifectaChannel = function () {
+    try {
+      var q = new URLSearchParams(location.search);
+      var c = (q.get('c') || q.get('utm_source') || '').toLowerCase().replace(/[^a-z0-9_.-]/g, '').slice(0, 40);
+      if (c) { localStorage.setItem('trifecta_channel', c); return c; }
+      return localStorage.getItem('trifecta_channel') || '';
+    } catch (e) { return ''; }
+  };
+  window.trifectaChannel();
+
   // trifectaTrack('event_name', {key: value}) -- safe to call from any page, does nothing when GA is off.
   window.trifectaTrack = function (name, params) {
     if (!GA_ID) return;
-    try { gtag('event', name, params || {}); } catch (e) {}
+    try {
+      params = params || {};
+      if (params.channel === undefined) params.channel = window.trifectaChannel();
+      gtag('event', name, params);
+    } catch (e) {}
   };
 
   // Local previews (localhost) never load Google's script, so testing can't pollute real data;
@@ -55,6 +71,6 @@
   // Any element with data-track="event_name" reports a click.
   document.addEventListener('click', function (e) {
     var el = e.target && e.target.closest ? e.target.closest('[data-track]') : null;
-    if (el) window.trifectaTrack(el.getAttribute('data-track'), { page: location.pathname, channel: new URLSearchParams(location.search).get('c') || '' });
+    if (el) window.trifectaTrack(el.getAttribute('data-track'), { page: location.pathname, channel: window.trifectaChannel() });
   }, true);
 })();

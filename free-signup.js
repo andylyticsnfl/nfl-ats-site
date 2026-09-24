@@ -13,10 +13,10 @@
     btn.disabled = true; btn.textContent = 'Sending\u2026';
     fetch(WORKER + '/internal/signup-free', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: name, email: email, website: form.website.value })
+      body: JSON.stringify({ firstName: name, email: email, website: form.website.value, source: (window.trifectaChannel ? window.trifectaChannel() : '') + ':' + location.pathname.replace(/^\//, '').replace(/\.html$/, '') })
     }).then(function (r) {
       if (!r.ok) throw new Error('bad');
-      if (window.trifectaTrack) trifectaTrack('free_pick_signup', { page: location.pathname });
+      if (window.trifectaTrack) trifectaTrack('free_pick_signup', { page: location.pathname, channel: window.trifectaChannel() });
       var wrap = document.getElementById('cap-form-wrap') || form; wrap.innerHTML = '<div class="cap-done"><h4>You\u2019re in.</h4><p>Check your inbox for a welcome email. Your first free pick arrives 75 minutes before Thursday\u2019s game.</p></div>';
     }).catch(function () {
       err.textContent = 'Something went wrong. Please try again.';
