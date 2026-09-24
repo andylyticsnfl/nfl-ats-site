@@ -17,7 +17,7 @@
     }).then(function (r) {
       if (!r.ok) throw new Error('bad');
       if (window.trifectaTrack) trifectaTrack('free_pick_signup', { page: location.pathname });
-      document.getElementById('cap-form-wrap').innerHTML = '<div class="cap-done"><h4>You\u2019re in.</h4><p>Check your inbox for a welcome email. Your first free pick arrives 75 minutes before Thursday\u2019s game.</p></div>';
+      var wrap = document.getElementById('cap-form-wrap') || form; wrap.innerHTML = '<div class="cap-done"><h4>You\u2019re in.</h4><p>Check your inbox for a welcome email. Your first free pick arrives 75 minutes before Thursday\u2019s game.</p></div>';
     }).catch(function () {
       err.textContent = 'Something went wrong. Please try again.';
       btn.disabled = false; btn.innerHTML = 'Send me the free pick &rarr;';

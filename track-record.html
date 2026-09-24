@@ -64,27 +64,30 @@
     </div>
 
 
-    <div class="sub-cta">
-    <h2>Get the picks behind these numbers.</h2>
-    <p>Every week's Top 5 and most confident pick, straight to your inbox.</p>
-    <a class="btn btn-primary btn-lg btn-glow" href="subscribe.html">Subscribe →</a>
-  </div>
-
-  <div class="cap" id="free-pick-signup">
-      <div>
-        <div class="eb">FREE &middot; EVERY WEEK</div>
-        <h3>Get a free pick every week.</h3>
-        <p class="sub">The model's free take on Thursday Night Football, plus first look at each week's deal, straight to your inbox.</p>
-        <ul><li>A free Thursday Night Football pick or lean each week</li><li>First look at each week's deal on the full picks</li><li>Official picks graded in public, right or wrong</li></ul>
+    <div class="combo" id="free-pick-signup">
+      <div class="combo-head">
+        <h2>Get the picks behind these numbers.</h2>
+        <p>Start free, or get every pick.</p>
       </div>
-      <div id="cap-form-wrap">
-        <form id="cap-form" novalidate>
-          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <div class="row"><input type="text" id="cap-name" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="email" id="cap-email" placeholder="Email address" autocomplete="email" aria-label="Email address" required></div>
-          <div class="cap-err" id="cap-err" role="alert"></div>
-          <button type="submit" class="cap-btn" id="cap-btn">Send me the free pick &rarr;</button>
-          <p class="fine">Free. No card required. Unsubscribe anytime.<br>A lean is the model's view on a game outside its Top 5: not an official pick, and not tracked.</p>
-        </form>
+      <div class="combo-grid">
+        <div class="combo-col">
+          <div class="eb">FREE &middot; EVERY WEEK</div>
+          <h3>A free pick every week</h3>
+          <p>One free pick from the model, plus first look at each week's deal, straight to your inbox.</p>
+          <form id="cap-form" novalidate>
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="row"><input type="text" id="cap-name" placeholder="First name" autocomplete="given-name" aria-label="First name"><input type="email" id="cap-email" placeholder="Email address" autocomplete="email" aria-label="Email address" required></div>
+            <div class="cap-err" id="cap-err" role="alert"></div>
+            <button type="submit" class="cap-btn-ghost" id="cap-btn">Send me the free pick &rarr;</button>
+            <p class="fine">Free. No card required. Unsubscribe anytime.</p>
+          </form>
+        </div>
+        <div class="combo-col combo-paid">
+          <div class="eb">EVERY OFFICIAL PICK</div>
+          <h3>Get every week's Top 5</h3>
+          <p>Every Top 5 and most confident pick, straight to your inbox.</p>
+          <a class="btn btn-primary btn-lg btn-glow" href="subscribe.html" data-track="track_record_subscribe_click">Subscribe &rarr;</a>
+        </div>
       </div>
     </div>
 
