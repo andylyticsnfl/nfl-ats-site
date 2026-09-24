@@ -424,4 +424,6 @@ footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text
 }
 
 /* Homepage: the stat box, the free-pick band and the SmackTok card sit an equal 28px apart. */
-.stat-row + .cap { margin-top: -12px; }
+/* Homepage order: banners, free-pick band, SmackTok card, stat row, chart -- one 28px rhythm between them */
+.cap { margin-top: 28px; }
+.st-promo + .stat-row { margin-bottom: 28px; }
