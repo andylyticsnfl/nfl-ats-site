@@ -171,15 +171,15 @@
       <h3>SmackTok is live in your state.</h3>
       <p>Use this code when you register so your welcome offer is applied.</p>
       <div class="code-chip"><span id="code-text">TRIFECTA</span><button type="button" id="copy-code">Copy</button></div>
-      <div><a class="btn btn-st" id="claim-link" href="#" target="_blank" rel="noopener sponsored">Claim the offer on SmackTok →</a></div>
+      <div><a class="btn btn-st" id="claim-link" href="#" target="_blank" rel="noopener sponsored" data-track="smacktok_claim_click">Claim the offer on SmackTok →</a></div>
       <p class="fine">Advertisement. Trifecta earns a commission when you sign up with this code.</p>
     </div>
     <div class="result" id="result-no">
       <h3 id="no-title">SmackTok isn't available for you yet.</h3>
       <p id="no-text"></p>
       <div class="no-btns" id="no-btns">
-        <a class="btn btn-orange-ghost" href="track-record.html">See the track record →</a>
-        <a class="btn btn-orange" href="subscribe.html">Subscribe →</a>
+        <a class="btn btn-orange-ghost" href="track-record.html" data-track="smacktok_fallback_track_record">See the track record →</a>
+        <a class="btn btn-orange" href="subscribe.html" data-track="smacktok_fallback_subscribe">Subscribe →</a>
       </div>
     </div>
   </div>
@@ -232,6 +232,7 @@
 
   var params = new URLSearchParams(location.search);
   var code = CODES[params.get('c')] || DEFAULT_CODE;
+  document.addEventListener('DOMContentLoaded', function () { if (window.trifectaTrack) trifectaTrack('smacktok_view', { channel: params.get('c') || '' }); });
 
   var sel = document.getElementById('state');
   Object.keys(STATES).sort(function (a, b) { return STATES[a].localeCompare(STATES[b]); }).forEach(function (abbr) {
@@ -259,15 +260,19 @@
     ok.style.display = 'none'; no.style.display = 'none'; err.textContent = '';
     var st = sel.value;
     if (!st) { err.textContent = 'Please select your state.'; return; }
+    function track(result) { if (window.trifectaTrack) trifectaTrack('smacktok_state_check', { state: st, result: result, channel: params.get('c') || '' }); }
     if (!document.getElementById('age').checked) {
+      track('underage');
       showNo('You must be 21 or older.', 'This offer is only for adults who meet the age requirement.', false);
       return;
     }
     if (LIVE.indexOf(st) === -1) {
+      track('not_live');
       showNo("SmackTok isn't available in " + STATES[st] + ' yet.',
         "It's live in a limited number of states and is adding more over time. In the meantime, Trifecta publishes NFL picks every week and grades them in public." + STATS, true);
       return;
     }
+    track('live');
     document.getElementById('code-text').textContent = code;
     document.getElementById('claim-link').href = REFERRAL_BASE + encodeURIComponent(code);
     ok.style.display = 'block';
@@ -278,11 +283,14 @@
     try {
       navigator.clipboard.writeText(code).then(function () {
         btn.textContent = 'Copied';
+        if (window.trifectaTrack) trifectaTrack('smacktok_copy_code', { channel: params.get('c') || '' });
         setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
       });
     } catch (e) {}
   });
 })();
 </script>
+<script src="analytics.js" defer></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>
 </body>
 </html>
