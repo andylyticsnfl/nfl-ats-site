@@ -471,8 +471,8 @@ body { overscroll-behavior-y: none; }
 .tag-over { background: rgba(255,138,61,.16); color: #ff8a3d; }
 .tag-under { background: rgba(79,143,255,.16); color: #6ea2ff; }
 .st-nav { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 22px; }
-.st-chips { display: flex; flex-wrap: wrap; gap: 10px; }
-.st-chip { width: 108px; padding: 9px 0; text-align: center; justify-content: center; }
+.wk-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.wk-chip { width: 108px; padding: 9px 0; text-align: center; justify-content: center; }
 .st-season { margin-bottom: 16px; }
 .st-season h3 { margin-bottom: 14px; }
 .st-card { display: block; color: inherit; text-decoration: none; border-top: 3px solid var(--pg); transition: transform .15s ease, box-shadow .15s ease; }
