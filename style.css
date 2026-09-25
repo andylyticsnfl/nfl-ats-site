@@ -504,11 +504,12 @@ a.st-card:hover { transform: translateY(-2px); box-shadow: 0 0 34px color-mix(in
 }
 
 /* ---- SmackTok DFS block on NFL Stats + team pages ---- */
-.st-dfs { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin: 12px 0 0; padding: 16px 20px; border-radius: 14px;
+.st-dfs { text-decoration: none; color: inherit; cursor: pointer; transition: box-shadow .15s ease, border-color .15s ease; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin: 12px 0 0; padding: 16px 20px; border-radius: 14px;
   border: 1px solid rgba(23,246,164,.35); background: linear-gradient(90deg, rgba(23,246,164,.10), rgba(23,246,164,.03)); }
-.st-dfs-copy { color: var(--text-secondary); font-size: 14.5px; flex: 1 1 320px; }
+.st-dfs-copy { color: var(--text-secondary); font-size: 14px; line-height: 1.35; flex: 1 1 320px; }
 .st-dfs-copy b { color: #17f6a4; }
 .st-dfs-btn { display: inline-block; white-space: nowrap; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 14px; color: #04140d; background: #17f6a4; text-decoration: none; }
-.st-dfs-btn:hover { filter: brightness(1.08); }
+.st-dfs:hover { border-color: rgba(23,246,164,.7); box-shadow: 0 0 34px rgba(23,246,164,.16); }
+.st-dfs:hover .st-dfs-btn { filter: brightness(1.08); }
 .stats-page .st-list { margin: 8px 0 0; padding-left: 20px; color: var(--text-secondary); font-size: 14.5px; line-height: 1.65; }
 .stats-page .st-list li { margin: 6px 0; }
