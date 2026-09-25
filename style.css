@@ -313,8 +313,8 @@ footer { padding: 36px 0 48px; color: var(--text-muted); font-size: 12.5px; text
   .st-promo h3 { font-size: 24px; white-space: normal; }
 }
 
-/* The extra nav tab needs more room, so the hamburger menu kicks in below 960px (was 720px). */
-@media (max-width: 960px) {
+/* Eight nav items need about 1015px, so the hamburger menu kicks in below 1060px (was 960px, 720px before that). */
+@media (max-width: 1060px) {
   .nav { padding: 14px 20px; }
   .nav-toggle { display: block; }
   .nav .links {

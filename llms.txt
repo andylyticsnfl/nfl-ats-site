@@ -9,7 +9,10 @@
 - [Weekly recaps](https://trifectapicks.com/weekly-recaps.html): every week's Top 5 picks, graded against the final score.
 - [Trifecta picks by team](https://trifectapicks.com/nfl-team-ats-picks.html): every Top 5 pick involving each of the 32 teams, plus each team's full ATS record.
 
-## ATS data (regular season, updated weekly)
+## NFL Stats: ATS and over/under data (regular season, updated weekly)
+- [NFL Stats hub](https://trifectapicks.com/stats.html): free league-wide stats against the spread and the total. No picks.
+- [ATS results by week](https://trifectapicks.com/nfl-ats-results.html): every game's score, spread, cover and total since 2021.
+- [Over/under standings](https://trifectapicks.com/nfl-over-under-standings.html) and [trends](https://trifectapicks.com/nfl-over-under-trends.html)
 - [NFL ATS standings](https://trifectapicks.com/nfl-ats-standings.html): every team's record against the spread this season, with archives back to 2021.
 - [NFL ATS trends since 2021](https://trifectapicks.com/nfl-ats-trends.html): favorites, underdogs, home and road teams, big spreads, division games, teams off a bye.
 - [Thursday Night Football ATS record](https://trifectapicks.com/thursday-night-football-ats-record.html)
@@ -17,5 +20,5 @@
 - [Sunday Night Football ATS record](https://trifectapicks.com/sunday-night-football-ats-record.html)
 
 ## Notes
-- ATS data uses the point spread and final scores from nflverse's schedule data. A game that lands exactly on the spread is a push.
+- ATS data uses each game's point spread and final score. A game that lands exactly on the spread is a push.
 - Paid picks are not published on the public site. Past performance does not guarantee future results. 21+ and where legal.
