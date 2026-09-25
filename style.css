@@ -436,6 +436,7 @@ body { overscroll-behavior-y: none; }
 .container.stats-page { max-width: 1240px; --pg: #3ddc74; }
 .stats-page.pg-orange { --pg: #ff8a3d; }
 .stats-page.pg-blue { --pg: #4f8fff; }
+.stats-page.pg-purple { --pg: #a78bfa; }
 .stats-page .crumb { margin: 20px 0 0; font-size: 13.5px; }
 .stats-page .crumb a { color: var(--pg); }
 .stats-page .hero { position: relative; }
