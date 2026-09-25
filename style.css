@@ -484,3 +484,21 @@ a.st-card:hover { transform: translateY(-2px); box-shadow: 0 0 34px color-mix(in
 .stats-page .faq-item { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
 .stats-page .faq-item h3 { margin: 0 0 6px; font-size: 16px; }
 .stats-page .faq-item p { margin: 0; color: var(--text-secondary); font-size: 14.5px; line-height: 1.6; }
+
+/* Phones: keep the identifying column of NFL Stats tables pinned while the rest scrolls sideways (the '#' rank column is hidden). */
+@media (max-width: 900px) {
+  .stats-page .table-wrap table.stk1 th:first-child,
+  .stats-page .table-wrap table.stk1 td:first-child,
+  .stats-page .table-wrap table.stk2 th:nth-child(2),
+  .stats-page .table-wrap table.stk2 td:nth-child(2) { position: sticky; left: 0; z-index: 2; box-shadow: 6px 0 8px -6px rgba(0,0,0,.6); }
+  .stats-page .table-wrap table.stk2 th:first-child,
+  .stats-page .table-wrap table.stk2 td:first-child { display: none; }
+  .stats-page .table-wrap table.stk1 td:first-child,
+  .stats-page .table-wrap table.stk2 td:nth-child(2) { background: var(--surface-1); }
+  .stats-page .table-wrap table.stk1 th:first-child,
+  .stats-page .table-wrap table.stk2 th:nth-child(2) { background: var(--surface-2); }
+  .container.stats-page { padding: 0 16px; }
+  .stats-page .hero h1 { font-size: 26px !important; }
+  .stats-page section.st-sec h2 { font-size: 20px; align-items: flex-start; }
+  .stats-page section.st-sec h2::before { margin-top: 3px; height: 20px; }
+}
