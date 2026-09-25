@@ -1,0 +1,21 @@
+# Trifecta
+
+> Trifecta is a proprietary NFL against-the-spread (ATS) model. It is built with zero market data as an input, uses point-in-time data only, and grades every pick in public, wins and losses. Trifecta sells weekly picks and sends a free Thursday Night Football pick by email. Trifecta is an informational and educational sports-analytics service; it does not accept wagers.
+
+## Key pages
+- [Track record](https://trifectapicks.com/track-record.html): every graded Top 5 and Most Confident pick, by season.
+- [Methodology](https://trifectapicks.com/about.html): how the model works and why market data is excluded.
+- [Free NFL picks](https://trifectapicks.com/free-nfl-picks.html): the free Thursday Night Football pick, sent by email 75 minutes before kickoff.
+- [Weekly recaps](https://trifectapicks.com/weekly-recaps.html): every week's Top 5 picks, graded against the final score.
+- [Trifecta picks by team](https://trifectapicks.com/nfl-team-ats-picks.html): every Top 5 pick involving each of the 32 teams, plus each team's full ATS record.
+
+## ATS data (regular season, updated weekly)
+- [NFL ATS standings](https://trifectapicks.com/nfl-ats-standings.html): every team's record against the spread this season, with archives back to 2021.
+- [NFL ATS trends since 2021](https://trifectapicks.com/nfl-ats-trends.html): favorites, underdogs, home and road teams, big spreads, division games, teams off a bye.
+- [Thursday Night Football ATS record](https://trifectapicks.com/thursday-night-football-ats-record.html)
+- [Monday Night Football ATS record](https://trifectapicks.com/monday-night-football-ats-record.html)
+- [Sunday Night Football ATS record](https://trifectapicks.com/sunday-night-football-ats-record.html)
+
+## Notes
+- ATS data uses the point spread and final scores from nflverse's schedule data. A game that lands exactly on the spread is a push.
+- Paid picks are not published on the public site. Past performance does not guarantee future results. 21+ and where legal.
