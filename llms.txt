@@ -18,7 +18,10 @@
 - [Thursday Night Football ATS record](https://trifectapicks.com/thursday-night-football-ats-record.html)
 - [Monday Night Football ATS record](https://trifectapicks.com/monday-night-football-ats-record.html)
 - [Sunday Night Football ATS record](https://trifectapicks.com/sunday-night-football-ats-record.html)
+- [NFL Stats data notes](https://trifectapicks.com/nfl-stats-data-notes.html): how each number is calculated, and how to use the data.
+- [Download: every NFL game since 2021 (CSV)](https://trifectapicks.com/data/nfl-ats-games.csv): scores, spread, total, cover and over/under result, roof.
 
 ## Notes
+- The NFL Stats tables and data files are free to use under CC BY 4.0 with credit: cite Trifecta (trifectapicks.com) and link to the page used. This does not cover Trifecta's picks, the Encyclopedia or the Track Record.
 - ATS data uses each game's point spread and final score. A game that lands exactly on the spread is a push.
 - Paid picks are not published on the public site. Past performance does not guarantee future results. 21+ and where legal.
