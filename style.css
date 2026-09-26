@@ -517,8 +517,8 @@ a.st-card:hover { transform: translateY(-2px); box-shadow: 0 0 34px color-mix(in
 /* DFS game-environment page: prominent promo code */
 .st-dfs-big { padding: 22px 24px; gap: 20px; border-width: 2px; margin-top: 4px; }
 .st-dfs-big .st-dfs-copy { font-size: 16px; line-height: 1.4; flex: 1 1 300px; }
-.st-code { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 26px 12px; border: 2px dashed #17f6a4; border-radius: 14px; background: rgba(23,246,164,.12); }
-.st-code small { font: 700 11px/1 'JetBrains Mono', monospace; letter-spacing: .18em; color: var(--text-secondary); }
-.st-code strong { font: 800 36px/1.05 'JetBrains Mono', monospace; letter-spacing: .06em; color: #17f6a4; text-shadow: 0 0 24px rgba(23,246,164,.45); }
+.dfs-code { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 26px 12px; border: 2px dashed #17f6a4; border-radius: 14px; background: rgba(23,246,164,.12); }
+.dfs-code small { font: 700 11px/1 'JetBrains Mono', monospace; letter-spacing: .18em; color: var(--text-secondary); }
+.dfs-code strong { font: 800 36px/1.05 'JetBrains Mono', monospace; letter-spacing: .06em; color: #17f6a4; text-shadow: 0 0 24px rgba(23,246,164,.45); }
 .st-adnote { margin: 8px 2px 0; font-size: 11.5px; line-height: 1.4; color: var(--text-muted); }
-@media (max-width: 600px) { .st-code strong { font-size: 30px; } .st-dfs-big { justify-content: center; text-align: center; } }
+@media (max-width: 600px) { .dfs-code strong { font-size: 30px; } .st-dfs-big { justify-content: center; text-align: center; } }
