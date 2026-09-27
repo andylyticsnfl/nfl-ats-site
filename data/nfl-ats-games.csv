@@ -1391,20 +1391,20 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,2,2026-09-20,Sunday,20:20,IND,KC,30,33,-6.0,46.5,IND,Over,outdoors,0,GEHA Field at Arrowhead Stadium
 2026,2,2026-09-21,Monday,20:15,NYG,LA,6,28,-6.5,47.5,LA,Under,dome,0,SoFi Stadium
 2026,3,2026-09-24,Thursday,20:15,ATL,GB,35,14,-4.5,43.5,ATL,Over,outdoors,0,Lambeau Field
-2026,3,2026-09-27,Sunday,13:00,LAC,BUF,,,-7.0,49.5,,,outdoors,0,Highmark Stadium
-2026,3,2026-09-27,Sunday,13:00,CAR,CLE,,,1.5,42.5,,,outdoors,0,Huntington Bank Field
+2026,3,2026-09-27,Sunday,13:00,LAC,BUF,,,-7.0,50.5,,,outdoors,0,Highmark Stadium
+2026,3,2026-09-27,Sunday,13:00,CAR,CLE,,,2.5,41.5,,,outdoors,0,Huntington Bank Field
 2026,3,2026-09-27,Sunday,13:00,NYJ,DET,,,-6.5,48.5,,,dome,0,Ford Field
 2026,3,2026-09-27,Sunday,13:00,HOU,IND,,,1.5,42.5,,,,1,Lucas Oil Stadium
-2026,3,2026-09-27,Sunday,13:00,NE,JAX,,,-3.0,46.5,,,outdoors,0,EverBank Stadium
+2026,3,2026-09-27,Sunday,13:00,NE,JAX,,,-3.0,45.5,,,outdoors,0,EverBank Stadium
 2026,3,2026-09-27,Sunday,13:00,KC,MIA,,,10.0,45.5,,,outdoors,0,Hard Rock Stadium
 2026,3,2026-09-27,Sunday,13:00,TEN,NYG,,,-2.5,37.5,,,outdoors,0,MetLife Stadium
 2026,3,2026-09-27,Sunday,13:00,CIN,PIT,,,3.5,42.5,,,outdoors,1,Acrisure Stadium
-2026,3,2026-09-27,Sunday,13:00,SEA,WAS,,,7.5,40.5,,,outdoors,0,Northwest Stadium
-2026,3,2026-09-27,Sunday,16:05,ARI,SF,,,-7.5,47.5,,,outdoors,1,Levi's Stadium
+2026,3,2026-09-27,Sunday,13:00,SEA,WAS,,,8.5,40.5,,,outdoors,0,Northwest Stadium
+2026,3,2026-09-27,Sunday,16:05,ARI,SF,,,-7.5,48.5,,,outdoors,1,Levi's Stadium
 2026,3,2026-09-27,Sunday,16:05,MIN,TB,,,1.5,42.5,,,outdoors,0,Raymond James Stadium
 2026,3,2026-09-27,Sunday,16:25,BAL,DAL,,,3.0,53.5,,,,0,Maracana Stadium
 2026,3,2026-09-27,Sunday,16:25,LV,NO,,,-3.5,43.5,,,dome,0,Caesars Superdome
-2026,3,2026-09-27,Sunday,20:20,LA,DEN,,,2.5,43.5,,,outdoors,0,Empower Field at Mile High
+2026,3,2026-09-27,Sunday,20:20,LA,DEN,,,1.5,43.5,,,outdoors,0,Empower Field at Mile High
 2026,3,2026-09-28,Monday,20:15,PHI,CHI,,,3.5,42.5,,,outdoors,0,Soldier Field
 2026,4,2026-10-01,Thursday,20:15,PIT,CLE,,,3.0,38.5,,,outdoors,1,Huntington Bank Field
 2026,4,2026-10-04,Sunday,09:30,IND,WAS,,,4.5,46.5,,,outdoors,0,Tottenham Hotspur Stadium
