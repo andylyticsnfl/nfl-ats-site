@@ -1,10 +1,10 @@
 {
- "generated": "2026-09-22",
+ "generated": "2026-09-28",
  "pooled": {
   "top5_pct": 60.4,
-  "top5_n": 460,
-  "top1_pct": 69.6,
-  "top1_n": 92
+  "top5_n": 465,
+  "top1_pct": 69.9,
+  "top1_n": 93
  },
  "season_summary": [
   {
@@ -49,11 +49,11 @@
   },
   {
    "season": 2026,
-   "top5_pct": 70.0,
-   "top5_n": 10,
-   "top1_pct": 0.0,
-   "top1_n": 2,
-   "max_week": 2
+   "top5_pct": 66.7,
+   "top5_n": 15,
+   "top1_pct": 33.3,
+   "top1_n": 3,
+   "max_week": 3
   }
  ],
  "top5_picks": [
@@ -6046,6 +6046,76 @@
    "edge": 8.5,
    "correct": true,
    "push": false
+  },
+  {
+   "season": 2026,
+   "week": 3,
+   "away": "TEN",
+   "home": "NYG",
+   "away_score": 7,
+   "home_score": 12,
+   "spread": -2.5,
+   "pick_team": "NYG",
+   "pick_side": "home",
+   "edge": 18.0,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 3,
+   "away": "SEA",
+   "home": "WAS",
+   "away_score": 31,
+   "home_score": 33,
+   "spread": 7.5,
+   "pick_team": "SEA",
+   "pick_side": "away",
+   "edge": 17.1,
+   "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 3,
+   "away": "MIN",
+   "home": "TB",
+   "away_score": 23,
+   "home_score": 16,
+   "spread": 1.5,
+   "pick_team": "MIN",
+   "pick_side": "away",
+   "edge": 9.8,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 3,
+   "away": "CAR",
+   "home": "CLE",
+   "away_score": 18,
+   "home_score": 21,
+   "spread": 2.5,
+   "pick_team": "CAR",
+   "pick_side": "away",
+   "edge": 8.6,
+   "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 3,
+   "away": "ATL",
+   "home": "GB",
+   "away_score": 35,
+   "home_score": 14,
+   "spread": -4.5,
+   "pick_team": "ATL",
+   "pick_side": "away",
+   "edge": 7.8,
+   "correct": true,
+   "push": false
   }
  ],
  "top1_picks": [
@@ -7245,6 +7315,20 @@
    "pick_side": "home",
    "edge": 17.6,
    "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 3,
+   "away": "TEN",
+   "home": "NYG",
+   "away_score": 7,
+   "home_score": 12,
+   "spread": -2.5,
+   "pick_team": "NYG",
+   "pick_side": "home",
+   "edge": 18.0,
+   "correct": true,
    "push": false
   }
  ]
