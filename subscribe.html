@@ -106,6 +106,13 @@
     background: color-mix(in srgb, var(--accent-2) 14%, var(--surface-1));
     border: 1px solid var(--accent-2);
   }
+  /* An author rule's `display: flex` always beats the browser's default
+     [hidden] { display: none }, since author styles outrank UA styles
+     regardless of specificity -- so `dealBanner.hidden = true` (renderPricing,
+     below) was silently not hiding this element at all. Found 2026-09-28:
+     the expired Week 3 deal was still visibly showing a day after its own
+     cutoff. */
+  .deal-banner[hidden] { display: none; }
   .deal-banner-text {
     /* font-size is set by JS (fitDealBannerText below), not CSS -- the text
        and the code chip must always share exactly one row, at whatever
