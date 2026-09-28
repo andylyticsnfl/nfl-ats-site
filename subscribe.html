@@ -262,28 +262,31 @@
 <script>
 const PRICING = {
   top1: {
-    1: { price: 7.99, billing: 'billed weekly' },
-    4: { price: 27.99, billing: 'billed every 4 weeks' },
-    8: { price: 49.99 },
+    1: { price: 3.99, billing: 'billed weekly' },
+    4: { price: 13.99, billing: 'billed every 4 weeks' },
+    8: { price: 24.99 },
   },
   top5: {
-    1: { price: 19.99, billing: 'billed weekly' },
-    4: { price: 69.99, billing: 'billed every 4 weeks' },
-    8: { price: 124.99 },
+    1: { price: 9.99, billing: 'billed weekly' },
+    4: { price: 34.99, billing: 'billed every 4 weeks' },
+    8: { price: 61.99 },
   },
   pro: {
-    1: { price: 37.99, billing: 'billed weekly' },
-    4: { price: 131.99, billing: 'billed every 4 weeks' },
-    8: { price: 236.99 },
+    1: { price: 18.99, billing: 'billed weekly' },
+    4: { price: 65.99, billing: 'billed every 4 weeks' },
+    8: { price: 117.99 },
   },
 };
 
-// Whop plan ids — created via the Whop API 2026-08-18, see
-// trifecta-encyclopedia-api/whop_products.json for the full map.
+// Whop plan ids — created via the Whop API 2026-09-28 (all prices halved from
+// the 2026-08-18 originals, .99-rounded, same relative discounts: ~13% off
+// on the 4-week plan, ~22% off on 8-week, computed from each tier's own
+// actual original ratio rather than the rounded label). See
+// trifecta-encyclopedia-api/whop_products.json for the product ids.
 const WHOP_PLAN_IDS = {
-  top1: { 1: 'plan_g0bJuvr1FDCgt', 4: 'plan_f0L3JQFqvIgac', 8: 'plan_8lax0DNxSWYEA' },
-  top5: { 1: 'plan_644TtLotYV7hi', 4: 'plan_1z6HxlmJ2ziFA', 8: 'plan_zNrfdmo8jpl2g' },
-  pro: { 1: 'plan_FOvluOHgaskzw', 4: 'plan_bqU72730rQ3cq', 8: 'plan_HN3LTVMta0dFr' },
+  top1: { 1: 'plan_LNh5hh7hKKIKu', 4: 'plan_dXYYEyP8ajS48', 8: 'plan_YExCPxGZx9vfa' },
+  top5: { 1: 'plan_kk1xT3njjDt05', 4: 'plan_bV1xiGqvHSLyC', 8: 'plan_rWw1EewqkXK8s' },
+  pro: { 1: 'plan_3ennbvEydfL61', 4: 'plan_Eo1uZD0kp5JST', 8: 'plan_bp6S8Th9axOW5' },
 };
 
 // "Rest of Season": the pass covers every week from the current NFL week
@@ -292,71 +295,72 @@ const WHOP_PLAN_IDS = {
 // clock-based, no scheduled job: one hidden one-time Whop plan exists per
 // (tier, weeks remaining) and this page picks the plan for right now (the
 // Worker also refuses any plan cheaper than the current week's). Prices are
-// the nearest .99 to a ~38% discount off the weekly rate x weeks remaining
-// (Snapshot: $5/wk; Digest and Encyclopedia: 38% off exactly, which lands on
-// 38% for every week except the very last). Source of truth:
-// trifecta-encyclopedia-api/rest_of_season_plans.json.
-// The Worker gives every one of these plans access through the end of Week 18.
+// the nearest .99 to a ~38% discount off the (new, halved) weekly rate x
+// weeks remaining for Digest and Encyclopedia; Snapshot uses a flat
+// per-week rate (nearest 50 cents to 38% off) since its original pricing
+// wasn't a clean multiple of the weekly rate either. Recomputed and
+// recreated via the Whop API 2026-09-28 alongside the base-plan halving
+// above.
 const REST_OF_SEASON = {
   top1: {
-    18: { planId: 'plan_UKfXhPPYeZADs', price: 89.99 },
-    17: { planId: 'plan_XuUSl2ESLFd9k', price: 84.99 },
-    16: { planId: 'plan_dcTaubDRXBCq3', price: 79.99 },
-    15: { planId: 'plan_EOVFvUlCJx42c', price: 74.99 },
-    14: { planId: 'plan_597MnNSE4RGmu', price: 69.99 },
-    13: { planId: 'plan_BDlrT7ieA6jch', price: 64.99 },
-    12: { planId: 'plan_V0OtT6iCN4yJt', price: 59.99 },
-    11: { planId: 'plan_t5YfC51gF2pRU', price: 54.99 },
-    10: { planId: 'plan_La3bTWmVWoute', price: 49.99 },
-    9: { planId: 'plan_7uHYqjkQXz3aa', price: 44.99 },
-    8: { planId: 'plan_tOcGPzaKLFWHf', price: 39.99 },
-    7: { planId: 'plan_ej4FnWzDOs2qT', price: 34.99 },
-    6: { planId: 'plan_Bke7Tf8JslWcc', price: 29.99 },
-    5: { planId: 'plan_6cnYbLv6kdxec', price: 24.99 },
-    4: { planId: 'plan_uQCwdfaU05WDL', price: 19.99 },
-    3: { planId: 'plan_3gjzkGYYzgzQI', price: 14.99 },
-    2: { planId: 'plan_kSRVnpy5ReJ8w', price: 9.99 },
-    1: { planId: 'plan_mV1UzNDSuLjIc', price: 4.99 },
+    18: { planId: 'plan_4smbHjp019CK4', price: 44.99 },
+    17: { planId: 'plan_zf0iooOb3LpXM', price: 42.99 },
+    16: { planId: 'plan_klbpXmGWGA8dC', price: 39.99 },
+    15: { planId: 'plan_OBkRjQOB9yvrG', price: 37.99 },
+    14: { planId: 'plan_foQGn5vEsBtqb', price: 34.99 },
+    13: { planId: 'plan_ozWu5Ty1Wf0nd', price: 32.99 },
+    12: { planId: 'plan_ScBXes5UriGTC', price: 29.99 },
+    11: { planId: 'plan_4fNhYwUN9S8gx', price: 27.99 },
+    10: { planId: 'plan_PeXMRFPnY8y1n', price: 24.99 },
+    9: { planId: 'plan_vvm8CVq4mlGYv', price: 22.99 },
+    8: { planId: 'plan_oDSTjuo312ux9', price: 19.99 },
+    7: { planId: 'plan_VeNftaeNjvGd7', price: 17.99 },
+    6: { planId: 'plan_h0HePIrP3Q472', price: 14.99 },
+    5: { planId: 'plan_5dtDjZMF2WgI8', price: 12.99 },
+    4: { planId: 'plan_xXNp5YxT99nVT', price: 9.99 },
+    3: { planId: 'plan_CqsiNterzactu', price: 7.99 },
+    2: { planId: 'plan_rh1BRqeY4oH7B', price: 4.99 },
+    1: { planId: 'plan_JfUgisNYwJmTq', price: 2.99 },
   },
   top5: {
-    18: { planId: 'plan_IicTf3PpR8Lhy', price: 222.99 },
-    17: { planId: 'plan_9gxDk9UxzrL3y', price: 210.99 },
-    16: { planId: 'plan_gRePMzfgiooaH', price: 197.99 },
-    15: { planId: 'plan_rBJjtEulG95vO', price: 185.99 },
-    14: { planId: 'plan_VMfCfOCiRE5Al', price: 173.99 },
-    13: { planId: 'plan_WFsx72cRK3YYZ', price: 160.99 },
-    12: { planId: 'plan_xGt7f0tYXViAF', price: 148.99 },
-    11: { planId: 'plan_7tIEw2SxJ3zmq', price: 135.99 },
-    10: { planId: 'plan_oecTHn4B8Xc68', price: 123.99 },
-    9: { planId: 'plan_jnM9xY9p8jCCx', price: 111.99 },
-    8: { planId: 'plan_FtRL27zjyxE0g', price: 98.99 },
-    7: { planId: 'plan_gDYUjn7OkDX8J', price: 86.99 },
-    6: { planId: 'plan_jJnnXCTSYfAjg', price: 73.99 },
-    5: { planId: 'plan_S8zqTs4rIdiAm', price: 61.99 },
-    4: { planId: 'plan_jF2Q4uCCx8pjB', price: 49.99 },
-    3: { planId: 'plan_p6mDuJRNLXsPb', price: 36.99 },
-    2: { planId: 'plan_1GiYh9HHMuFM9', price: 24.99 },
-    1: { planId: 'plan_Zs0LbkpQk44AW', price: 11.99 },
+    18: { planId: 'plan_MlgFzlCkWDHOc', price: 110.99 },
+    17: { planId: 'plan_Prl6xujFIp3fc', price: 104.99 },
+    16: { planId: 'plan_GBv3NRqbto6SM', price: 98.99 },
+    15: { planId: 'plan_g9g7NpjLrcF6B', price: 92.99 },
+    14: { planId: 'plan_Zjtet7gp3NVkv', price: 86.99 },
+    13: { planId: 'plan_pFOhOLDDS8aqv', price: 80.99 },
+    12: { planId: 'plan_R5IsvresmFpyI', price: 73.99 },
+    11: { planId: 'plan_d9pOneG2G4Tj7', price: 67.99 },
+    10: { planId: 'plan_A3EIAxhoKUunh', price: 61.99 },
+    9: { planId: 'plan_cdFPgIvLJ62bC', price: 55.99 },
+    8: { planId: 'plan_FQ8Wz4UTB6myH', price: 49.99 },
+    7: { planId: 'plan_T1MT6r6nQvK4C', price: 42.99 },
+    6: { planId: 'plan_npJJ9x6Tx5MwX', price: 36.99 },
+    5: { planId: 'plan_emQyPGSlngQiD', price: 30.99 },
+    4: { planId: 'plan_vjVmObklDoEQY', price: 24.99 },
+    3: { planId: 'plan_th3L0fhkYyVEH', price: 18.99 },
+    2: { planId: 'plan_lWc08c7G7lZlO', price: 11.99 },
+    1: { planId: 'plan_TMrdKXUIUH9E0', price: 5.99 },
   },
   pro: {
-    18: { planId: 'plan_SRzSlVtfVqruC', price: 423.99 },
-    17: { planId: 'plan_FbLPJbQZeJ1J3', price: 400.99 },
-    16: { planId: 'plan_uRDt68TPz0nBs', price: 376.99 },
-    15: { planId: 'plan_Z69H0nIJDAVbF', price: 352.99 },
-    14: { planId: 'plan_7ehkI2NDlJZuT', price: 329.99 },
-    13: { planId: 'plan_wtTZNctVdcWKB', price: 305.99 },
-    12: { planId: 'plan_FnjqLVy4saGbL', price: 282.99 },
-    11: { planId: 'plan_W27zT97nc5X6H', price: 258.99 },
-    10: { planId: 'plan_YhNSnkqFbtDyV', price: 235.99 },
-    9: { planId: 'plan_Q2XpPjE9JcHvA', price: 211.99 },
-    8: { planId: 'plan_btxzn1F9dft6W', price: 187.99 },
-    7: { planId: 'plan_TSmymqVZ8po68', price: 164.99 },
-    6: { planId: 'plan_477MTXIGpnAu2', price: 140.99 },
-    5: { planId: 'plan_N2p06hp7XUZYd', price: 117.99 },
-    4: { planId: 'plan_UNHwe7OyRvqpw', price: 93.99 },
-    3: { planId: 'plan_OiQ8iulXjGspu', price: 70.99 },
-    2: { planId: 'plan_9IAJmAwPOhAEd', price: 46.99 },
-    1: { planId: 'plan_ezmezdOo8vQiu', price: 23.99 },
+    18: { planId: 'plan_XOzw2FLvJvrkJ', price: 211.99 },
+    17: { planId: 'plan_kZkWQaN4fpJ63', price: 199.99 },
+    16: { planId: 'plan_XcK9kF3RHaHwV', price: 187.99 },
+    15: { planId: 'plan_z3P6vH9JWy6GT', price: 176.99 },
+    14: { planId: 'plan_507V77OPGCxzw', price: 164.99 },
+    13: { planId: 'plan_3GQMcGFfeCuUX', price: 152.99 },
+    12: { planId: 'plan_lFgFAEczCac1I', price: 140.99 },
+    11: { planId: 'plan_oZfYJfKpRTHsc', price: 129.99 },
+    10: { planId: 'plan_D9HEVh2ULAqvB', price: 117.99 },
+    9: { planId: 'plan_EZrdzhjHyC9zT', price: 105.99 },
+    8: { planId: 'plan_wRYdDI4y0mkFf', price: 93.99 },
+    7: { planId: 'plan_ZiP8CvwCSLdgg', price: 81.99 },
+    6: { planId: 'plan_iXHuAWep3tffE', price: 70.99 },
+    5: { planId: 'plan_W6HSlysvyFq2k', price: 58.99 },
+    4: { planId: 'plan_u266dPeWVpiUe', price: 46.99 },
+    3: { planId: 'plan_fXBQ5S8pBkzZs', price: 34.99 },
+    2: { planId: 'plan_8SAv52Kgj9yKj', price: 23.99 },
+    1: { planId: 'plan_LMMOjr7D4ofaF', price: 11.99 },
   },
 };
 
@@ -403,15 +407,17 @@ const WHOP_PLAN_IDS_PRESEASON = {
 // task: same pattern as popup.js's WEEK1_CUTOFF.
 const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
 
-// Week 3 Top 5 deal (Caleb's call, 2026-09-22): the Digest 1-week plan's
-// first payment is $4.99 instead of $19.99, via Whop promo code WEEK3
-// entered at checkout (Whop's promo_duration_months=1 == "once" -- applies
-// to exactly one charge, confirmed by testing a real checkout session
-// directly; there's no API field to pre-apply it server-side, so this page
-// just surfaces the code prominently and reminds people to enter it).
-// New subscribers only -- Whop's own new_users_only flag enforces that, not
-// this page. Doesn't touch PRICING/WHOP_PLAN_IDS at all: same $19.99 plan,
-// same checkout flow, only the display + a reminder change.
+// Week 3 Top 5 deal (Caleb's call, 2026-09-22, already expired): the Digest
+// 1-week plan's first payment was $4.99 instead of its then-price of $19.99
+// (now $9.99 after the 2026-09-28 halving -- this deal is expired and dead
+// code below, left as-is rather than updated to match), via Whop promo code
+// WEEK3 entered at checkout (Whop's promo_duration_months=1 == "once" --
+// applies to exactly one charge, confirmed by testing a real checkout
+// session directly; there's no API field to pre-apply it server-side, so
+// this page just surfaces the code prominently and reminds people to enter
+// it). New subscribers only -- Whop's own new_users_only flag enforces
+// that, not this page. Doesn't touch PRICING/WHOP_PLAN_IDS at all: same
+// plan, same checkout flow, only the display + a reminder change.
 // Cutoff = Sunday Sept 27 2026, 9:30am PT (Caleb's call, 2026-09-22) --
 // defined locally rather than read from popup.js's window.TRIFECTA_WEEK3_DEAL_CUTOFF
 // because this script's first renderPricing() call below runs before
@@ -483,9 +489,10 @@ function renderPricing(term) {
       }
     }
 
-    // Week 3 deal: the Digest 1-week card gets its own price display instead
-    // of the normal one -- same plan, same $19.99 charge in Whop, the $4.99
-    // only happens if the code is entered at checkout (see dealActive() above).
+    // Week 3 deal (expired, see dealActive() above -- this branch is dead
+    // code now): the Digest 1-week card got its own price display instead
+    // of the normal one -- same plan, same Whop charge, the $4.99 only
+    // happened if the code was entered at checkout.
     const isDeal = tier === 'top5' && term === '1' && dealActive();
     const priceRow = document.querySelector(`.tier-price-row[data-tier="${tier}"]`);
     const billingRow = document.querySelector(`.tier-billing[data-tier="${tier}"]`);
