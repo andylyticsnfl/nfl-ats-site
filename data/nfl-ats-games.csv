@@ -1405,20 +1405,20 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,3,2026-09-27,Sunday,16:25,BAL,DAL,34,31,3.0,53.5,PUSH,Over,open,0,Maracana Stadium
 2026,3,2026-09-27,Sunday,16:25,LV,NO,35,27,-3.5,43.5,LV,Over,dome,0,Caesars Superdome
 2026,3,2026-09-27,Sunday,20:20,LA,DEN,26,30,-1.5,43.5,DEN,Over,outdoors,0,Empower Field at Mile High
-2026,3,2026-09-28,Monday,20:15,PHI,CHI,,,3.5,41.5,,,outdoors,0,Soldier Field
-2026,4,2026-10-01,Thursday,20:15,PIT,CLE,,,3.0,38.5,,,outdoors,1,Huntington Bank Field
+2026,3,2026-09-28,Monday,20:15,PHI,CHI,7,27,3.5,42.5,CHI,Under,outdoors,0,Soldier Field
+2026,4,2026-10-01,Thursday,20:15,PIT,CLE,,,2.5,38.5,,,outdoors,1,Huntington Bank Field
 2026,4,2026-10-04,Sunday,09:30,IND,WAS,,,3.5,47.5,,,outdoors,0,Tottenham Hotspur Stadium
 2026,4,2026-10-04,Sunday,13:00,TEN,BAL,,,-11.5,43.5,,,outdoors,0,M&T Bank Stadium
 2026,4,2026-10-04,Sunday,13:00,NE,BUF,,,-7.0,48.5,,,outdoors,1,Highmark Stadium
-2026,4,2026-10-04,Sunday,13:00,NYJ,CHI,,,-3.0,43.5,,,outdoors,0,Soldier Field
-2026,4,2026-10-04,Sunday,13:00,JAX,CIN,,,-3.0,51.5,,,outdoors,0,Paycor Stadium
+2026,4,2026-10-04,Sunday,13:00,NYJ,CHI,,,-3.5,42.5,,,outdoors,0,Soldier Field
+2026,4,2026-10-04,Sunday,13:00,JAX,CIN,,,-2.5,51.5,,,outdoors,0,Paycor Stadium
 2026,4,2026-10-04,Sunday,13:00,DAL,HOU,,,-2.5,47.5,,,,0,Reliant Stadium
 2026,4,2026-10-04,Sunday,13:00,ARI,NYG,,,1.5,44.5,,,outdoors,0,MetLife Stadium
-2026,4,2026-10-04,Sunday,13:00,LA,PHI,,,1.5,45.5,,,outdoors,0,Lincoln Financial Field
+2026,4,2026-10-04,Sunday,13:00,LA,PHI,,,2.5,44.5,,,outdoors,0,Lincoln Financial Field
 2026,4,2026-10-04,Sunday,13:00,GB,TB,,,3.5,39.5,,,outdoors,0,Raymond James Stadium
 2026,4,2026-10-04,Sunday,16:05,MIA,MIN,,,-10.5,38.5,,,dome,0,U.S. Bank Stadium
 2026,4,2026-10-04,Sunday,16:25,KC,LV,,,4.5,47.5,,,dome,1,Allegiant Stadium
-2026,4,2026-10-04,Sunday,16:25,LAC,SEA,,,-6.5,43.5,,,outdoors,0,Lumen Field
-2026,4,2026-10-04,Sunday,16:25,DEN,SF,,,-2.5,46.5,,,outdoors,0,Levi's Stadium
+2026,4,2026-10-04,Sunday,16:25,LAC,SEA,,,-7.0,42.5,,,outdoors,0,Lumen Field
+2026,4,2026-10-04,Sunday,16:25,DEN,SF,,,-3.0,46.5,,,outdoors,0,Levi's Stadium
 2026,4,2026-10-04,Sunday,20:20,DET,CAR,,,3.5,50.5,,,outdoors,0,Bank of America Stadium
-2026,4,2026-10-05,Monday,20:15,ATL,NO,,,-2.5,48.5,,,dome,1,Caesars Superdome
+2026,4,2026-10-05,Monday,20:15,ATL,NO,,,-3.0,48.5,,,dome,1,Caesars Superdome
