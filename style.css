@@ -180,6 +180,7 @@ td:nth-child(6), th:nth-child(6) { font-family: var(--font-body); }
 th { color: var(--text-muted); font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; user-select: none; background: var(--surface-2); }
 th:hover { color: var(--accent); }
 tr:hover td { background: var(--surface-2); }
+tr[data-href] { cursor: pointer; }
 .tag { display: inline-block; padding: 3px 9px; border-radius: 5px; font-size: 11.5px; font-weight: 700; font-family: var(--font-mono); letter-spacing: 0.02em; }
 .tag-correct { background: var(--good-dim); color: var(--good); }
 .tag-wrong { background: var(--bad-dim); color: var(--bad); }
