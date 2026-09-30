@@ -20,6 +20,16 @@
   };
   window.trifectaChannel();
 
+  // Owner's own devices: visiting any page with ?internal=on marks this browser as internal
+  // (GA's "Internal Traffic" data filter then drops its hits, from any network); ?internal=off undoes it.
+  var INTERNAL = false;
+  try {
+    var iq = new URLSearchParams(location.search).get('internal');
+    if (iq === 'on') localStorage.setItem('trifecta_internal', '1');
+    if (iq === 'off') localStorage.removeItem('trifecta_internal');
+    INTERNAL = localStorage.getItem('trifecta_internal') === '1';
+  } catch (e) {}
+
   // trifectaTrack('event_name', {key: value}) -- safe to call from any page, does nothing when GA is off.
   window.trifectaTrack = function (name, params) {
     if (!GA_ID) return;
@@ -41,7 +51,8 @@
   }
   if (GA_ID) {
     gtag('js', new Date());
-    gtag('config', GA_ID, { anonymize_ip: true });
+    if (INTERNAL) gtag('set', { traffic_type: 'internal' });
+    gtag('config', GA_ID, INTERNAL ? { anonymize_ip: true, traffic_type: 'internal' } : { anonymize_ip: true });
   }
 
   // Named calls-to-action across the whole site, matched by selector (no per-page markup needed).
