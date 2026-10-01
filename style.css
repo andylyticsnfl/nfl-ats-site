@@ -456,6 +456,8 @@ body { overscroll-behavior-y: none; }
 .stats-page .cap { margin-top: 6px; }
 .stats-page .table-wrap { border-top: 3px solid var(--pg); }
 .stats-page th, .stats-page td, .stats-page td:nth-child(3), .stats-page th:nth-child(3), .stats-page td:nth-child(6), .stats-page th:nth-child(6) { white-space: nowrap; font-family: var(--font-mono); }
+/* table contents in the body font for readability; headers, tags and labels keep the mono look */
+.stats-page td, .stats-page td:nth-child(3), .stats-page td:nth-child(6) { font-family: var(--font-body); font-variant-numeric: tabular-nums; font-size: 14.5px; }
 .stats-page th { cursor: default; }
 .stats-page .st-win { color: var(--good); font-weight: 700; }
 .stats-page th:hover { color: var(--text-muted); }
