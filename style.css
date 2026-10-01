@@ -459,11 +459,12 @@ body { overscroll-behavior-y: none; }
 /* table contents in the body font for readability; headers, tags and labels keep the mono look */
 .stats-page td, .stats-page td:nth-child(3), .stats-page td:nth-child(6) { font-family: var(--font-body); font-variant-numeric: tabular-nums; font-size: 14.5px; }
 .stats-page th { cursor: default; }
+.stats-page .at { margin: 0 10px; color: var(--text-secondary); }
 .stats-page .st-win { color: var(--good); font-weight: 700; }
 .stats-page th:hover { color: var(--text-muted); }
 .stats-page .tl { color: inherit; text-decoration: underline; text-decoration-color: var(--border-strong); }
 .stats-page .tl:hover { text-decoration-color: var(--pg); }
-.tdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 9px; background: var(--c); box-shadow: 0 0 8px color-mix(in srgb, var(--c) 55%, transparent); }
+.tdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; background: var(--c); box-shadow: 0 0 8px color-mix(in srgb, var(--c) 55%, transparent); }
 .cv.hi { color: var(--good); }
 .cv.lo { color: var(--bad); }
 .cv.mid { color: var(--text-muted); }
