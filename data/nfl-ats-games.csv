@@ -1409,12 +1409,12 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,4,2026-10-01,Thursday,20:15,PIT,CLE,24,27,2.5,38.5,CLE,Over,outdoors,1,Huntington Bank Field
 2026,4,2026-10-04,Sunday,09:30,IND,WAS,30,13,4.5,46.5,IND,Under,outdoors,0,Tottenham Hotspur Stadium
 2026,4,2026-10-04,Sunday,13:00,TEN,BAL,18,24,-11.5,42.5,TEN,Under,outdoors,0,M&T Bank Stadium
-2026,4,2026-10-04,Sunday,13:00,NE,BUF,,,-7.0,49.5,,,outdoors,1,Highmark Stadium
+2026,4,2026-10-04,Sunday,13:00,NE,BUF,29,26,-7.0,49.5,NE,Over,outdoors,1,Highmark Stadium
 2026,4,2026-10-04,Sunday,13:00,NYJ,CHI,12,23,-3.5,43.5,CHI,Under,outdoors,0,Soldier Field
-2026,4,2026-10-04,Sunday,13:00,JAX,CIN,,,-2.5,51.5,,,outdoors,0,Paycor Stadium
-2026,4,2026-10-04,Sunday,13:00,DAL,HOU,,,-3.0,48.5,,,,0,Reliant Stadium
-2026,4,2026-10-04,Sunday,13:00,ARI,NYG,,,2.5,44.5,,,outdoors,0,MetLife Stadium
-2026,4,2026-10-04,Sunday,13:00,LA,PHI,,,3.5,42.5,,,outdoors,0,Lincoln Financial Field
+2026,4,2026-10-04,Sunday,13:00,JAX,CIN,22,17,-2.5,51.5,JAX,Under,outdoors,0,Paycor Stadium
+2026,4,2026-10-04,Sunday,13:00,DAL,HOU,34,30,-3.0,48.5,DAL,Over,closed,0,Reliant Stadium
+2026,4,2026-10-04,Sunday,13:00,ARI,NYG,24,36,2.5,44.5,NYG,Over,outdoors,0,MetLife Stadium
+2026,4,2026-10-04,Sunday,13:00,LA,PHI,24,20,3.5,42.5,LA,Over,outdoors,0,Lincoln Financial Field
 2026,4,2026-10-04,Sunday,13:00,GB,TB,17,14,3.0,38.5,PUSH,Under,outdoors,0,Raymond James Stadium
 2026,4,2026-10-04,Sunday,16:05,MIA,MIN,,,-10.0,38.5,,,dome,0,U.S. Bank Stadium
 2026,4,2026-10-04,Sunday,16:25,KC,LV,,,4.5,47.5,,,dome,1,Allegiant Stadium
