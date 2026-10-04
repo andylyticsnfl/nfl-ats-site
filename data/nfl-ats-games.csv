@@ -1422,16 +1422,3 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,4,2026-10-04,Sunday,16:25,DEN,SF,,,-3.0,48.5,,,outdoors,0,Levi's Stadium
 2026,4,2026-10-04,Sunday,20:20,DET,CAR,,,3.5,51.5,,,outdoors,0,Bank of America Stadium
 2026,4,2026-10-05,Monday,20:15,ATL,NO,,,-1.5,47.5,,,dome,1,Caesars Superdome
-2026,5,2026-10-08,Thursday,20:15,TB,DAL,,,-9.5,47.5,,,,0,AT&T Stadium
-2026,5,2026-10-11,Sunday,09:30,PHI,JAX,,,-3.0,44.5,,,outdoors,0,Tottenham Hotspur Stadium
-2026,5,2026-10-11,Sunday,13:00,CHI,GB,,,-2.5,45.5,,,outdoors,1,Lambeau Field
-2026,5,2026-10-11,Sunday,13:00,CIN,MIA,,,8.5,46.5,,,outdoors,0,Hard Rock Stadium
-2026,5,2026-10-11,Sunday,13:00,LV,NE,,,-3.5,44.5,,,outdoors,0,Gillette Stadium
-2026,5,2026-10-11,Sunday,13:00,MIN,NO,,,2.5,44.5,,,dome,0,Caesars Superdome
-2026,5,2026-10-11,Sunday,13:00,CLE,NYJ,,,-1.5,40.5,,,outdoors,0,MetLife Stadium
-2026,5,2026-10-11,Sunday,13:00,HOU,TEN,,,6.5,39.5,,,outdoors,1,Nissan Stadium
-2026,5,2026-10-11,Sunday,16:05,DEN,LAC,,,2.5,43.5,,,dome,1,SoFi Stadium
-2026,5,2026-10-11,Sunday,16:25,DET,ARI,,,5.5,52.5,,,,0,State Farm Stadium
-2026,5,2026-10-11,Sunday,16:25,SF,SEA,,,-3.0,47.5,,,outdoors,1,Lumen Field
-2026,5,2026-10-11,Sunday,20:20,BAL,ATL,,,6.0,49.5,,,,0,Mercedes-Benz Stadium
-2026,5,2026-10-12,Monday,20:15,BUF,LA,,,-2.5,52.5,,,dome,0,SoFi Stadium
