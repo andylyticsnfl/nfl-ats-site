@@ -1416,9 +1416,24 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,4,2026-10-04,Sunday,13:00,ARI,NYG,24,36,2.5,44.5,NYG,Over,outdoors,0,MetLife Stadium
 2026,4,2026-10-04,Sunday,13:00,LA,PHI,24,20,3.5,42.5,LA,Over,outdoors,0,Lincoln Financial Field
 2026,4,2026-10-04,Sunday,13:00,GB,TB,17,14,3.0,38.5,PUSH,Under,outdoors,0,Raymond James Stadium
-2026,4,2026-10-04,Sunday,16:05,MIA,MIN,,,-10.0,38.5,,,dome,0,U.S. Bank Stadium
+2026,4,2026-10-04,Sunday,16:05,MIA,MIN,10,15,-10.0,38.5,MIA,Under,dome,0,U.S. Bank Stadium
 2026,4,2026-10-04,Sunday,16:25,KC,LV,,,4.5,47.5,,,dome,1,Allegiant Stadium
 2026,4,2026-10-04,Sunday,16:25,LAC,SEA,,,-7.0,42.5,,,outdoors,0,Lumen Field
 2026,4,2026-10-04,Sunday,16:25,DEN,SF,,,-3.0,48.5,,,outdoors,0,Levi's Stadium
 2026,4,2026-10-04,Sunday,20:20,DET,CAR,,,3.5,51.5,,,outdoors,0,Bank of America Stadium
 2026,4,2026-10-05,Monday,20:15,ATL,NO,,,-1.5,47.5,,,dome,1,Caesars Superdome
+2026,5,2026-10-08,Thursday,20:15,TB,DAL,,,-10.0,47.5,,,,0,AT&T Stadium
+2026,5,2026-10-11,Sunday,09:30,PHI,JAX,,,-3.5,42.5,,,outdoors,0,Tottenham Hotspur Stadium
+2026,5,2026-10-11,Sunday,13:00,CHI,GB,,,1.5,44.5,,,outdoors,1,Lambeau Field
+2026,5,2026-10-11,Sunday,13:00,CIN,MIA,,,7.5,45.5,,,outdoors,0,Hard Rock Stadium
+2026,5,2026-10-11,Sunday,13:00,LV,NE,,,-3.5,45.5,,,outdoors,0,Gillette Stadium
+2026,5,2026-10-11,Sunday,13:00,MIN,NO,,,1.5,43.5,,,dome,0,Caesars Superdome
+2026,5,2026-10-11,Sunday,13:00,CLE,NYJ,,,-1.5,39.5,,,outdoors,0,MetLife Stadium
+2026,5,2026-10-11,Sunday,13:00,IND,PIT,,,-2.5,44.5,,,outdoors,0,Acrisure Stadium
+2026,5,2026-10-11,Sunday,13:00,HOU,TEN,,,6.5,40.5,,,outdoors,1,Nissan Stadium
+2026,5,2026-10-11,Sunday,13:00,NYG,WAS,,,-3.0,44.5,,,outdoors,1,Northwest Stadium
+2026,5,2026-10-11,Sunday,16:05,DEN,LAC,,,3.5,43.5,,,dome,1,SoFi Stadium
+2026,5,2026-10-11,Sunday,16:25,DET,ARI,,,5.5,53.5,,,,0,State Farm Stadium
+2026,5,2026-10-11,Sunday,16:25,SF,SEA,,,-3.0,46.5,,,outdoors,1,Lumen Field
+2026,5,2026-10-11,Sunday,20:20,BAL,ATL,,,3.5,46.5,,,,0,Mercedes-Benz Stadium
+2026,5,2026-10-12,Monday,20:15,BUF,LA,,,-2.5,53.5,,,dome,0,SoFi Stadium
