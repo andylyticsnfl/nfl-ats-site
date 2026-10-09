@@ -1422,7 +1422,7 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,4,2026-10-04,Sunday,16:25,DEN,SF,14,24,-3.0,48.5,SF,Under,outdoors,0,Levi's Stadium
 2026,4,2026-10-04,Sunday,20:20,DET,CAR,26,32,4.5,52.5,CAR,Over,outdoors,0,Bank of America Stadium
 2026,4,2026-10-05,Monday,20:15,ATL,NO,45,24,-1.5,47.5,ATL,Over,dome,1,Caesars Superdome
-2026,5,2026-10-08,Thursday,20:15,TB,DAL,,,-9.5,49.5,,,,0,AT&T Stadium
+2026,5,2026-10-08,Thursday,20:15,TB,DAL,24,16,-9.5,49.5,TB,Under,closed,0,AT&T Stadium
 2026,5,2026-10-11,Sunday,09:30,PHI,JAX,,,-7.5,41.5,,,outdoors,0,Tottenham Hotspur Stadium
 2026,5,2026-10-11,Sunday,13:00,CHI,GB,,,1.5,45.5,,,outdoors,1,Lambeau Field
 2026,5,2026-10-11,Sunday,13:00,CIN,MIA,,,6.5,42.5,,,outdoors,0,Hard Rock Stadium
@@ -1445,7 +1445,9 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,6,2026-10-18,Sunday,13:00,NYJ,NE,,,-7.0,43.5,,,outdoors,1,Gillette Stadium
 2026,6,2026-10-18,Sunday,13:00,NO,NYG,,,1.5,45.5,,,outdoors,0,MetLife Stadium
 2026,6,2026-10-18,Sunday,13:00,CAR,PHI,,,-2.5,43.5,,,outdoors,0,Lincoln Financial Field
+2026,6,2026-10-18,Sunday,13:00,PIT,TB,,,2.5,39.5,,,outdoors,0,Raymond James Stadium
 2026,6,2026-10-18,Sunday,16:05,ARI,LA,,,-10.5,51.5,,,dome,1,SoFi Stadium
 2026,6,2026-10-18,Sunday,16:25,LAC,KC,,,-7.5,45.5,,,outdoors,1,GEHA Field at Arrowhead Stadium
 2026,6,2026-10-18,Sunday,16:25,BUF,LV,,,4.5,51.5,,,dome,0,Allegiant Stadium
+2026,6,2026-10-18,Sunday,20:20,DAL,GB,,,1.5,50.5,,,outdoors,0,Lambeau Field
 2026,6,2026-10-19,Monday,20:15,WAS,SF,,,-7.5,50.5,,,outdoors,0,Levi's Stadium
