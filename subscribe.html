@@ -20,9 +20,9 @@
 <link rel="canonical" href="https://trifectapicks.com/subscribe.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css?v=f53f9be8">
-<link rel="preconnect" href="https://js.whop.com">
+<link rel="preconnect" href="https://cdn.whop.com">
 <link rel="preconnect" href="https://whop.com" crossorigin>
-<link rel="dns-prefetch" href="https://js.whop.com">
+<link rel="dns-prefetch" href="https://cdn.whop.com">
 <link rel="dns-prefetch" href="https://whop.com">
 <!-- Tried adding preconnect/dns-prefetch for Stripe/Sardine/hCaptcha here
      (2026-09-22) to warm the checkout embed's sub-origins early. Reverted
@@ -37,7 +37,8 @@
      given real doubt, don't leave an unproven, plausibly-harmful change in.
      See trifecta-encyclopedia-api/week3_top5_deal_promo.json for the fuller
      writeup of the checkout-speed investigation. -->
-<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
+<!-- Whop Elements (replaced the legacy loader.js embed, retired by Whop on 2026-10-21) -->
+<script src="https://cdn.whop.com/elements/amber/elements.js" data-whop-elements></script>
 <style>
   .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 9px 0; align-items: stretch; }
   .tier-card {
@@ -597,7 +598,7 @@ function showNameStep(planId, dealEligible) {
       if (pend) { pend.sessionId = sessionId; savePendingCheckout(pend); }
       checkoutStep = 'payment';
       if (pend && window.trifectaTrack) trifectaTrack('add_payment_info', { currency: 'USD', value: pend.price, deal_eligible: pend.deal, items: checkoutItems(pend) });
-      showPaymentStep(sessionId, dealEligible);
+      showPaymentStep(sessionId, dealEligible, planId);
     } catch (err) {
       errorEl.textContent = err.message === 'price not available yet'
         ? "That price isn't available yet — please refresh the page to see the current price."
@@ -612,7 +613,31 @@ function showNameStep(planId, dealEligible) {
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitName(); });
 }
 
-function showPaymentStep(sessionId, dealEligible) {
+let whopCheckout = null;
+function mountWhopCheckout(sessionId, planId) {
+  const target = document.getElementById('whop-checkout');
+  if (!target) return;
+  const fail = () => {
+    // Should never happen; if Whop's script can't load, send people to Whop's hosted checkout instead of a dead modal.
+    target.innerHTML = `<p class="checkout-reminder">Checkout didn't load. <a href="https://whop.com/checkout/${planId}" style="color:var(--accent);">Continue on Whop's secure checkout &rarr;</a></p>`;
+  };
+  let tries = 0;
+  (function attempt() {
+    if (!window.WhopElements) { if (++tries > 50) return fail(); return setTimeout(attempt, 100); }
+    try {
+      const handle = window.WhopElements({ appearance: { theme: { appearance: 'dark' } } }).checkout.create({
+        checkoutConfiguration: sessionId,
+        returnUrl: 'https://trifectapicks.com/checkout-complete.html',
+      });
+      const done = () => { const l = document.getElementById('whop-loading'); if (l) l.remove(); window.__whopReadyAt = performance.now(); };
+      whopCheckout = handle.create ? handle.create('checkout', { onReady: done, onError: done }) : handle;
+      if (whopCheckout.on) { try { whopCheckout.on('ready', done); } catch (e) {} }
+      whopCheckout.mount('#whop-checkout');
+    } catch (e) { fail(); }
+  })();
+}
+
+function showPaymentStep(sessionId, dealEligible, planId) {
   modalMount.innerHTML = '<div class="checkout-modal-loading">Loading checkout…</div>';
   // Give the loading state a paint frame before swapping in the real
   // embed div, so the loader script reliably sees a freshly-added node.
@@ -632,8 +657,10 @@ function showPaymentStep(sessionId, dealEligible) {
     modalMount.innerHTML = `
       <p class="checkout-reminder">Picks are delivered to the email you enter below.</p>
       ${dealNote}
-      <div data-whop-checkout-session="${sessionId}" data-whop-checkout-theme="dark" data-whop-checkout-return-url="https://trifectapicks.com/checkout-complete.html"></div>
+      <div class="checkout-modal-loading" id="whop-loading">Loading secure checkout…</div>
+      <div id="whop-checkout"></div>
     `;
+    mountWhopCheckout(sessionId, planId);
   });
 }
 
@@ -667,6 +694,8 @@ function closeCheckoutModal() {
   checkoutStep = null;
   modalBackdrop.hidden = true;
   document.body.style.overflow = '';
+  try { if (whopCheckout && whopCheckout.destroy) whopCheckout.destroy(); } catch (e) {}
+  whopCheckout = null;
   modalMount.innerHTML = ''; // unmount the iframe so a stale session isn't reused next open
 }
 
