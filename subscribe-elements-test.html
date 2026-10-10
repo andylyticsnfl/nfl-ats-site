@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subscribe — Trifecta</title>
+<meta name="description" content="Get Trifecta's highest-confidence NFL picks, every week — three tiers, built around the model's own selectivity.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Trifecta">
+<meta property="og:title" content="Subscribe — Trifecta">
+<meta property="og:description" content="Get Trifecta's highest-confidence NFL picks, every week.">
+<meta property="og:url" content="https://trifectapicks.com/subscribe.html">
+<meta property="og:image" content="https://trifectapicks.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Subscribe — Trifecta">
+<meta name="twitter:description" content="Get Trifecta's highest-confidence NFL picks, every week.">
+<meta name="twitter:image" content="https://trifectapicks.com/og-image.png">
+<link rel="canonical" href="https://trifectapicks.com/subscribe.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css?v=f53f9be8">
+<link rel="preconnect" href="https://cdn.whop.com">
+<link rel="preconnect" href="https://whop.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.whop.com">
+<link rel="dns-prefetch" href="https://whop.com">
+<!-- Tried adding preconnect/dns-prefetch for Stripe/Sardine/hCaptcha here
+     (2026-09-22) to warm the checkout embed's sub-origins early. Reverted
+     the same day -- Caleb reported checkout got slower after that change
+     went out, and 6 extra preconnects opening real connections on every
+     Subscribe page load can plausibly compete with the page's own more
+     urgent requests (including the Worker call this page makes to create
+     the checkout session) for a browser's limited concurrent-connection
+     budget. Removed rather than tuned, since the live site was still
+     serving the OLD version when the slowdown was reported, which points
+     more at a GitHub Pages/CDN propagation delay than this change -- but
+     given real doubt, don't leave an unproven, plausibly-harmful change in.
+     See trifecta-encyclopedia-api/week3_top5_deal_promo.json for the fuller
+     writeup of the checkout-speed investigation. -->
+<!-- Whop Elements (replaced the legacy loader.js embed, retired by Whop on 2026-10-21) -->
+<script src="https://cdn.whop.com/elements/amber/elements.js" data-whop-elements></script>
+<style>
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 9px 0; align-items: stretch; }
+  .tier-card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px;
+    padding: 12px 18px 12px; display: flex; flex-direction: column;
+  }
+  .tier-card.featured { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--surface-1)); position: relative; }
+  .tier-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 12px;
+    border-radius: 100px; font-family: var(--font-mono); letter-spacing: 0.03em;
+  }
+  .tier-name { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em; margin-bottom: 7px; }
+  .checkout-modal-backdrop {
+    position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+  }
+  .checkout-modal-backdrop[hidden] { display: none; }
+  .checkout-modal {
+    position: relative; width: 100%; max-width: 480px; max-height: 90vh;
+    background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: 14px;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .checkout-modal-close {
+    position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 100px;
+    background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text-primary);
+    font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2;
+  }
+  .checkout-modal-close:hover { background: var(--surface-3); }
+  /* The Whop iframe embed can push this taller than the viewport, so this
+     inner element (not .checkout-modal itself) owns the scroll — keeps the
+     close button and reminder text out of the scrolling content, and
+     overscroll-behavior stops iOS from chaining the drag to the page
+     behind the modal, which was the "can't scroll back up" bug. */
+  #checkout-modal-mount {
+    flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch; padding: 20px;
+  }
+  .checkout-reminder {
+    position: sticky; top: 0; z-index: 1; background: var(--surface-1);
+    margin: 0 -20px 12px; padding: 0 20px 10px; text-align: center;
+    font-size: 13.5px; font-weight: 700; color: var(--accent-2);
+  }
+  .checkout-modal-loading {
+    display: flex; align-items: center; justify-content: center; min-height: 300px;
+    color: var(--text-muted); font-size: 14px;
+  }
+  .tier-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-height: 32px; }
+  .tier-price-strike { font-size: 15px; color: var(--text-muted); text-decoration: line-through; font-family: var(--font-mono); }
+  .tier-price { font-size: 27px; font-weight: 800; font-family: var(--font-mono); }
+  .tier-price span { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+  .tier-perweek { font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); margin: 2px 0 0; min-height: 16px; }
+  .tier-perweek:empty { min-height: 0; margin: 0; }
+  .tier-free-badge { display: inline-block; background: var(--good-dim); color: var(--good); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; font-family: var(--font-mono); margin: 4px 0 0; }
+  .tier-desc { font-size: 13px; color: var(--text-secondary); margin: 7px 0; min-height: 32px; }
+  .tier-features { list-style: none; padding: 0; margin: 0 0 9px; flex-grow: 1; }
+  .tier-features li { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; }
+  .tier-features li span.check { color: var(--good); font-weight: 700; font-family: var(--font-mono); flex-shrink: 0; }
+  .term-toggle { display: flex; gap: 8px; justify-content: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .tier-login-link { display: block; text-align: center; font-size: 12px; color: var(--text-muted); margin: 0 0 6px; min-height: 15px; }
+  .tier-billing { font-size: 11.5px; color: var(--text-muted); margin: 2px 0 0; font-family: var(--font-mono); }
+  .tier-billing .deal-note { color: var(--accent-2); font-weight: 700; }
+  .deal-banner {
+    display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: nowrap;
+    margin: 0 0 20px; padding: 9px 20px; text-align: center; border-radius: 12px;
+    background: color-mix(in srgb, var(--accent-2) 14%, var(--surface-1));
+    border: 1px solid var(--accent-2);
+  }
+  /* An author rule's `display: flex` always beats the browser's default
+     [hidden] { display: none }, since author styles outrank UA styles
+     regardless of specificity -- so `dealBanner.hidden = true` (renderPricing,
+     below) was silently not hiding this element at all. Found 2026-09-28:
+     the expired Week 3 deal was still visibly showing a day after its own
+     cutoff. */
+  .deal-banner[hidden] { display: none; }
+  .deal-banner-text {
+    /* font-size is set by JS (fitDealBannerText below), not CSS -- the text
+       and the code chip must always share exactly one row, at whatever
+       size makes that true for the current width, so this can't be a fixed
+       breakpoint or a vw-based clamp() (both were tried and both left
+       widths where it either barely changed or wrapped/overflowed). 36px
+       here is only the fallback before JS runs. */
+    font-size: 36px; font-weight: 700; color: var(--text-primary);
+    text-transform: uppercase; text-align: center; line-height: 1.2;
+    white-space: nowrap; min-width: 0;
+  }
+  .deal-banner-text strong { color: var(--accent-2); }
+  .deal-code-chip {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 1px; flex-shrink: 0;
+    font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent-2);
+    background: var(--surface-2); border: 1px dashed var(--accent-2); border-radius: 8px;
+    padding: 5px 14px; cursor: pointer; letter-spacing: 0.03em;
+  }
+  .deal-code-chip:hover { background: var(--surface-3); }
+  .deal-code-copy { font-size: 10px; font-weight: 500; color: var(--text-muted); letter-spacing: 0; }
+  @media (max-width: 720px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .tier-badge { top: -12px; }
+    /* Claws back some width for the deal banner's text-fitting script on
+       narrow screens, where a long sentence + the code chip on one row is
+       already tight -- every pixel here is a pixel the JS doesn't have to
+       shrink the font to make up for. */
+    .deal-banner { padding: 9px 12px; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <rect x="2" y="14" width="5" height="10" rx="1.5" fill="var(--accent)" opacity="0.55"/>
+      <rect x="10.5" y="8" width="5" height="16" rx="1.5" fill="var(--accent)" opacity="0.8"/>
+      <rect x="19" y="2" width="5" height="22" rx="1.5" fill="var(--accent)"/>
+    </svg>
+    <span class="word">TRI<span>FECTA</span></span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  <div class="links">
+    <a href="index.html">Home</a>
+    <a href="track-record.html">Track Record</a>
+    <a href="about.html">Methodology</a>
+    <a href="stats.html">NFL Stats</a>
+    <a href="encyclopedia.html">Encyclopedia</a>
+    <a href="https://x.com/TrifectaNFL" target="_blank" rel="noopener" class="nav-x-link" aria-label="Trifecta on X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="smacktok.html" class="btn nav-st-btn" style="padding:8px 18px; font-size:13.5px;">DFS $50 Match</a>
+    <a href="subscribe.html" class="btn btn-primary" style="padding:8px 18px; font-size:13.5px;">Subscribe</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="hero" style="padding: 18px 0 6px;">
+    <div class="eyebrow" style="margin-bottom: 12px;"><span class="dot"></span>2026 SEASON · PROPRIETARY MODEL</div>
+    <h1 style="font-size:24px; margin-bottom: 7px;">Winning picks, your way.</h1>
+    <p class="sub" style="margin-bottom: 10px; font-size:14px;">One model, three tiers — each one gives you a little more of what it sees, from the week's single highest-conviction pick to a full assessment of every game in the NFL season.</p>
+  </div>
+
+  <div id="deal" class="deal-banner" hidden>
+    <div class="deal-banner-text">Get Week 3's Top 5 picks for just <strong>$4.99</strong> (75% off)!</div>
+    <button type="button" class="deal-code-chip" id="deal-code-chip" title="Copy code">
+      <span>WEEK3</span><span class="deal-code-copy" id="deal-code-copy">Copy code</span>
+    </button>
+  </div>
+
+  <section style="border-top:none; padding-top:0;">
+    <div class="term-toggle" style="margin-bottom: 22px;">
+      <button class="tab-btn active" data-term="1">1 Week</button>
+      <button class="tab-btn" data-term="4">4 Weeks</button>
+      <button class="tab-btn" data-term="8">8 Weeks</button>
+      <button class="tab-btn" data-term="season">Rest of Season</button>
+    </div>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-name">Analytics Snapshot</div>
+        <div class="tier-price-row" data-tier="top1"><span class="tier-price"><span>$—</span></span></div>
+        <div class="tier-perweek" data-tier="top1"></div>
+        <div class="tier-billing" data-tier="top1"></div>
+        <div class="tier-desc">The week's single most confident pick — hitting <strong id="stat-snap" style="color:var(--good);">69.6% (+32.8% ROI)</strong> over 5+ NFL seasons.</div>
+        <ul class="tier-features">
+          <li><span class="check">✓</span> The week's #1 highest-conviction pick</li>
+          <li><span class="check">✓</span> Delivered before kickoff</li>
+          <li><span class="check">✓</span> Updated through final inactives</li>
+        </ul>
+        <div class="tier-login-link"></div>
+        <button id="btn-top1" class="btn btn-secondary" style="justify-content:center;">Get Snapshot</button>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-badge">MOST POPULAR</div>
+        <div class="tier-name">Analytics Digest</div>
+        <div class="tier-price-row" data-tier="top5"><span class="tier-price"><span>$—</span></span></div>
+        <div class="tier-perweek" data-tier="top5"></div>
+        <div class="tier-billing" data-tier="top5"></div>
+        <div class="tier-desc">The week's five most confident picks — hitting <strong id="stat-digest" style="color:var(--good);">60.4% (+15.4% ROI)</strong> over 5+ NFL seasons.</div>
+        <ul class="tier-features">
+          <li><span class="check">✓</span> All 5 of the week's highest-conviction picks</li>
+          <li><span class="check">✓</span> Includes the week's most confident pick</li>
+          <li><span class="check">✓</span> Delivered before kickoff</li>
+          <li><span class="check">✓</span> Updated through final inactives</li>
+        </ul>
+        <div class="tier-login-link"></div>
+        <button id="btn-top5" class="btn btn-primary" style="justify-content:center;">Get Digest</button>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-name">Analytics Encyclopedia</div>
+        <div class="tier-price-row" data-tier="pro"><span class="tier-price"><span>$—</span></span></div>
+        <div class="tier-perweek" data-tier="pro"></div>
+        <div class="tier-billing" data-tier="pro"></div>
+        <div class="tier-desc">The same Edge score behind Snapshot and Digest — on every game, all season.</div>
+        <ul class="tier-features">
+          <li><span class="check">✓</span> <span>Model edge/confidence shown for <strong style="color:var(--text-secondary);">every game of the NFL season</strong></span></li>
+          <li><span class="check">✓</span> <span>Everything in Digest, plus week-long access to the model — more time to plan your bets</span></li>
+        </ul>
+        <a href="encyclopedia.html" class="tier-login-link">Already subscribed? Log in to the live board →</a>
+        <button id="btn-pro" class="btn btn-secondary" style="justify-content:center;">Get Encyclopedia</button>
+      </div>
+    </div>
+
+    <div id="checkout-modal-backdrop" class="checkout-modal-backdrop" hidden>
+      <div class="checkout-modal" role="dialog" aria-modal="true">
+        <button id="checkout-modal-close" class="checkout-modal-close" aria-label="Close checkout">✕</button>
+        <div id="checkout-modal-mount"></div>
+      </div>
+    </div>
+
+    <p style="text-align:center; font-size:14px; font-weight:700; color:var(--accent); margin: 12px 0 0;">Picks are delivered by email, sent to the address you check out with.</p>
+  </section>
+
+  <p style="text-align:center; font-size:13px; color:var(--text-muted); margin: 8px 0 40px;">Past performance doesn't guarantee future results — see the <a href="track-record.html" style="color:var(--accent);">full track record</a> and <a href="about.html" style="color:var(--accent);">methodology</a> before you sign up.</p>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="contact.html">Contact</a>
+
+    <a href="weekly-recaps.html">Weekly Recaps</a>
+    <a href="free-nfl-picks.html">Free NFL Picks</a>
+    <a href="stats.html">NFL Stats</a>
+    <a href="smacktok.html">SmackTok Promo Code</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="refund.html">Refund Policy</a>
+    <a href="https://x.com/TrifectaNFL" target="_blank" rel="noopener" class="footer-x-link" aria-label="Trifecta on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+  </div>
+  <div class="disclaimer">Trifecta is an informational and educational sports-analytics service — we do not accept wagers or offer gambling services. Past performance doesn't guarantee future results. 21+ and located where legal. Problem gambling? Call 1-800-GAMBLER.</div>
+</footer>
+
+<script>
+const PRICING = {
+  top1: {
+    1: { price: 3.99, billing: 'billed weekly' },
+    4: { price: 13.99, billing: 'billed every 4 weeks' },
+    8: { price: 24.99 },
+  },
+  top5: {
+    1: { price: 9.99, billing: 'billed weekly' },
+    4: { price: 34.99, billing: 'billed every 4 weeks' },
+    8: { price: 61.99 },
+  },
+  pro: {
+    1: { price: 18.99, billing: 'billed weekly' },
+    4: { price: 65.99, billing: 'billed every 4 weeks' },
+    8: { price: 117.99 },
+  },
+};
+
+// Whop plan ids — created via the Whop API 2026-09-28 (all prices halved from
+// the 2026-08-18 originals, .99-rounded, same relative discounts: ~13% off
+// on the 4-week plan, ~22% off on 8-week, computed from each tier's own
+// actual original ratio rather than the rounded label). See
+// trifecta-encyclopedia-api/whop_products.json for the product ids.
+const WHOP_PLAN_IDS = {
+  top1: { 1: 'plan_LNh5hh7hKKIKu', 4: 'plan_dXYYEyP8ajS48', 8: 'plan_YExCPxGZx9vfa' },
+  top5: { 1: 'plan_kk1xT3njjDt05', 4: 'plan_bV1xiGqvHSLyC', 8: 'plan_rWw1EewqkXK8s' },
+  pro: { 1: 'plan_3ennbvEydfL61', 4: 'plan_Eo1uZD0kp5JST', 8: 'plan_bp6S8Th9axOW5' },
+};
+
+// "Rest of Season": the pass covers every week from the current NFL week
+// through Week 18, so it gets one week cheaper each time the NFL week rolls
+// over -- Tuesday 12:01am PT, right after Monday Night Football. Purely
+// clock-based, no scheduled job: one hidden one-time Whop plan exists per
+// (tier, weeks remaining) and this page picks the plan for right now (the
+// Worker also refuses any plan cheaper than the current week's). Prices are
+// the nearest .99 to a ~38% discount off the (new, halved) weekly rate x
+// weeks remaining for Digest and Encyclopedia; Snapshot uses a flat
+// per-week rate (nearest 50 cents to 38% off) since its original pricing
+// wasn't a clean multiple of the weekly rate either. Recomputed and
+// recreated via the Whop API 2026-09-28 alongside the base-plan halving
+// above.
+const REST_OF_SEASON = {
+  top1: {
+    18: { planId: 'plan_4smbHjp019CK4', price: 44.99 },
+    17: { planId: 'plan_zf0iooOb3LpXM', price: 42.99 },
+    16: { planId: 'plan_klbpXmGWGA8dC', price: 39.99 },
+    15: { planId: 'plan_OBkRjQOB9yvrG', price: 37.99 },
+    14: { planId: 'plan_foQGn5vEsBtqb', price: 34.99 },
+    13: { planId: 'plan_ozWu5Ty1Wf0nd', price: 32.99 },
+    12: { planId: 'plan_ScBXes5UriGTC', price: 29.99 },
+    11: { planId: 'plan_4fNhYwUN9S8gx', price: 27.99 },
+    10: { planId: 'plan_PeXMRFPnY8y1n', price: 24.99 },
+    9: { planId: 'plan_vvm8CVq4mlGYv', price: 22.99 },
+    8: { planId: 'plan_oDSTjuo312ux9', price: 19.99 },
+    7: { planId: 'plan_VeNftaeNjvGd7', price: 17.99 },
+    6: { planId: 'plan_h0HePIrP3Q472', price: 14.99 },
+    5: { planId: 'plan_5dtDjZMF2WgI8', price: 12.99 },
+    4: { planId: 'plan_xXNp5YxT99nVT', price: 9.99 },
+    3: { planId: 'plan_CqsiNterzactu', price: 7.99 },
+    2: { planId: 'plan_rh1BRqeY4oH7B', price: 4.99 },
+    1: { planId: 'plan_JfUgisNYwJmTq', price: 2.99 },
+  },
+  top5: {
+    18: { planId: 'plan_MlgFzlCkWDHOc', price: 110.99 },
+    17: { planId: 'plan_Prl6xujFIp3fc', price: 104.99 },
+    16: { planId: 'plan_GBv3NRqbto6SM', price: 98.99 },
+    15: { planId: 'plan_g9g7NpjLrcF6B', price: 92.99 },
+    14: { planId: 'plan_Zjtet7gp3NVkv', price: 86.99 },
+    13: { planId: 'plan_pFOhOLDDS8aqv', price: 80.99 },
+    12: { planId: 'plan_R5IsvresmFpyI', price: 73.99 },
+    11: { planId: 'plan_d9pOneG2G4Tj7', price: 67.99 },
+    10: { planId: 'plan_A3EIAxhoKUunh', price: 61.99 },
+    9: { planId: 'plan_cdFPgIvLJ62bC', price: 55.99 },
+    8: { planId: 'plan_FQ8Wz4UTB6myH', price: 49.99 },
+    7: { planId: 'plan_T1MT6r6nQvK4C', price: 42.99 },
+    6: { planId: 'plan_npJJ9x6Tx5MwX', price: 36.99 },
+    5: { planId: 'plan_emQyPGSlngQiD', price: 30.99 },
+    4: { planId: 'plan_vjVmObklDoEQY', price: 24.99 },
+    3: { planId: 'plan_th3L0fhkYyVEH', price: 18.99 },
+    2: { planId: 'plan_lWc08c7G7lZlO', price: 11.99 },
+    1: { planId: 'plan_TMrdKXUIUH9E0', price: 5.99 },
+  },
+  pro: {
+    18: { planId: 'plan_XOzw2FLvJvrkJ', price: 211.99 },
+    17: { planId: 'plan_kZkWQaN4fpJ63', price: 199.99 },
+    16: { planId: 'plan_XcK9kF3RHaHwV', price: 187.99 },
+    15: { planId: 'plan_z3P6vH9JWy6GT', price: 176.99 },
+    14: { planId: 'plan_507V77OPGCxzw', price: 164.99 },
+    13: { planId: 'plan_3GQMcGFfeCuUX', price: 152.99 },
+    12: { planId: 'plan_lFgFAEczCac1I', price: 140.99 },
+    11: { planId: 'plan_oZfYJfKpRTHsc', price: 129.99 },
+    10: { planId: 'plan_D9HEVh2ULAqvB', price: 117.99 },
+    9: { planId: 'plan_EZrdzhjHyC9zT', price: 105.99 },
+    8: { planId: 'plan_wRYdDI4y0mkFf', price: 93.99 },
+    7: { planId: 'plan_ZiP8CvwCSLdgg', price: 81.99 },
+    6: { planId: 'plan_iXHuAWep3tffE', price: 70.99 },
+    5: { planId: 'plan_W6HSlysvyFq2k', price: 58.99 },
+    4: { planId: 'plan_u266dPeWVpiUe', price: 46.99 },
+    3: { planId: 'plan_fXBQ5S8pBkzZs', price: 34.99 },
+    2: { planId: 'plan_8SAv52Kgj9yKj', price: 23.99 },
+    1: { planId: 'plan_LMMOjr7D4ofaF', price: 11.99 },
+  },
+};
+
+// Wall-clock time in Pacific (DST-aware), as a UTC-style number so week math
+// is unaffected by the March/November clock change.
+function ptWallClockMs() {
+  const p = {};
+  new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hourCycle: 'h23',
+    year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
+    .formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
+  return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute);
+}
+// Week 2 began Tuesday Sept 15, 2026 at 12:01am PT; every later week starts 7 days after the last.
+const WEEK2_START_PT_WALL = Date.UTC(2026, 8, 15, 0, 1);
+
+// Temporary one-time versions of the 1-week/4-week plans, used only before
+// RECURRING_CUTOVER. A real subscription would bill immediately AND again
+// on its next cycle — which could land deep in the preseason gap with no
+// picks to deliver. These are single-delivery, no-auto-renew purchases
+// instead: paid today, access window anchored to Week 1 kickoff by the
+// Worker (see trifecta-encyclopedia-api/worker.js's SEASON_KICKOFF_MS),
+// so nobody is ever charged again for a week that had no content. No
+// separate "you're charged today" disclosure is shown anywhere — Whop's
+// plan/session description field doesn't render in the embedded checkout
+// view this site uses (confirmed by testing directly), and the one-time
+// billing language above the price already covers it.
+const PRICING_PRESEASON = {
+  top1: { 1: { price: 7.99 }, 4: { price: 27.99 } },
+  top5: { 1: { price: 19.99 }, 4: { price: 69.99 } },
+  pro: { 1: { price: 37.99 }, 4: { price: 131.99 } },
+};
+
+const WHOP_PLAN_IDS_PRESEASON = {
+  top1: { 1: 'plan_qTfODKTWG3Mah', 4: 'plan_ILOQjMCEeblsw' },
+  top5: { 1: 'plan_JDhOYqiLkqm1U', 4: 'plan_SoHfrnWUU9wWw' },
+  pro: { 1: 'plan_27KumQoXmGLjE', 4: 'plan_c6ZsALyVeg6d4' },
+};
+// Sept 6, 2026, midnight PT — a few days out from Week 1 kickoff (Sept 9),
+// close enough that "charged today, content arrives in days" genuinely
+// holds. Before this instant, 1-week/4-week checkout uses the one-time
+// PRICING_PRESEASON plans above; at/after it, they switch back to the
+// real recurring PRICING plans — automatically, purely by comparing the
+// visitor's clock against this constant. No manual step, no scheduled
+// task: same pattern as popup.js's WEEK1_CUTOFF.
+const RECURRING_CUTOVER = Date.parse('2026-09-06T07:00:00Z');
+
+// Week 3 Top 5 deal (Caleb's call, 2026-09-22, already expired): the Digest
+// 1-week plan's first payment was $4.99 instead of its then-price of $19.99
+// (now $9.99 after the 2026-09-28 halving -- this deal is expired and dead
+// code below, left as-is rather than updated to match), via Whop promo code
+// WEEK3 entered at checkout (Whop's promo_duration_months=1 == "once" --
+// applies to exactly one charge, confirmed by testing a real checkout
+// session directly; there's no API field to pre-apply it server-side, so
+// this page just surfaces the code prominently and reminds people to enter
+// it). New subscribers only -- Whop's own new_users_only flag enforces
+// that, not this page. Doesn't touch PRICING/WHOP_PLAN_IDS at all: same
+// plan, same checkout flow, only the display + a reminder change.
+// Cutoff = Sunday Sept 27 2026, 9:30am PT (Caleb's call, 2026-09-22) --
+// defined locally rather than read from popup.js's window.TRIFECTA_WEEK3_DEAL_CUTOFF
+// because this script's first renderPricing() call below runs before
+// popup.js (loaded later in the page) has executed -- same reason
+// RECURRING_CUTOVER above is its own local Date.parse rather than a
+// cross-file read.
+const WEEK3_DEAL_CUTOFF = Date.parse('2026-09-27T16:30:00Z');
+function dealActive() { return Date.now() < WEEK3_DEAL_CUTOFF; }
+
+const TERM_UNIT = { 1: '/wk', 4: '/4wks', 8: ' total', season: ' total' };
+// Payhip checkout is paused for good (moved to Whop, see HANDOFF.md) — this
+// only gates the brief window between deploying this file and Whop going live.
+const CHECKOUT_DISABLED = false;
+if (CHECKOUT_DISABLED) {
+  // urgency-banner element was removed (2026-09-15, Caleb's rule) -- guarded
+  // so flipping this flag back on later doesn't throw on a missing element.
+  const banner = document.getElementById('urgency-banner');
+  if (banner) {
+    banner.innerHTML = '<strong>Checkout is upgrading&nbsp;—</strong> new signups open again shortly.';
+  }
+}
+
+function currentNflWeek() {
+  const wall = ptWallClockMs();
+  if (wall < WEEK2_START_PT_WALL) return 1;
+  return Math.min(18, 2 + Math.floor((wall - WEEK2_START_PT_WALL) / (7 * 24 * 60 * 60 * 1000)));
+}
+
+// Weeks a purchase of this term covers right now (Rest of Season = current week through Week 18).
+function weeksInTerm(term) {
+  return term === 'season' ? 19 - currentNflWeek() : Number(term);
+}
+
+function oneTimeBilling(tier, weeks) {
+  const startWeek = currentNflWeek();
+  const endWeek = Math.min(18, startWeek + weeks - 1);
+  const noun = tier === 'top1' ? 'Pick' : tier === 'pro' ? 'Model access' : 'Picks';
+  const weekPhrase = weeks === 1 ? `Week ${startWeek}` : `Weeks ${startWeek}-${endWeek}`;
+  // "Model access" + "for" wraps to 2 lines at this card width — drop the
+  // connector for that tier only; Pick/Picks already fit with it.
+  const label = tier === 'pro' ? `${noun} ${weekPhrase}` : `${noun} for ${weekPhrase}`;
+  return `one-time payment · ${label}`;
+}
+
+function renderPricing(term) {
+  const isPreseason = Date.now() < RECURRING_CUTOVER;
+  const usePreseasonPlan = isPreseason && (term === '1' || term === '4');
+  const isOneTime = usePreseasonPlan || term === '8' || term === 'season';
+
+  Object.keys(PRICING).forEach(tier => {
+    const weeks = weeksInTerm(term);
+    const plan = term === 'season' ? REST_OF_SEASON[tier][weeks]
+      : usePreseasonPlan ? PRICING_PRESEASON[tier][term] : PRICING[tier][term];
+    const weeklyRate = PRICING[tier][1].price;
+    const perWeek = plan.price / weeks;
+    const billing = isOneTime ? oneTimeBilling(tier, weeks) : plan.billing;
+
+    let strikeHtml = '';
+    let freeBadge = '';
+    if (term !== '1') {
+      // Display "full price" always rounds to a clean .99 — the raw weeklyRate*weeks
+      // product lands on odd cents (.92, .82, etc.) that read as a math error, not a discount.
+      const fullPrice = Math.floor(weeklyRate * weeks) + 0.99;
+      const savings = fullPrice - plan.price;
+      if (savings > 0) {
+        const pct = Math.round((savings / fullPrice) * 100);
+        strikeHtml = `<span class="tier-price-strike">$${fullPrice.toFixed(2)}</span>`;
+        freeBadge = `<span class="tier-free-badge">Save $${savings.toFixed(0)} (${pct}%)</span>`;
+      }
+    }
+
+    // Week 3 deal (expired, see dealActive() above -- this branch is dead
+    // code now): the Digest 1-week card got its own price display instead
+    // of the normal one -- same plan, same Whop charge, the $4.99 only
+    // happened if the code was entered at checkout.
+    const isDeal = tier === 'top5' && term === '1' && dealActive();
+    const priceRow = document.querySelector(`.tier-price-row[data-tier="${tier}"]`);
+    const billingRow = document.querySelector(`.tier-billing[data-tier="${tier}"]`);
+    if (isDeal) {
+      priceRow.innerHTML = `<span class="tier-price-strike">$${plan.price.toFixed(2)}</span>` +
+        `<span class="tier-price" style="color:var(--accent-2);">$4.99<span> first week</span></span>`;
+      billingRow.innerHTML = `<span class="deal-note">use code WEEK3 at checkout</span>`;
+    } else {
+      priceRow.innerHTML = `${strikeHtml}<span class="tier-price">$${plan.price.toFixed(2)}<span>${TERM_UNIT[term]}</span></span>`;
+      billingRow.textContent = billing;
+    }
+    document.querySelector(`.tier-perweek[data-tier="${tier}"]`).innerHTML =
+      term === '1' ? '' : `$${perWeek.toFixed(2)}/wk equivalent ${freeBadge}`;
+    const btn = document.getElementById(`btn-${tier}`);
+    if (CHECKOUT_DISABLED) {
+      btn.disabled = true;
+      btn.textContent = 'Checkout upgrading — check back soon';
+    } else {
+      const planId = term === 'season' ? REST_OF_SEASON[tier][weeks].planId
+        : usePreseasonPlan ? WHOP_PLAN_IDS_PRESEASON[tier][term] : WHOP_PLAN_IDS[tier][term];
+      btn.dataset.planId = planId;
+      btn.dataset.dealEligible = isDeal ? 'true' : 'false';
+      btn.dataset.tier = tier;
+      btn.dataset.term = term;
+      btn.dataset.price = String(plan.price);
+    }
+  });
+
+  const dealBanner = document.getElementById('deal');
+  dealBanner.hidden = !dealActive();
+}
+
+document.querySelectorAll('.term-toggle .tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.term-toggle .tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderPricing(btn.dataset.term);
+    if (window.trifectaTrack) trifectaTrack('select_term', { term: btn.dataset.term });
+  });
+});
+
+renderPricing('1');
+
+// Checkout modal — the Whop embed only mounts once a tier button is
+// clicked, so only one iframe ever loads at a time instead of three at
+// once on page load (which was both slow and, on the always-inline
+// layout this replaced, effectively a redirect-free but always-open
+// checkout for a tier nobody had chosen yet).
+//
+// Two steps: (1) our own Full Name field — kept separate from Whop's
+// checkout because the card's billing name isn't always the actual
+// subscriber (a parent's card, a business card, etc.) — then (2) the
+// real Whop embed, mounted against a checkout SESSION (not a bare plan
+// id) so the name rides along as session metadata and comes back on the
+// webhook's data.metadata.full_name, tied unambiguously to that purchase.
+const WORKER_BASE = 'https://trifecta-encyclopedia-api.andylyticsnfl.workers.dev';
+const modalBackdrop = document.getElementById('checkout-modal-backdrop');
+const modalMount = document.getElementById('checkout-modal-mount');
+
+function showNameStep(planId, dealEligible) {
+  modalMount.innerHTML = `
+    <div class="checkout-name-step">
+      <div class="tier-name" style="margin-bottom:10px;">What's your name?</div>
+      <p style="font-size:13.5px; color:var(--text-secondary); margin:0 0 16px;">Separate from your card's billing name — this is who we keep on record as the subscriber.</p>
+      <input type="text" id="checkout-name-input" placeholder="Full name" autocomplete="name" style="width:100%; box-sizing:border-box; padding:12px 14px; border-radius:8px; background:var(--surface-2); border:1px solid var(--border); color:var(--text-primary); font-family:var(--font-body); font-size:14.5px; margin-bottom:14px;">
+      <div id="checkout-name-error" style="display:none; color:var(--bad); font-size:13px; margin-bottom:10px;"></div>
+      <button id="checkout-name-continue" class="btn btn-primary" style="width:100%; justify-content:center;">Continue to payment</button>
+    </div>
+  `;
+  const input = document.getElementById('checkout-name-input');
+  const errorEl = document.getElementById('checkout-name-error');
+  const continueBtn = document.getElementById('checkout-name-continue');
+  input.focus();
+
+  async function submitName() {
+    const fullName = input.value.trim();
+    if (!fullName || fullName.split(/\s+/).length < 2) {
+      errorEl.textContent = 'Please enter your full name.';
+      errorEl.style.display = 'block';
+      return;
+    }
+    continueBtn.disabled = true;
+    continueBtn.textContent = 'Loading…';
+    try {
+      const resp = await fetch(`${WORKER_BASE}/internal/create-checkout-session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId, fullName }),
+      });
+      if (resp.status === 409) throw new Error('price not available yet');
+      if (!resp.ok) throw new Error('session request failed');
+      const { sessionId } = await resp.json();
+      const pend = pendingCheckout();
+      if (pend) { pend.sessionId = sessionId; savePendingCheckout(pend); }
+      checkoutStep = 'payment';
+      if (pend && window.trifectaTrack) trifectaTrack('add_payment_info', { currency: 'USD', value: pend.price, deal_eligible: pend.deal, items: checkoutItems(pend) });
+      showPaymentStep(sessionId, dealEligible, planId);
+    } catch (err) {
+      errorEl.textContent = err.message === 'price not available yet'
+        ? "That price isn't available yet — please refresh the page to see the current price."
+        : "Something went wrong — please try again.";
+      errorEl.style.display = 'block';
+      continueBtn.disabled = false;
+      continueBtn.textContent = 'Continue to payment';
+    }
+  }
+
+  continueBtn.addEventListener('click', submitName);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitName(); });
+}
+
+let whopCheckout = null;
+function mountWhopCheckout(sessionId, planId) {
+  window.__whopMountAt = performance.now();
+  const target = document.getElementById('whop-checkout');
+  if (!target) return;
+  const fail = () => {
+    // Should never happen; if Whop's script can't load, send people to Whop's hosted checkout instead of a dead modal.
+    target.innerHTML = `<p class="checkout-reminder">Checkout didn't load. <a href="https://whop.com/checkout/${planId}" style="color:var(--accent);">Continue on Whop's secure checkout &rarr;</a></p>`;
+  };
+  let tries = 0;
+  (function attempt() {
+    if (!window.WhopElements) { if (++tries > 50) return fail(); return setTimeout(attempt, 100); }
+    try {
+      const handle = window.WhopElements({ appearance: { theme: { appearance: 'dark' } } }).checkout.create({
+        checkoutConfiguration: sessionId,
+        returnUrl: 'https://trifectapicks.com/checkout-complete.html',
+      });
+      const done = () => { const l = document.getElementById('whop-loading'); if (l) l.remove(); window.__whopReadyAt = performance.now(); };
+      whopCheckout = handle.create ? handle.create('checkout', { onReady: done, onError: done }) : handle;
+      if (whopCheckout.on) { try { whopCheckout.on('ready', done); } catch (e) {} }
+      whopCheckout.mount('#whop-checkout');
+    } catch (e) { fail(); }
+  })();
+}
+
+function showPaymentStep(sessionId, dealEligible, planId) {
+  modalMount.innerHTML = '<div class="checkout-modal-loading">Loading checkout…</div>';
+  // Give the loading state a paint frame before swapping in the real
+  // embed div, so the loader script reliably sees a freshly-added node.
+  requestAnimationFrame(() => {
+    // Whop's plan/session "description" field only renders on their wide,
+    // two-column hosted checkout page — not in this narrow embedded view
+    // (confirmed by testing directly, Email is the very first thing shown
+    // here) — so the "picks go to this email" reminder has to live in our
+    // own chrome, right above the embed, instead of inside Whop's iframe.
+    // Same reason the Week 3 deal reminder below lives here too: there's no
+    // API way to pre-apply a promo code to a checkout session (tried it --
+    // see renderPricing's dealActive() comment), so the code has to be
+    // typed into the embed's own "Promo code & details" panel by hand.
+    const dealNote = dealEligible
+      ? `<p class="checkout-reminder" style="color:var(--accent-2);">Enter code <strong>WEEK3</strong> under &ldquo;Promo code &amp; details&rdquo; below for 75% off this week.</p>`
+      : '';
+    modalMount.innerHTML = `
+      <p class="checkout-reminder">Picks are delivered to the email you enter below.</p>
+      ${dealNote}
+      <div class="checkout-modal-loading" id="whop-loading">Loading secure checkout…</div>
+      <div id="whop-checkout"></div>
+    `;
+    mountWhopCheckout(sessionId, planId);
+  });
+}
+
+// ---- Analytics: checkout funnel (Google Analytics 4 recommended ecommerce events) ----
+// begin_checkout (tier button) -> add_payment_info (name accepted, payment form shown) ->
+// purchase (fired on checkout-complete.html from the details saved here) or checkout_closed.
+const TIER_NAME = { top1: 'Analytics Snapshot', top5: 'Analytics Digest', pro: 'Analytics Encyclopedia' };
+let checkoutStep = null;
+function pendingCheckout() {
+  try { return JSON.parse(localStorage.getItem('trifecta_pending_checkout') || 'null'); } catch (e) { return null; }
+}
+function savePendingCheckout(d) { try { localStorage.setItem('trifecta_pending_checkout', JSON.stringify(d)); } catch (e) {} }
+function checkoutItems(d) {
+  return [{ item_id: d.planId, item_name: TIER_NAME[d.tier] || d.tier, item_category: d.tier, item_variant: d.term, price: d.price, quantity: 1 }];
+}
+function trackCheckoutStart(btn) {
+  const d = { planId: btn.dataset.planId, tier: btn.dataset.tier, term: btn.dataset.term, price: parseFloat(btn.dataset.price), deal: btn.dataset.dealEligible === 'true', ts: Date.now() };
+  savePendingCheckout(d);
+  checkoutStep = 'name';
+  if (window.trifectaTrack) trifectaTrack('begin_checkout', { currency: 'USD', value: d.price, deal_eligible: d.deal, items: checkoutItems(d) });
+}
+
+function openCheckoutModal(planId, dealEligible) {
+  modalBackdrop.hidden = false;
+  document.body.style.overflow = 'hidden';
+  showNameStep(planId, dealEligible);
+}
+
+function closeCheckoutModal() {
+  if (checkoutStep && window.trifectaTrack) trifectaTrack('checkout_closed', { step: checkoutStep });
+  checkoutStep = null;
+  modalBackdrop.hidden = true;
+  document.body.style.overflow = '';
+  try { if (whopCheckout && whopCheckout.destroy) whopCheckout.destroy(); } catch (e) {}
+  whopCheckout = null;
+  modalMount.innerHTML = ''; // unmount the iframe so a stale session isn't reused next open
+}
+
+['btn-top1', 'btn-top5', 'btn-pro'].forEach(id => {
+  document.getElementById(id).addEventListener('click', () => {
+    const btn = document.getElementById(id);
+    if (!CHECKOUT_DISABLED) { trackCheckoutStart(btn); openCheckoutModal(btn.dataset.planId, btn.dataset.dealEligible === 'true'); }
+  });
+});
+
+// The deal banner's text and its code chip must always share exactly one
+// row, at whatever size makes that true -- a fixed size or a vw-based
+// clamp() both leave some window width where it's too big (wraps/overflows)
+// or too small (barely bigger than before it was "made bigger" at all).
+// Measures the text's own natural width at a large reference size, scales
+// down only by exactly the ratio needed to fit next to the chip, floors at
+// the original 14px so it never becomes illegible, and never scales up
+// past that reference size on very wide screens.
+function fitDealBannerText() {
+  const banner = document.getElementById('deal');
+  const text = document.querySelector('.deal-banner-text');
+  const chip = document.getElementById('deal-code-chip');
+  if (!banner || !text || banner.hidden) return;
+  // FLOOR is a sanity guard against a literal 0px, not a "stay legible"
+  // minimum -- a real legibility floor caused the actual bug here: at a
+  // narrow enough width, 14px was STILL too wide to fit next to the chip,
+  // so clamping to it forced an overflow instead of honoring "always fits
+  // on one line." Letting it shrink however far it has to is what
+  // guarantees that; there's no width where this breaks.
+  // FLOOR=1 is not a "stay legible" minimum -- it's just short of literally
+  // zero. A real legibility floor is what caused the original bug: at a
+  // narrow enough width, even 14px was still too wide to fit next to the
+  // chip, so clamping to it forced an overflow instead of honoring "always
+  // fits on one line, no exceptions." Letting it shrink however far it
+  // actually has to is what guarantees that on any width.
+  const REFERENCE = 36, FLOOR = 1;
+  text.style.fontSize = REFERENCE + 'px';
+  const bannerStyle = getComputedStyle(banner);
+  const gap = parseFloat(bannerStyle.columnGap) || 14; // reads the real CSS gap (which the 720px breakpoint shrinks) instead of assuming it
+  const available = banner.clientWidth
+    - parseFloat(bannerStyle.paddingLeft) - parseFloat(bannerStyle.paddingRight)
+    - chip.getBoundingClientRect().width - gap - 2; // 2px rounding safety margin
+  const natural = text.scrollWidth;
+  if (natural > available) {
+    let size = Math.max(FLOOR, Math.floor(REFERENCE * available / natural));
+    text.style.fontSize = size + 'px';
+    // The scale-by-ratio estimate above assumes width scales exactly
+    // linearly with font-size, which font hinting/rounding doesn't always
+    // honor to the pixel -- step down further if it's still actually too
+    // wide, so this is a guarantee, not just an approximation.
+    while (text.scrollWidth > available && size > FLOOR) {
+      size -= 1;
+      text.style.fontSize = size + 'px';
+    }
+  }
+}
+fitDealBannerText();
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(fitDealBannerText); // web fonts can still be loading at the call above
+}
+let dealFitResizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(dealFitResizeTimer);
+  dealFitResizeTimer = setTimeout(fitDealBannerText, 150);
+});
+
+const dealCodeChip = document.getElementById('deal-code-chip');
+if (dealCodeChip) {
+  dealCodeChip.addEventListener('click', () => {
+    const label = document.getElementById('deal-code-copy');
+    navigator.clipboard.writeText('WEEK3').then(() => {
+      const prev = label.textContent;
+      label.textContent = 'Copied!';
+      setTimeout(() => { label.textContent = prev; }, 1500);
+    }).catch(() => {}); // clipboard permission denied — the code is already visible to read/type manually
+  });
+}
+document.getElementById('checkout-modal-close').addEventListener('click', closeCheckoutModal);
+modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeCheckoutModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modalBackdrop.hidden) closeCheckoutModal(); });
+</script>
+<script src="nav.js"></script>
+<script src="popup.js"></script>
+<script src="analytics.js" defer></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4761cdb6e5484a9797ccc3dd3dd4d641"}'></script>
+
+<script>
+// Snapshot / Digest hit rate + ROI, read from the same data file as the homepage so they refresh
+// whenever the site's track record does (no hand-edited numbers). ROI is $100/pick at -110,
+// pushes excluded -- identical math to the homepage tiles.
+fetch('data/picks_log.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+  function roi(picks) {
+    var w = picks.filter(function (g) { return g.correct === true; }).length;
+    var l = picks.filter(function (g) { return g.correct === false; }).length;
+    if (!w && !l) return null;
+    return (w * (100 / 1.1) - l * 100) / ((w + l) * 100) * 100;
+  }
+  function fmt(pct, r) { return pct.toFixed(1) + '% (' + (r >= 0 ? '+' : '\u2212') + Math.abs(r).toFixed(1) + '% ROI)'; }
+  var p = d.pooled, r1 = roi(d.top1_picks), r5 = roi(d.top5_picks);
+  if (p && r1 !== null) document.getElementById('stat-snap').textContent = fmt(p.top1_pct, r1);
+  if (p && r5 !== null) document.getElementById('stat-digest').textContent = fmt(p.top5_pct, r5);
+}).catch(function () {});
+</script>
+</body>
+</html>
