@@ -1436,14 +1436,14 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,5,2026-10-11,Sunday,16:25,DET,ARI,45,21,5.5,55.5,DET,Over,closed,0,State Farm Stadium
 2026,5,2026-10-11,Sunday,16:25,SF,SEA,32,29,-3.0,46.5,SF,Over,outdoors,1,Lumen Field
 2026,5,2026-10-11,Sunday,20:20,BAL,ATL,30,23,-3.5,44.5,BAL,Over,open,0,Mercedes-Benz Stadium
-2026,5,2026-10-12,Monday,20:15,BUF,LA,,,-3.5,54.5,,,dome,0,SoFi Stadium
+2026,5,2026-10-12,Monday,20:15,BUF,LA,,,-3.5,55.5,,,dome,0,SoFi Stadium
 2026,6,2026-10-15,Thursday,20:15,SEA,DEN,,,3.0,40.5,,,outdoors,0,Empower Field at Mile High
 2026,6,2026-10-18,Sunday,09:30,HOU,JAX,,,-3.0,42.5,,,outdoors,1,Wembley Stadium
-2026,6,2026-10-18,Sunday,13:00,CHI,ATL,,,3.0,48.5,,,,0,Mercedes-Benz Stadium
+2026,6,2026-10-18,Sunday,13:00,CHI,ATL,,,3.0,49.5,,,,0,Mercedes-Benz Stadium
 2026,6,2026-10-18,Sunday,13:00,BAL,CLE,,,4.5,40.5,,,outdoors,1,Huntington Bank Field
 2026,6,2026-10-18,Sunday,13:00,TEN,IND,,,-7.0,44.5,,,,1,Lucas Oil Stadium
 2026,6,2026-10-18,Sunday,13:00,NYJ,NE,,,-7.0,43.5,,,outdoors,1,Gillette Stadium
-2026,6,2026-10-18,Sunday,13:00,NO,NYG,,,1.5,45.5,,,outdoors,0,MetLife Stadium
+2026,6,2026-10-18,Sunday,13:00,NO,NYG,,,-1.5,45.5,,,outdoors,0,MetLife Stadium
 2026,6,2026-10-18,Sunday,13:00,CAR,PHI,,,-1.5,41.5,,,outdoors,0,Lincoln Financial Field
 2026,6,2026-10-18,Sunday,13:00,PIT,TB,,,3.0,40.5,,,outdoors,0,Raymond James Stadium
 2026,6,2026-10-18,Sunday,16:05,ARI,LA,,,-12.5,52.5,,,dome,1,SoFi Stadium
