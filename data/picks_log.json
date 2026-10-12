@@ -1,10 +1,10 @@
 {
- "generated": "2026-10-06",
+ "generated": "2026-10-12",
  "pooled": {
-  "top5_pct": 60.6,
-  "top5_n": 470,
-  "top1_pct": 70.2,
-  "top1_n": 94
+  "top5_pct": 60.8,
+  "top5_n": 475,
+  "top1_pct": 70.5,
+  "top1_n": 95
  },
  "season_summary": [
   {
@@ -49,11 +49,11 @@
   },
   {
    "season": 2026,
-   "top5_pct": 70.0,
-   "top5_n": 20,
-   "top1_pct": 50.0,
-   "top1_n": 4,
-   "max_week": 4
+   "top5_pct": 72.0,
+   "top5_n": 25,
+   "top1_pct": 60.0,
+   "top1_n": 5,
+   "max_week": 5
   }
  ],
  "top5_picks": [
@@ -6186,6 +6186,76 @@
    "edge": 10.4,
    "correct": false,
    "push": false
+  },
+  {
+   "season": 2026,
+   "week": 5,
+   "away": "MIN",
+   "home": "NO",
+   "away_score": 23,
+   "home_score": 13,
+   "spread": 2.5,
+   "pick_team": "MIN",
+   "pick_side": "away",
+   "edge": 11.1,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 5,
+   "away": "LV",
+   "home": "NE",
+   "away_score": 17,
+   "home_score": 45,
+   "spread": -3.5,
+   "pick_team": "NE",
+   "pick_side": "home",
+   "edge": 10.9,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 5,
+   "away": "CLE",
+   "home": "NYJ",
+   "away_score": 12,
+   "home_score": 17,
+   "spread": -2.5,
+   "pick_team": "NYJ",
+   "pick_side": "home",
+   "edge": 10.5,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 5,
+   "away": "TB",
+   "home": "DAL",
+   "away_score": 24,
+   "home_score": 16,
+   "spread": -8.5,
+   "pick_team": "DAL",
+   "pick_side": "home",
+   "edge": 10.5,
+   "correct": false,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 5,
+   "away": "IND",
+   "home": "PIT",
+   "away_score": 22,
+   "home_score": 34,
+   "spread": -3.0,
+   "pick_team": "PIT",
+   "pick_side": "home",
+   "edge": 9.6,
+   "correct": true,
+   "push": false
   }
  ],
  "top1_picks": [
@@ -7412,6 +7482,20 @@
    "pick_team": "TEN",
    "pick_side": "away",
    "edge": 13.6,
+   "correct": true,
+   "push": false
+  },
+  {
+   "season": 2026,
+   "week": 5,
+   "away": "MIN",
+   "home": "NO",
+   "away_score": 23,
+   "home_score": 13,
+   "spread": 2.5,
+   "pick_team": "MIN",
+   "pick_side": "away",
+   "edge": 11.1,
    "correct": true,
    "push": false
   }
