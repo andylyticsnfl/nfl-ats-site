@@ -528,3 +528,31 @@ a.st-card:hover { transform: translateY(-2px); box-shadow: 0 0 34px color-mix(in
 .dfs-code strong { font: 800 36px/1.05 'JetBrains Mono', monospace; letter-spacing: .06em; color: #17f6a4; text-shadow: 0 0 24px rgba(23,246,164,.45); }
 .st-adnote { margin: 8px 2px 0; font-size: 11.5px; line-height: 1.4; color: var(--text-muted); }
 @media (max-width: 600px) { .dfs-code strong { font-size: 30px; } .st-dfs-big { justify-content: center; text-align: center; } }
+
+/* Trifecta vs the Experts */
+.xp-lb td:first-child, .xp-lb th:first-child { width: 36px; color: var(--text-secondary); }
+.xp-lb tr.xp-me td { color: var(--good); font-weight: 700; background: rgba(61,220,126,.06); }
+.xp-grid td.xp-w b { color: var(--good); }
+.xp-grid td.xp-l { color: var(--text-secondary); }
+.xp-grid td.xp-l b { color: #ff5a5a; }
+@media (max-width: 640px) { .xp-lb th:nth-child(3), .xp-lb td:nth-child(3) { display: none; } }
+.xp-grid th .xp-o { font-size: 10px; letter-spacing: 1px; opacity: .65; }
+/* Trifecta vs the Experts: CTA band + homepage / Track Record callout */
+.xp-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 8px 0 36px; padding: 26px 30px; border-radius: 16px;
+  background: linear-gradient(110deg, rgba(61,220,126,.16), rgba(79,143,255,.10) 70%), var(--surface-1); border: 1px solid rgba(61,220,126,.45); box-shadow: 0 0 40px rgba(61,220,126,.12); }
+.xp-cta-eb, .xp-co-eb { font-family: var(--font-mono); font-size: 12px; letter-spacing: 2px; color: var(--good); font-weight: 700; margin-bottom: 6px; }
+.xp-cta-h { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; }
+.xp-cta-p { color: var(--text-secondary); font-size: 15px; margin-top: 4px; }
+.xp-cta .btn { flex-shrink: 0; }
+.xp-callout { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 0 0 22px; padding: 22px 26px; border-radius: 16px; text-decoration: none; color: var(--text);
+  background: linear-gradient(110deg, rgba(61,220,126,.14), rgba(18,21,25,.0) 75%), var(--surface-1); border: 1px solid rgba(61,220,126,.4); transition: border-color .15s, transform .15s; }
+.xp-callout:hover { border-color: var(--good); transform: translateY(-1px); }
+.xp-co-h { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; }
+.xp-co-h b { color: var(--good); } .xp-co-h span { color: var(--text-secondary); }
+.xp-co-p { color: var(--text-secondary); font-size: 14.5px; margin-top: 4px; }
+.xp-co-btn { flex-shrink: 0; font-weight: 700; color: var(--good); white-space: nowrap; }
+@media (max-width: 640px) {
+  .xp-cta, .xp-callout { flex-direction: column; align-items: flex-start; padding: 20px; }
+  .xp-cta-h { font-size: 20px; } .xp-co-h { font-size: 19px; }
+}
+.stats-page > .xp-callout { margin-top: 28px; }
