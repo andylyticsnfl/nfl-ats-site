@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="style.css?v=db33c13d">
 </head>
 <body>
-<a href="subscribe.html#deal" class="deal-ticker" id="deal-ticker" aria-label="Week 3 Top 5 picks for $4.99, code WEEK3 at checkout">
+<a href="subscribe.html#deal" class="deal-ticker" id="deal-ticker" style="display:none" aria-label="Week 3 Top 5 picks for $4.99, code WEEK3 at checkout">
   <div class="deal-ticker-track" id="deal-ticker-track" aria-hidden="true">
     <span class="deal-ticker-item">WEEK 3 TOP 5 PICKS &mdash; ONLY $4.99 (75% OFF) &bull; CODE WEEK3 AT CHECKOUT</span>
   </div>
@@ -65,12 +65,12 @@
     </div>
   </div>
 
-  <button type="button" class="promo-banner-home" id="promo-banner-home">
+  <button type="button" class="promo-banner-home" id="promo-banner-home" style="display:none">
     <span class="ptext"><strong>Get Week 1 picks free</strong> — drop your name and email, no card required.</span>
     <span class="parrow">Sign me up →</span>
   </button>
 
-  <a href="subscribe.html#deal" class="promo-banner-home promo-banner-deal" id="promo-banner-deal">
+  <a href="subscribe.html#deal" class="promo-banner-home promo-banner-deal" id="promo-banner-deal" style="display:none">
     <span class="ptext">Get Week 3's Top 5 picks for only $4.99 — 75% off!</span>
     <span class="parrow"><span class="parrow-label">Get the deal </span>→</span>
   </a>
@@ -300,9 +300,9 @@ function drawSeasonChart() {
   // Hide the permanent banner once it's no longer relevant — same rules as
   // the popup itself (popup.js), so the two never contradict each other.
   if (new Date() >= window.TRIFECTA_WEEK1_CUTOFF || localStorage.getItem('trifecta_email_submitted') || localStorage.getItem('trifecta_enc_token')) {
-    banner.style.display = 'none';
-    return;
+    return;   // starts hidden (style="display:none") so an expired banner never flashes on load
   }
+  banner.style.display = '';
   banner.addEventListener('click', function () { window.trifectaOpenPromo(); });
 })();
 (function () {
@@ -312,10 +312,9 @@ function drawSeasonChart() {
   // who already looks subscribed (trifecta_enc_token) since the deal is for
   // new subscribers only.
   if (new Date() >= window.TRIFECTA_WEEK3_DEAL_CUTOFF || localStorage.getItem('trifecta_enc_token')) {
-    deal.style.display = 'none';
-    ticker.style.display = 'none';
-    return;
+    return;   // both start hidden (style="display:none") so an expired deal never flashes on load
   }
+  deal.style.display = ''; ticker.style.display = '';
 
   // Same guaranteed-one-row text-fit as the Subscribe page's deal banner:
   // measure against the real available width and shrink until it provably
