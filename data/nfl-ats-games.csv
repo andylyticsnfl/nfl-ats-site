@@ -1440,11 +1440,11 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,6,2026-10-15,Thursday,20:15,SEA,DEN,,,2.5,40.5,,,outdoors,0,Empower Field at Mile High
 2026,6,2026-10-18,Sunday,09:30,HOU,JAX,,,-2.5,42.5,,,outdoors,1,Wembley Stadium
 2026,6,2026-10-18,Sunday,13:00,CHI,ATL,,,1.5,51.5,,,,0,Mercedes-Benz Stadium
-2026,6,2026-10-18,Sunday,13:00,BAL,CLE,,,5.5,42.5,,,outdoors,1,Huntington Bank Field
+2026,6,2026-10-18,Sunday,13:00,BAL,CLE,,,4.5,40.5,,,outdoors,1,Huntington Bank Field
 2026,6,2026-10-18,Sunday,13:00,TEN,IND,,,-7.0,44.5,,,,1,Lucas Oil Stadium
 2026,6,2026-10-18,Sunday,13:00,NYJ,NE,,,-7.5,43.5,,,outdoors,1,Gillette Stadium
 2026,6,2026-10-18,Sunday,13:00,NO,NYG,,,1.5,45.5,,,outdoors,0,MetLife Stadium
-2026,6,2026-10-18,Sunday,13:00,CAR,PHI,,,3.0,38.5,,,outdoors,0,Lincoln Financial Field
+2026,6,2026-10-18,Sunday,13:00,CAR,PHI,,,3.5,38.5,,,outdoors,0,Lincoln Financial Field
 2026,6,2026-10-18,Sunday,13:00,PIT,TB,,,2.5,39.5,,,outdoors,0,Raymond James Stadium
 2026,6,2026-10-18,Sunday,16:05,ARI,LA,,,-12.5,51.5,,,dome,1,SoFi Stadium
 2026,6,2026-10-18,Sunday,16:25,LAC,KC,,,-8.5,42.5,,,outdoors,1,GEHA Field at Arrowhead Stadium
@@ -1464,4 +1464,3 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,7,2026-10-25,Sunday,16:25,GB,DET,,,-3.0,52.5,,,dome,1,Ford Field
 2026,7,2026-10-25,Sunday,16:25,LA,LV,,,7.0,48.5,,,dome,0,Allegiant Stadium
 2026,7,2026-10-25,Sunday,20:20,KC,SEA,,,-2.5,44.5,,,outdoors,0,Lumen Field
-2026,7,2026-10-26,Monday,20:15,DAL,PHI,,,-1.5,47.5,,,outdoors,1,Lincoln Financial Field
