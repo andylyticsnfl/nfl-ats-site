@@ -1471,7 +1471,7 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,8,2026-11-01,Sunday,13:00,ARI,DAL,,,-6.5,51.5,,,,0,AT&T Stadium
 2026,8,2026-11-01,Sunday,13:00,MIN,DET,,,-2.5,47.5,,,dome,1,Ford Field
 2026,8,2026-11-01,Sunday,13:00,IND,JAX,,,-7.5,47.5,,,outdoors,1,EverBank Stadium
-2026,8,2026-11-01,Sunday,13:00,LV,NYJ,,,-1.5,42.5,,,outdoors,0,MetLife Stadium
+2026,8,2026-11-01,Sunday,13:00,LV,NYJ,,,1.5,42.5,,,outdoors,0,MetLife Stadium
 2026,8,2026-11-01,Sunday,13:00,CLE,PIT,,,-4.5,38.5,,,outdoors,1,Acrisure Stadium
 2026,8,2026-11-01,Sunday,13:00,ATL,TB,,,-1.5,44.5,,,outdoors,1,Raymond James Stadium
 2026,8,2026-11-01,Sunday,16:05,LAC,LA,,,-7.5,46.5,,,dome,0,SoFi Stadium
