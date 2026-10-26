@@ -1464,18 +1464,18 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,7,2026-10-25,Sunday,16:25,GB,DET,17,20,-3.5,55.5,GB,Under,dome,1,Ford Field
 2026,7,2026-10-25,Sunday,16:25,LA,LV,35,21,3.5,49.5,LA,Over,dome,0,Allegiant Stadium
 2026,7,2026-10-25,Sunday,20:20,KC,SEA,3,20,-3.0,43.5,SEA,Under,outdoors,0,Lumen Field
-2026,7,2026-10-26,Monday,20:15,DAL,PHI,,,4.5,44.5,,,outdoors,1,Lincoln Financial Field
+2026,7,2026-10-26,Monday,20:15,DAL,PHI,,,4.5,43.5,,,outdoors,1,Lincoln Financial Field
 2026,8,2026-10-29,Thursday,20:15,CAR,GB,,,-3.5,47.5,,,outdoors,0,Lambeau Field
 2026,8,2026-11-01,Sunday,13:00,BAL,BUF,,,-3.5,53.5,,,outdoors,0,Highmark Stadium
 2026,8,2026-11-01,Sunday,13:00,TEN,CIN,,,-10.0,46.5,,,outdoors,0,Paycor Stadium
-2026,8,2026-11-01,Sunday,13:00,ARI,DAL,,,-6.5,54.5,,,,0,AT&T Stadium
+2026,8,2026-11-01,Sunday,13:00,ARI,DAL,,,-6.0,54.5,,,,0,AT&T Stadium
 2026,8,2026-11-01,Sunday,13:00,MIN,DET,,,-3.0,46.5,,,dome,1,Ford Field
 2026,8,2026-11-01,Sunday,13:00,IND,JAX,,,-7.5,46.5,,,outdoors,1,EverBank Stadium
-2026,8,2026-11-01,Sunday,13:00,LV,NYJ,,,-1.5,44.5,,,outdoors,0,MetLife Stadium
-2026,8,2026-11-01,Sunday,13:00,CLE,PIT,,,-3.5,38.5,,,outdoors,1,Acrisure Stadium
+2026,8,2026-11-01,Sunday,13:00,LV,NYJ,,,-1.5,45.5,,,outdoors,0,MetLife Stadium
+2026,8,2026-11-01,Sunday,13:00,CLE,PIT,,,-3.5,39.5,,,outdoors,1,Acrisure Stadium
 2026,8,2026-11-01,Sunday,13:00,ATL,TB,,,-2.5,46.5,,,outdoors,1,Raymond James Stadium
-2026,8,2026-11-01,Sunday,16:05,LAC,LA,,,-6.5,43.5,,,dome,0,SoFi Stadium
+2026,8,2026-11-01,Sunday,16:05,LAC,LA,,,-6.5,44.5,,,dome,0,SoFi Stadium
 2026,8,2026-11-01,Sunday,16:25,KC,DEN,,,1.5,41.5,,,outdoors,1,Empower Field at Mile High
-2026,8,2026-11-01,Sunday,16:25,NE,MIA,,,7.0,44.5,,,outdoors,1,Hard Rock Stadium
+2026,8,2026-11-01,Sunday,16:25,NE,MIA,,,7.5,44.5,,,outdoors,1,Hard Rock Stadium
 2026,8,2026-11-01,Sunday,20:20,PHI,WAS,,,-3.5,40.5,,,outdoors,1,Northwest Stadium
 2026,8,2026-11-02,Monday,20:15,CHI,SEA,,,-3.0,46.5,,,outdoors,0,Lumen Field
