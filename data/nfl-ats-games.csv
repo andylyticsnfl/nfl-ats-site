@@ -1467,7 +1467,7 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,7,2026-10-26,Monday,20:15,DAL,PHI,38,21,4.5,43.5,DAL,Over,outdoors,1,Lincoln Financial Field
 2026,8,2026-10-29,Thursday,20:15,CAR,GB,,,-3.5,46.5,,,outdoors,0,Lambeau Field
 2026,8,2026-11-01,Sunday,13:00,BAL,BUF,,,-3.0,54.5,,,outdoors,0,Highmark Stadium
-2026,8,2026-11-01,Sunday,13:00,TEN,CIN,,,-10.0,46.5,,,outdoors,0,Paycor Stadium
+2026,8,2026-11-01,Sunday,13:00,TEN,CIN,,,-11.5,46.5,,,outdoors,0,Paycor Stadium
 2026,8,2026-11-01,Sunday,13:00,ARI,DAL,,,-7.0,54.5,,,,0,AT&T Stadium
 2026,8,2026-11-01,Sunday,13:00,MIN,DET,,,-3.0,46.5,,,dome,1,Ford Field
 2026,8,2026-11-01,Sunday,13:00,IND,JAX,,,-10.0,46.5,,,outdoors,1,EverBank Stadium
@@ -1482,13 +1482,13 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,9,2026-11-05,Thursday,20:15,JAX,BAL,,,-3.0,48.5,,,outdoors,0,M&T Bank Stadium
 2026,9,2026-11-08,Sunday,09:30,CIN,ATL,,,3.0,49.5,,,,0,Bernabeu
 2026,9,2026-11-08,Sunday,13:00,DEN,CAR,,,2.5,44.5,,,outdoors,0,Bank of America Stadium
-2026,9,2026-11-08,Sunday,13:00,DAL,IND,,,3.5,51.5,,,,0,Lucas Oil Stadium
+2026,9,2026-11-08,Sunday,13:00,DAL,IND,,,4.5,51.5,,,,0,Lucas Oil Stadium
 2026,9,2026-11-08,Sunday,13:00,NYJ,KC,,,-9.5,43.5,,,outdoors,0,GEHA Field at Arrowhead Stadium
-2026,9,2026-11-08,Sunday,13:00,DET,MIA,,,7.0,47.5,,,outdoors,0,Hard Rock Stadium
-2026,9,2026-11-08,Sunday,13:00,CLE,NO,,,-2.5,42.5,,,dome,0,Caesars Superdome
+2026,9,2026-11-08,Sunday,13:00,DET,MIA,,,7.0,48.5,,,outdoors,0,Hard Rock Stadium
+2026,9,2026-11-08,Sunday,13:00,CLE,NO,,,-2.5,43.5,,,dome,0,Caesars Superdome
 2026,9,2026-11-08,Sunday,13:00,NYG,PHI,,,1.5,40.5,,,outdoors,1,Lincoln Financial Field
 2026,9,2026-11-08,Sunday,13:00,LA,WAS,,,5.5,48.5,,,outdoors,0,Northwest Stadium
-2026,9,2026-11-08,Sunday,16:05,HOU,LAC,,,3.0,42.5,,,dome,0,SoFi Stadium
+2026,9,2026-11-08,Sunday,16:05,HOU,LAC,,,3.5,42.5,,,dome,0,SoFi Stadium
 2026,9,2026-11-08,Sunday,16:05,LV,SF,,,-9.5,48.5,,,outdoors,0,Levi's Stadium
 2026,9,2026-11-08,Sunday,16:25,GB,NE,,,-3.0,47.5,,,outdoors,0,Gillette Stadium
 2026,9,2026-11-08,Sunday,16:25,ARI,SEA,,,-10.5,44.5,,,outdoors,1,Lumen Field
