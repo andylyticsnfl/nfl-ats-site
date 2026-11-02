@@ -1475,7 +1475,7 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,8,2026-11-01,Sunday,13:00,CLE,PIT,6,27,-3.5,38.5,PIT,Under,outdoors,1,Acrisure Stadium
 2026,8,2026-11-01,Sunday,13:00,ATL,TB,0,16,-2.5,42.5,TB,Under,outdoors,1,Raymond James Stadium
 2026,8,2026-11-01,Sunday,16:05,LAC,LA,9,24,-6.5,46.5,LA,Under,dome,0,SoFi Stadium
-2026,8,2026-11-01,Sunday,16:25,KC,DEN,,,-1.5,41.5,,,outdoors,1,Empower Field at Mile High
+2026,8,2026-11-01,Sunday,16:25,KC,DEN,24,28,-1.5,41.5,DEN,Over,outdoors,1,Empower Field at Mile High
 2026,8,2026-11-01,Sunday,16:25,NE,MIA,24,19,7.0,41.5,MIA,Over,outdoors,1,Hard Rock Stadium
 2026,8,2026-11-01,Sunday,20:20,PHI,WAS,,,-6.0,40.5,,,outdoors,1,Northwest Stadium
 2026,8,2026-11-02,Monday,20:15,CHI,SEA,,,-3.0,46.5,,,outdoors,0,Lumen Field
