@@ -1478,19 +1478,19 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,8,2026-11-01,Sunday,16:25,KC,DEN,24,28,-1.5,41.5,DEN,Over,outdoors,1,Empower Field at Mile High
 2026,8,2026-11-01,Sunday,16:25,NE,MIA,24,19,7.0,41.5,MIA,Over,outdoors,1,Hard Rock Stadium
 2026,8,2026-11-01,Sunday,20:20,PHI,WAS,10,27,-6.0,40.5,WAS,Under,outdoors,1,Northwest Stadium
-2026,8,2026-11-02,Monday,20:15,CHI,SEA,,,-3.5,46.5,,,outdoors,0,Lumen Field
-2026,9,2026-11-05,Thursday,20:15,JAX,BAL,,,8.5,42.5,,,outdoors,0,M&T Bank Stadium
-2026,9,2026-11-08,Sunday,09:30,CIN,ATL,,,3.0,51.5,,,,0,Bernabeu
+2026,8,2026-11-02,Monday,20:15,CHI,SEA,,,-3.0,46.5,,,outdoors,0,Lumen Field
+2026,9,2026-11-05,Thursday,20:15,JAX,BAL,,,10.0,42.5,,,outdoors,0,M&T Bank Stadium
+2026,9,2026-11-08,Sunday,09:30,CIN,ATL,,,3.0,52.5,,,,0,Bernabeu
 2026,9,2026-11-08,Sunday,13:00,DEN,CAR,,,3.0,43.5,,,outdoors,0,Bank of America Stadium
 2026,9,2026-11-08,Sunday,13:00,DAL,IND,,,6.0,51.5,,,,0,Lucas Oil Stadium
 2026,9,2026-11-08,Sunday,13:00,NYJ,KC,,,-9.5,46.5,,,outdoors,0,GEHA Field at Arrowhead Stadium
 2026,9,2026-11-08,Sunday,13:00,DET,MIA,,,7.0,50.5,,,outdoors,0,Hard Rock Stadium
 2026,9,2026-11-08,Sunday,13:00,CLE,NO,,,-2.5,43.5,,,dome,0,Caesars Superdome
-2026,9,2026-11-08,Sunday,13:00,NYG,PHI,,,3.5,39.5,,,outdoors,1,Lincoln Financial Field
+2026,9,2026-11-08,Sunday,13:00,NYG,PHI,,,3.5,40.5,,,outdoors,1,Lincoln Financial Field
 2026,9,2026-11-08,Sunday,13:00,LA,WAS,,,5.5,47.5,,,outdoors,0,Northwest Stadium
 2026,9,2026-11-08,Sunday,16:05,HOU,LAC,,,4.5,40.5,,,dome,0,SoFi Stadium
-2026,9,2026-11-08,Sunday,16:05,LV,SF,,,-9.5,51.5,,,outdoors,0,Levi's Stadium
-2026,9,2026-11-08,Sunday,16:25,GB,NE,,,-3.0,47.5,,,outdoors,0,Gillette Stadium
+2026,9,2026-11-08,Sunday,16:05,LV,SF,,,-10.0,51.5,,,outdoors,0,Levi's Stadium
+2026,9,2026-11-08,Sunday,16:25,GB,NE,,,-3.0,46.5,,,outdoors,0,Gillette Stadium
 2026,9,2026-11-08,Sunday,16:25,ARI,SEA,,,-11.5,44.5,,,outdoors,1,Lumen Field
-2026,9,2026-11-08,Sunday,20:20,TB,CHI,,,-5.5,47.5,,,outdoors,0,Soldier Field
+2026,9,2026-11-08,Sunday,20:20,TB,CHI,,,-4.5,47.5,,,outdoors,0,Soldier Field
 2026,9,2026-11-09,Monday,20:15,BUF,MIN,,,3.5,46.5,,,dome,0,U.S. Bank Stadium
