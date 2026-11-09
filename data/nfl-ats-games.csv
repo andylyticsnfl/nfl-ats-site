@@ -1493,18 +1493,18 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,9,2026-11-08,Sunday,16:25,GB,NE,45,27,-3.0,44.5,GB,Over,outdoors,0,Gillette Stadium
 2026,9,2026-11-08,Sunday,16:25,ARI,SEA,3,17,-8.5,39.5,SEA,Under,outdoors,1,Lumen Field
 2026,9,2026-11-08,Sunday,20:20,TB,CHI,24,27,-6.5,47.5,TB,Over,outdoors,0,Soldier Field
-2026,9,2026-11-09,Monday,20:15,BUF,MIN,,,3.0,43.5,,,dome,0,U.S. Bank Stadium
-2026,10,2026-11-12,Thursday,20:15,WAS,NYG,,,-1.5,43.5,,,outdoors,1,MetLife Stadium
+2026,9,2026-11-09,Monday,20:15,BUF,MIN,,,3.5,45.5,,,dome,0,U.S. Bank Stadium
+2026,10,2026-11-12,Thursday,20:15,WAS,NYG,,,-1.5,42.5,,,outdoors,1,MetLife Stadium
 2026,10,2026-11-15,Sunday,09:30,NE,DET,,,-2.5,51.5,,,dome,0,FC Bayern Munich Stadium
 2026,10,2026-11-15,Sunday,13:00,KC,ATL,,,3.5,45.5,,,,0,Mercedes-Benz Stadium
 2026,10,2026-11-15,Sunday,13:00,HOU,CLE,,,4.5,39.5,,,outdoors,0,Huntington Bank Field
-2026,10,2026-11-15,Sunday,13:00,MIN,GB,,,-3.0,42.5,,,outdoors,1,Lambeau Field
+2026,10,2026-11-15,Sunday,13:00,MIN,GB,,,-3.5,41.5,,,outdoors,1,Lambeau Field
 2026,10,2026-11-15,Sunday,13:00,MIA,IND,,,-2.5,40.5,,,,0,Lucas Oil Stadium
 2026,10,2026-11-15,Sunday,13:00,CAR,NO,,,-1.5,47.5,,,dome,1,Caesars Superdome
-2026,10,2026-11-15,Sunday,13:00,BUF,NYJ,,,7.5,51.5,,,outdoors,1,MetLife Stadium
-2026,10,2026-11-15,Sunday,13:00,JAX,TEN,,,9.5,47.5,,,outdoors,1,Nissan Stadium
-2026,10,2026-11-15,Sunday,16:05,LA,ARI,,,7.0,44.5,,,,1,State Farm Stadium
+2026,10,2026-11-15,Sunday,13:00,BUF,NYJ,,,7.5,50.5,,,outdoors,1,MetLife Stadium
+2026,10,2026-11-15,Sunday,13:00,JAX,TEN,,,9.5,46.5,,,outdoors,1,Nissan Stadium
+2026,10,2026-11-15,Sunday,16:05,LA,ARI,,,7.5,40.5,,,,1,State Farm Stadium
 2026,10,2026-11-15,Sunday,16:05,SEA,LV,,,3.0,43.5,,,dome,0,Allegiant Stadium
-2026,10,2026-11-15,Sunday,16:25,SF,DAL,,,3.5,55.5,,,,0,AT&T Stadium
-2026,10,2026-11-15,Sunday,20:20,PIT,CIN,,,-3.5,47.5,,,outdoors,1,Paycor Stadium
+2026,10,2026-11-15,Sunday,16:25,SF,DAL,,,4.5,55.5,,,,0,AT&T Stadium
+2026,10,2026-11-15,Sunday,20:20,PIT,CIN,,,-3.5,48.5,,,outdoors,1,Paycor Stadium
 2026,10,2026-11-16,Monday,20:15,LAC,BAL,,,-5.5,38.5,,,outdoors,0,M&T Bank Stadium
