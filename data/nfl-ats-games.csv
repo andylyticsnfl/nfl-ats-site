@@ -1499,23 +1499,25 @@ season,week,date,weekday,kickoff_et,away_team,home_team,away_score,home_score,ho
 2026,10,2026-11-15,Sunday,13:00,KC,ATL,,,3.5,45.5,,,,0,Mercedes-Benz Stadium
 2026,10,2026-11-15,Sunday,13:00,HOU,CLE,,,4.5,39.5,,,outdoors,0,Huntington Bank Field
 2026,10,2026-11-15,Sunday,13:00,MIN,GB,,,-3.5,41.5,,,outdoors,1,Lambeau Field
-2026,10,2026-11-15,Sunday,13:00,MIA,IND,,,-2.5,40.5,,,,0,Lucas Oil Stadium
-2026,10,2026-11-15,Sunday,13:00,CAR,NO,,,-1.5,48.5,,,dome,1,Caesars Superdome
+2026,10,2026-11-15,Sunday,13:00,MIA,IND,,,-3.5,38.5,,,,0,Lucas Oil Stadium
+2026,10,2026-11-15,Sunday,13:00,CAR,NO,,,-2.5,48.5,,,dome,1,Caesars Superdome
 2026,10,2026-11-15,Sunday,13:00,BUF,NYJ,,,8.5,50.5,,,outdoors,1,MetLife Stadium
 2026,10,2026-11-15,Sunday,13:00,JAX,TEN,,,10.5,46.5,,,outdoors,1,Nissan Stadium
-2026,10,2026-11-15,Sunday,16:05,LA,ARI,,,9.5,40.5,,,,1,State Farm Stadium
-2026,10,2026-11-15,Sunday,16:05,SEA,LV,,,6.0,40.5,,,dome,0,Allegiant Stadium
-2026,10,2026-11-15,Sunday,16:25,SF,DAL,,,3.5,55.5,,,,0,AT&T Stadium
+2026,10,2026-11-15,Sunday,16:05,LA,ARI,,,9.5,39.5,,,,1,State Farm Stadium
+2026,10,2026-11-15,Sunday,16:05,SEA,LV,,,6.5,40.5,,,dome,0,Allegiant Stadium
+2026,10,2026-11-15,Sunday,16:25,SF,DAL,,,4.5,55.5,,,,0,AT&T Stadium
 2026,10,2026-11-15,Sunday,20:20,PIT,CIN,,,-3.5,49.5,,,outdoors,1,Paycor Stadium
-2026,10,2026-11-16,Monday,20:15,LAC,BAL,,,-5.5,38.5,,,outdoors,0,M&T Bank Stadium
-2026,11,2026-11-19,Thursday,20:15,IND,HOU,,,-9.5,43.5,,,,1,Reliant Stadium
-2026,11,2026-11-22,Sunday,13:00,MIA,BUF,,,-14.5,47.5,,,outdoors,1,Highmark Stadium
-2026,11,2026-11-22,Sunday,13:00,BAL,CAR,,,-2.5,43.5,,,outdoors,0,Bank of America Stadium
-2026,11,2026-11-22,Sunday,13:00,NO,CHI,,,-9.5,49.5,,,outdoors,0,Soldier Field
-2026,11,2026-11-22,Sunday,13:00,TEN,DAL,,,-7.5,49.5,,,,0,AT&T Stadium
-2026,11,2026-11-22,Sunday,13:00,TB,DET,,,-3.5,48.5,,,dome,0,Ford Field
-2026,11,2026-11-22,Sunday,13:00,ARI,KC,,,-13.5,41.5,,,outdoors,0,GEHA Field at Arrowhead Stadium
-2026,11,2026-11-22,Sunday,13:00,JAX,NYG,,,5.5,45.5,,,outdoors,0,MetLife Stadium
-2026,11,2026-11-22,Sunday,16:05,NYJ,LAC,,,-1.5,43.5,,,dome,0,SoFi Stadium
+2026,10,2026-11-16,Monday,20:15,LAC,BAL,,,-4.5,38.5,,,outdoors,0,M&T Bank Stadium
+2026,11,2026-11-19,Thursday,20:15,IND,HOU,,,-10.0,44.5,,,,1,Reliant Stadium
+2026,11,2026-11-22,Sunday,13:00,MIA,BUF,,,-16.5,46.5,,,outdoors,1,Highmark Stadium
+2026,11,2026-11-22,Sunday,13:00,BAL,CAR,,,-1.5,44.5,,,outdoors,0,Bank of America Stadium
+2026,11,2026-11-22,Sunday,13:00,NO,CHI,,,-9.5,48.5,,,outdoors,0,Soldier Field
+2026,11,2026-11-22,Sunday,13:00,TEN,DAL,,,-7.5,51.5,,,,0,AT&T Stadium
+2026,11,2026-11-22,Sunday,13:00,TB,DET,,,-3.5,47.5,,,dome,0,Ford Field
+2026,11,2026-11-22,Sunday,13:00,ARI,KC,,,-14.0,42.5,,,outdoors,0,GEHA Field at Arrowhead Stadium
+2026,11,2026-11-22,Sunday,13:00,JAX,NYG,,,6.0,44.5,,,outdoors,0,MetLife Stadium
+2026,11,2026-11-22,Sunday,16:05,NYJ,LAC,,,-2.5,42.5,,,dome,0,SoFi Stadium
+2026,11,2026-11-22,Sunday,16:25,LV,DEN,,,-8.5,41.5,,,outdoors,1,Empower Field at Mile High
 2026,11,2026-11-22,Sunday,16:25,PIT,PHI,,,4.5,38.5,,,outdoors,0,Lincoln Financial Field
-2026,11,2026-11-23,Monday,20:15,CIN,WAS,,,4.5,50.5,,,outdoors,0,Northwest Stadium
+2026,11,2026-11-22,Sunday,20:20,MIN,SF,,,-3.5,45.5,,,outdoors,0,Estadio Banorte
+2026,11,2026-11-23,Monday,20:15,CIN,WAS,,,3.5,51.5,,,outdoors,0,Northwest Stadium
